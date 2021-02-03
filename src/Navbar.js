@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import StyleContext from './StyleContext';
 
 
@@ -9,7 +10,6 @@ const Navbar = () => {
 
     const Navbar = styled.nav`
     display: block;
-    //position: fixed;
     z-index: 1;
     -webkit-user-select: none;
     user-select: none;
@@ -64,9 +64,9 @@ const Navbar = () => {
     }
    
     ul {
+        position: fixed;
         list-style: none;
         text-align: left;
-        position: absolute;
         width: 60%;
         top: 0;
         left: 0;
@@ -91,18 +91,20 @@ const Navbar = () => {
     }
     `
     const [isClicked, setIsClicked] = useState(false);
+
+    const toggleNav = () => setIsClicked(!isClicked);
 return (
 <section>
     <Navbar>
-        <div className={isClicked ? "clicked" : ""} onClick={() => setIsClicked(!isClicked) } >
+        <div className={isClicked ? "clicked" : ""} onClick={toggleNav} >
             <span></span>
             <span></span>
             <span></span>
         </div>
             <ul className="top-nav" id="js-menu">
-                <li className="menu-item"><a href="index.html">.Home</a></li>
-                <li className="menu-item"><a href="services.html">.Projects</a></li>
-                <li id="contact" className="menu-item"><a href="contact.html">.Contact</a></li>
+                <Link to="/" onClick={toggleNav}><li className="menu-item"><a href="index.html">.Home</a></li></Link>
+                <Link to="/projects" onClick={toggleNav}><li className="menu-item"><a href="services.html">.Projects</a></li></Link>
+                <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><a href="contact.html">.Contact</a></li></Link>
 			</ul>       
     </Navbar>
 </section>
