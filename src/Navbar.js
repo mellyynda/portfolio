@@ -7,35 +7,37 @@ const Navbar = () => {
     const { white, lightBlue, cadetBlue, teal, darkGreen, black } = useContext(StyleContext);
 
 
-    const Navlist = styled.ul`
-    list-style: none;
-    text-align: left;
-    li a{
-        text-decoration: none;
-    }
-    `
     const Navbar = styled.nav`
     display: block;
-    position: fixed;
+    //position: fixed;
     z-index: 1;
     -webkit-user-select: none;
     user-select: none;
     a {
+        font-weight: 600;
         text-decoration: none;
         color: ${black};
-        transition: color 0.3s ease;
     }
-    a:hover {
+    a:hover,
+    a:active,
+    a:focus {
         color: ${teal};
+        border-bottom: 1px solid ${teal};
     }
     div {
-        padding: 15px;
+        width: 50px;
+        height: 50px;
         display: block;
-        position: absolute;
         cursor: pointer;
-        opacity: 1; /* hide this */
-        z-index: 2; /* and place it over the hamburger */
-        -webkit-touch-callout: none;
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        border-radius: 50%;
+        background-color: ${darkGreen};
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     div span {
         display: block;
@@ -43,13 +45,15 @@ const Navbar = () => {
         height: 4px;
         margin-bottom: 5px;
         position: relative;
-        background: ${darkGreen};
+        background: ${white};
         border-radius: 3px;
         z-index: 1;
     }
+    div span:last-child {
+        margin-bottom: 0;
+    }
     .clicked span:first-child {
         transform: translateY(9px) rotate(45deg);
-        opacity: 1;
     }
     .clicked span:nth-child(2) {
         transform: translateX(-50px);
@@ -57,32 +61,33 @@ const Navbar = () => {
     }
     .clicked span:last-child {
         transform: translateY(-9px) rotate(-45deg);
-        opacity: 1;
     }
    
     ul {
+        list-style: none;
+        text-align: left;
         position: absolute;
-        width: 300px;
-        // margin: -100px 0 0 -50px;
+        width: 60%;
         top: 0;
         left: 0;
         padding: 50px;
-        padding-top: 125px;
+        padding-top: 100px;
+        padding-left: 15%;
         
-        background: #ededed;
+        background: ${white};
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
         
         transform-origin: 0% 0%;
-        transform: translate(-100%, -50px);
+        transform: translate(-100%, 0);
     }
     ul li {
-        padding: 10px 0;
+        padding: 15px 0;
         font-size: 22px;
     }
     .clicked ~ ul {
-        transform: translate(0, -50px);
+        transform: translate(0, 0);
     }
     `
     const [isClicked, setIsClicked] = useState(false);
@@ -94,12 +99,11 @@ return (
             <span></span>
             <span></span>
         </div>
-            <Navlist className="top-nav" id="js-menu">
-                <li className="menu-item"><a href="index.html">Home</a></li>
-                <li className="menu-item"><a href="services.html">Projects</a></li>
-                <li id="contact" className="menu-item"><a href="contact.html">Contact</a></li>
-			</Navlist>           
-        
+            <ul className="top-nav" id="js-menu">
+                <li className="menu-item"><a href="index.html">.Home</a></li>
+                <li className="menu-item"><a href="services.html">.Projects</a></li>
+                <li id="contact" className="menu-item"><a href="contact.html">.Contact</a></li>
+			</ul>       
     </Navbar>
 </section>
 )
