@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import StyleContext from './StyleContext';
 import Navbar from './Navbar';
-import Home from './Home'
+import Home from './Home';
 import Projects from './Projects';
 import Contact from './Contact';
 

@@ -51,7 +51,6 @@ const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
     .clicked span:last-child {
         transform: translateY(-9px) rotate(-45deg);
     }
-   
     ul {
         position: fixed;
         list-style: none;
