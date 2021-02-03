@@ -13,17 +13,6 @@ const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
     z-index: 1;
     -webkit-user-select: none;
     user-select: none;
-    a {
-        font-weight: 600;
-        text-decoration: none;
-        color: ${black};
-    }
-    a:hover,
-    a:active,
-    a:focus {
-        color: ${teal};
-        border-bottom: 1px solid ${teal};
-    }
     div {
         width: 50px;
         height: 50px;
@@ -82,9 +71,21 @@ const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
         transform-origin: 0% 0%;
         transform: translate(-100%, 0);
     }
+    ul a {
+        font-weight: 600;
+        text-decoration: none;
+        color: ${black};
+    }
     ul li {
         padding: 15px 0;
         font-size: 22px;
+    }
+    ul li:hover,
+    ul li:active,
+    ul li:focus{
+        span {
+            border-top:3px solid ${darkGreen};
+        }
     }
     .clicked ~ ul {
         transform: translate(0, 0);
@@ -100,9 +101,9 @@ return (
             <span></span>
         </div>
             <ul className="top-nav" id="js-menu">
-                <Link to="/" onClick={toggleNav}><li className="menu-item"><a href="index.html">.Home</a></li></Link>
-                <Link to="/projects" onClick={toggleNav}><li className="menu-item"><a href="services.html">.Projects</a></li></Link>
-                <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><a href="contact.html">.Contact</a></li></Link>
+                <Link to="/" onClick={toggleNav}><li className="menu-item"><span>.Home</span></li></Link>
+                <Link to="/projects" onClick={toggleNav}><li className="menu-item"><span>.Projects</span></li></Link>
+                <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><span>.Contact</span></li></Link>
 			</ul>       
     </Navbar>
 </section>
