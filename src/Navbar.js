@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import StyleContext from './StyleContext';
 
 
-const Navbar = () => {
+const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
     const { white, lightBlue, cadetBlue, teal, darkGreen, black } = useContext(StyleContext);
 
 
@@ -90,13 +90,11 @@ const Navbar = () => {
         transform: translate(0, 0);
     }
     `
-    const [isClicked, setIsClicked] = useState(false);
 
-    const toggleNav = () => setIsClicked(!isClicked);
 return (
 <section>
     <Navbar>
-        <div className={isClicked ? "clicked" : ""} onClick={toggleNav} >
+        <div className={navToggleClicked ? "clicked" : ""} onClick={toggleNav} >
             <span></span>
             <span></span>
             <span></span>

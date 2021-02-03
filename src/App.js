@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import {
   BrowserRouter as Router,
@@ -9,6 +10,7 @@ import Navbar from './Navbar';
 import Home from './Home'
 import Projects from './Projects';
 import Contact from './Contact';
+
 
 const colorsObj = {
     white: '#FFFFFA',
@@ -36,11 +38,20 @@ padding-top: 50px;
 `
 
 function App() {
+  const [navToggleClicked, setNavToggleClicked] = useState(false);
+  const toggleNav = () => setNavToggleClicked(!navToggleClicked);
+  const handleScroll = () => setNavToggleClicked(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [])
+
   return (
     <StyleContext.Provider value={colorsObj}>
-    <AppWrapper className="App">
+    <AppWrapper className="App" >
       <Router>
-        <Navbar />
+        <Navbar navToggleClicked={navToggleClicked} setNavToggleClicked={setNavToggleClicked} toggleNav={toggleNav}/>
         <Content>
           <Switch>
             <Route path="/projects">
