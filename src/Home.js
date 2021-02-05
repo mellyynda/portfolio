@@ -1,129 +1,223 @@
-import logo192 from './img/logo192.png';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import styled from 'styled-components';
+import StyleContext from './StyleContext';
+import {ReactComponent as ReactLogo} from './img/logo.svg';
+import logo from './img/logo192.png';
+// import Clear from './img/Clear.png';
+// import Clouds from './img/Clouds.png';
+// import MistFog from './img/Mist-Fog.png';
+// import Rain from './img/Rain.png';
+// import Snow from './img/Snow.png';
+// import Haze from './img/Haze.png';
+import line from './img/line.png';
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const API_KEY = '&appid=1f7c80d8a27983216c1e30554ff70078';
 const SETTINGS = '&units=metric'
 
+ let apiCallsNo = 0;
 
 function Home() {
 
-    let [weatherData, setWeatherData] = useState([]);
-    let [city, setCity] = useState('Stockholm');
+    const { white, yellow, pink, darkGreen, black } = useContext(StyleContext);
+
+    const StyledDiv = styled.div`
+    background: linear-gradient(to right, ${darkGreen} 0%, ${darkGreen} 50%, ${white} 50%, ${white} 100%);
+    height:100vh;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Helvetica Neue', sans-serif;
+    letter-spacing: -1px;
+    img {
+        width: 85px;
+        margin-top: 20px;
+    }
+    svg {
+        width: 25px;
+        align-self:center;
+        fill:${black};
+    }
+    h1 {
+        margin-top: 220px;
+        align-self: center;
+        font-size: 5rem;
+        display: flex;
+        flex-direction: column;
+        span{
+            color: ${yellow};
+        }
+        span:first-child {
+            color: ${black};
+        }
+    }
+    `
+    // const Logo = styled.div`
+    // width: 80px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items:center; 
+    // font-size: 3rem;
+    // padding: 25px;
+    //     *{
+    //         color: ${white};
+    //     }
+    // `
+    const Content = styled.section`
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+   
+    img {
+        width: 10%;
+        padding: 50px 0;
+    }
+    h2 { 
+        font-family: 'Open Sans', sans-serif; 
+        font-size: 30px; 
+        font-weight: 300; 
+        line-height: 32px; 
+        padding: 15px;
+    }
+    p { 
+        font-family: 'Open Sans', sans-serif; 
+        font-size: 1.1rem; 
+        line-height: 24px; 
+        padding: 0 0 0 15px; 
+        text-align: justify; 
+        text-justify: inter-word; 
+    }
+    p:first-child {
+        font-family: 'Iowan Old Style', sans-serif;
+        padding: 100px 20px 30px;
+        font-weight: bold;
+        background: url(${line}) no-repeat center center ; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    section {
+        margin:0 20px 20px;
+        padding: 15px;
+        max-width: 320px;
+        background: rgb(211,12,123);
+        background: linear-gradient(239deg, rgba(211,12,123,1) 63%, rgba(227,181,5,1) 100%);
+        border-radius: 5px;
+        form>label {
+            display: block;
+        }
+        *{
+            color: ${white};
+        }
+        input{
+            color:${black};
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 0.2rem;
+            border: none;
+            margin-top: 5px;
+        }
+        input[type='text'] {
+            background-color: ${white};
+            width: 100%;
+            max-width: 220px;
+        }
+        label[for='city'] {
+            font-size: 1.3rem;
+        }
+    }
+    `
+
+    const [weatherData, setWeatherData] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [city, setCity] = useState('Stockholm,SE');
     const messages = ["but that won't stop me from", "so i'll have fun by"];
-    let [message, setMessage] = useState('');
-    let [responseMessage , setResponseMessage] = useState('');
-    let apiCallsNo = 0;
-    let [weatherParam, setWeatherParam] = useState("new");
+    const [responseMessage , setResponseMessage] = useState('');
 
     useEffect(() => {
     fetch(API_URL + city + API_KEY + SETTINGS)
         .then(response => response.json())
         .then(data => {
-            setWeatherData(data);
+            
             if(apiCallsNo < 1) {
-                setSthlmW();
-            }
+               setWeatherData(data);
+            } else {
+                setUserData(data);
+            } 
             apiCallsNo++;
+            console.log(apiCallsNo);
             console.log(data);
             console.log('in effect');
         })
-        .catch( error => { 
-            weatherParam = "new";
-            console.log(error);
-        })
+        // .catch( error => { 
+        //     setWeatherParam("new");
+        //     console.log(error);
+        // })
     }, [city])
 
-    const setSthlmW = () => {
-        switch(weatherData.weather[0].main) {
+    const setSthlmW = (main) => {
+        console.log("in Sthlm", main);
+        //console.log("insetSthlm:", weatherData.weather[0].main);
+        switch(main) {
             case "Snow":
-                setMessage(messages[0]);
-                setWeatherParam('snowy');
-                
-                break;
+                return <span>{'snowy'} day {messages[0]}</span>;
             case "Clouds":
-                setMessage(messages[0]);
-                setWeatherParam('cloudy');
-                
-                break;
+                return <span>{'cloudy'} day {messages[0]}</span>;
             case "Fog":
-                setMessage(messages[0]);
-                setWeatherParam('fogy');
-                
-                break;
+                return <span>{'foggy'} day {messages[0]}</span>;
             case "Rain":
-                setMessage(messages[0]);
-                setWeatherParam('rainy');
-                
-                break;
+                return <span>{'rainy'} day {messages[0]}</span>;
             case "Clear":
-                setMessage(messages[1]);
-                setWeatherParam('sunny');
-                
-                break;
+                return <span>{'sunny'} day {messages[1]}</span>;
             case "Haze":
-                setMessage(messages[0]);
-                setWeatherParam('hazy');
-                
-                break;
+                return <span>{'hazy'} day {messages[0]}</span>;
             case "Mist":
-                setMessage(messages[0]);
-                setWeatherParam('misty');
-                
-                break;
+                return <span>{'misty'} day {messages[0]}</span>;
             default:
-                setMessage(messages[1]);
-                setWeatherParam('new');
+                <span>{'new'} day {messages[1]}</span>;
         }
-        console.log('called setSthlm:', weatherData.weather[0].main);
-        // weatherData.weather[0].main
     }
-    
-    console.log(apiCallsNo);
-    
-    //console.log(weatherData.weather[0].main);
-    console.log('in home');
 
     const getWeather = (e) => {
         e.preventDefault();
-        setResponseMessage('The temperature is:');
-        setCity(e.target.querySelector('input').value.trim());
+        let val = e.target.querySelector('input').value.trim();
+        console.log(val);
+        setCity(val);
+        setResponseMessage(`${val.replace(/(^\w|\s\w)/g, m => m.toUpperCase())}`);
         console.log(responseMessage);
     }
 
     return (
         <section>
-            <div><img src={logo192} />@mellyynda</div>
-            <h1>WEL<br />COME</h1>
-            <div>.</div>
-            <div>
-                <p>I am a passionate aspiring front-end web developer based in Stockholm and today is a {weatherParam} day {message} gaining new skills and hopefully creating something that matters. Hope you are having a great day yourself!</p>
-                <form onSubmit={getWeather}>
-                <label htmlFor='city'>Check the weather in your city:</label>
-                <input type='text' name='city' placeholder='enter a city'></input>
-                <input type='submit' value='Submit'></input>
-                </form>
-                <p>{responseMessage ? <span>{responseMessage} {weatherParam}</span> : null }</p>
-            </div>
-            <br /><br />
-            <div>
-                <p>One of the most common problem people are experiencing with Prettier/ESLint is having conflicting warnings and lot of red lining errors.
-
-                A good way to avoid this problem is using Prettier as a ESLint plugin.
-
-                That’s why you have to install a special plugin called “eslint-plugin-prettier” ad dev dependency:
-                One of the most common problem people are experiencing with Prettier/ESLint is having conflicting warnings and lot of red lining errors.
-
-                A good way to avoid this problem is using Prettier as a ESLint plugin.
-
-                That’s why you have to install a special plugin called “eslint-plugin-prettier” ad dev dependency:
-                One of the most common problem people are experiencing with Prettier/ESLint is having conflicting warnings and lot of red lining errors.
-
-                A good way to avoid this problem is using Prettier as a ESLint plugin.
-
-                That’s why you have to install a special plugin called “eslint-plugin-prettier” ad dev dependency:</p>
-            </div>
-
+            <StyledDiv>
+                <img src={logo}></img>
+                <ReactLogo />
+                <ReactLogo />
+                <ReactLogo />
+                <h1><span>WEL</span><span>COME<span>.</span></span></h1>
+            </StyledDiv>
+            <Content>
+                {weatherData ? <><p>I am a passionate aspiring front-end web developer based in Stockholm and today is a {setSthlmW(weatherData.weather[0].main)} gaining new skills and hopefully creating something that matters. Hope you are having a great day yourself!</p></> : null}
+                <section>
+                    <form onSubmit={getWeather}>
+                    <label htmlFor='city'>Check the weather in your city:</label>
+                    <input type='text' name='city' placeholder='enter a city'></input>
+                    <input type='submit' value='Go'></input>
+                    </form>
+                    {userData ? 
+                    <div>
+                        <h2>{responseMessage}</h2>
+                        <p>Description: {userData.weather[0].description}</p>
+                        <p>Temperature: {userData.main.temp}°C</p>
+                        <p>Maximum: {userData.main.temp_max}°C</p>
+                        <p>Min: {userData.main.temp_min}°C</p>
+                        <p>Feels like: {userData.main.feels_like}°C</p>
+                    </div> 
+                    : null}
+                </section>
+            </Content>
         </section>
     );
 }

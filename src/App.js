@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,9 +14,8 @@ import Contact from './Contact';
 
 const colorsObj = {
     white: '#FFFFFA',
-    lightBlue: '#78CDD7',
-    cadetBlue: '#44A1A0',
-    teal: '#247B7B',
+    yellow: '#E3B505',
+    pink: '#D30C7B',
     darkGreen: '#0D5C63',
     black: '#2C1320'
 }
@@ -29,13 +28,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${colorsObj.black};
   }
 `;
-const AppWrapper = styled.div`
-
-`
-
-const Content = styled.div`
-padding-top: 50px;
-`
 
 function App() {
   const [navToggleClicked, setNavToggleClicked] = useState(false);
@@ -49,10 +41,8 @@ function App() {
 
   return (
     <StyleContext.Provider value={colorsObj}>
-    <AppWrapper className="App" >
       <Router>
         <Navbar navToggleClicked={navToggleClicked} setNavToggleClicked={setNavToggleClicked} toggleNav={toggleNav}/>
-        <Content>
           <Switch>
             <Route path="/projects">
               <Projects />
@@ -64,10 +54,7 @@ function App() {
               <Home />
             </Route>
           </Switch>
-        </Content>
-      </Router>
-    </AppWrapper>
-    
+      </Router>    
     <GlobalStyle />
     </StyleContext.Provider>
   );

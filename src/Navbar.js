@@ -5,7 +5,7 @@ import StyleContext from './StyleContext';
 
 
 const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
-    const { white, lightBlue, cadetBlue, teal, darkGreen, black } = useContext(StyleContext);
+    const { white, darkGreen, black } = useContext(StyleContext);
 
 
     const Navbar = styled.nav`
