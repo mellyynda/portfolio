@@ -10,6 +10,7 @@ import logo from './img/logo192.png';
 // import Snow from './img/Snow.png';
 // import Haze from './img/Haze.png';
 import line from './img/line.png';
+import { SectionTitle } from './StyledComp';
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const API_KEY = '&appid=1f7c80d8a27983216c1e30554ff70078';
@@ -40,30 +41,6 @@ function Home() {
         fill:${black};
     }
     `
-    const SectionTitle = styled.h1`
-    margin-top: 220px;
-    align-self: center;
-    font-size: 5rem;
-    display: flex;
-    flex-direction: column;
-    span{
-        color: ${yellow};
-    }
-    span:first-child {
-        color: ${black};
-    }
-    `
-    // const Logo = styled.div`
-    // width: 80px;
-    // display: flex;
-    // flex-direction: column;
-    // align-items:center; 
-    // font-size: 3rem;
-    // padding: 25px;
-    //     *{
-    //         color: ${white};
-    //     }
-    // `
     const Content = styled.section`
     width: 100%;
     max-width: 800px;
