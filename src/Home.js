@@ -39,18 +39,18 @@ function Home() {
         align-self:center;
         fill:${black};
     }
-    h1 {
-        margin-top: 220px;
-        align-self: center;
-        font-size: 5rem;
-        display: flex;
-        flex-direction: column;
-        span{
-            color: ${yellow};
-        }
-        span:first-child {
-            color: ${black};
-        }
+    `
+    const SectionTitle = styled.h1`
+    margin-top: 220px;
+    align-self: center;
+    font-size: 5rem;
+    display: flex;
+    flex-direction: column;
+    span{
+        color: ${yellow};
+    }
+    span:first-child {
+        color: ${black};
     }
     `
     // const Logo = styled.div`
@@ -196,7 +196,7 @@ function Home() {
                 <ReactLogo />
                 <ReactLogo />
                 <ReactLogo />
-                <h1><span>WEL</span><span>COME<span>.</span></span></h1>
+                <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
             </StyledDiv>
             <Content>
                 {weatherData ? <><p>I am a passionate aspiring front-end web developer based in Stockholm and today is a {setSthlmW(weatherData.weather[0].main)} gaining new skills and hopefully creating something that matters. Hope you are having a great day yourself!</p></> : null}
