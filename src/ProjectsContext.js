@@ -1,5 +1,5 @@
 import React from 'react';
 
-const StyleContext = React.createContext(null);
+const ProjectsContext = React.createContext(null);
  
-export default StyleContext;
+export default ProjectsContext;

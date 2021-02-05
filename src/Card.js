@@ -7,7 +7,7 @@ padding: 0 5%;
 margin-bottom: 25px;
 h2, p  {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
 div {
     display: flex;
@@ -18,6 +18,8 @@ img {
     width: 100%;
     max-width: 600px;
     margin-bottom: 15px;
+    margin-right: 15px;
+    border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
               0 2px 2px rgba(0,0,0,0.12), 
               0 4px 4px rgba(0,0,0,0.12), 
@@ -38,6 +40,8 @@ const Card = ({pics, link, title, description}) => {
 
     const [showMore, setShowMore] = useState(false);
 
+    console.log(pics[0].includes('proto'));
+
     let height = 450;
 
     if(window.innerWidth > 668) {
@@ -45,24 +49,33 @@ const Card = ({pics, link, title, description}) => {
     }
 
     const mobImgStyle = {
-        maxWidth: '230px',
+        maxWidth: '300px',
         height: height +'px',
         width: 'auto'
     }
 
     return(<Wrapper>
-        <h2><a href={link}>{title}</a></h2>
+        <h2><a href={link} target='_blank'>{title}</a></h2>
         <p>{description}</p>
-        <div>
-            {!showMore ? <img src={pics[0]}></img> : 
+        <a href={link} target='_blank'>
+            <div>
+                {!showMore ? 
+                <img src={pics[0]} style={pics[0].includes('proto') ? mobImgStyle : null}></img> : 
                 pics.map(image => {
                     return(<img src={image} style={image.includes('mobile') ? mobImgStyle : null}></img>)
                 })
-            }             
-        </div>  
+                }  
+            </div>  
+        </a> 
         <Toggle onClick={() => {
             setShowMore(!showMore);
-        }}>{showMore ? 'show less △': 'show more ▽'}</Toggle>    
+        }}>
+            {pics.length < 2 ? 
+            null:
+            showMore ? 
+                'show less △': 
+                'show more ▽'}
+        </Toggle>    
     </Wrapper>
     )
 }
