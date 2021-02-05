@@ -12,12 +12,15 @@ const projects = [
         name: "quire",
         title: "Quire - Note saving app",
         link: "https://github.com/Viktor-Hultman/quire_notebook_assignment_paperclip",
-        description: "Something about this project",
+        description: "It is a browser based program that let's you save notes directly from your computer or mobile device.",
         pics: [notes, quireMobEd, quireMob, quirePad ]
     },
     {
         name: "guestbook",
-        pics: null
+        title: "Guestbook ",
+        link: "https://github.com/Viktor-Hultman/quire_notebook_assignment_paperclip",
+        description: "It is a project built for KYH Yrkeshögskola - Front End Developer Education Program that allows the user to add participants to specific events directly from his computer or mobile device. ",
+        pics: [notes, quireMobEd, quireMob, quirePad ]
     }
 ]
 
