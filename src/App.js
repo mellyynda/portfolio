@@ -5,12 +5,10 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import StyleContext from './StyleContext';
 import Navbar from './Navbar';
 import Home from './Home';
 import Projects from './Projects';
 import Contact from './Contact';
-
 
 const colorsObj = {
     white: '#FFFFFA',
@@ -40,9 +38,9 @@ function App() {
   }, [])
 
   return (
-    <StyleContext.Provider value={colorsObj}>
+    <div>
       <Router>
-        <Navbar navToggleClicked={navToggleClicked} setNavToggleClicked={setNavToggleClicked} toggleNav={toggleNav}/>
+        <Navbar navToggleClicked={navToggleClicked} toggleNav={toggleNav}/>
           <Switch>
             <Route path="/projects">
               <Projects />
@@ -56,7 +54,7 @@ function App() {
           </Switch>
       </Router>    
     <GlobalStyle />
-    </StyleContext.Provider>
+    </div>
   );
 }
 

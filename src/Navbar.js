@@ -1,14 +1,17 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import StyleContext from './StyleContext';
 
+const colorsObj = {
+    white: '#FFFFFA',
+    yellow: '#E3B505',
+    pink: '#D30C7B',
+    darkGreen: '#0D5C63',
+    black: '#2C1320'
+}
 
-const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
-    const { white, darkGreen, black } = useContext(StyleContext);
+const { white, yellow, pink, darkGreen, black } = colorsObj;
 
-
-    const Navbar = styled.nav`
+const Nav = styled.nav`
     display: block;
     z-index: 1;
     -webkit-user-select: none;
@@ -91,22 +94,24 @@ const Navbar = ({navToggleClicked, setNavToggleClicked, toggleNav}) => {
     }
     `
 
-return (
-<section>
-    <Navbar>
-        <div className={navToggleClicked ? "clicked" : ""} onClick={toggleNav} >
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-            <ul className="top-nav" id="js-menu">
-                <Link to="/" onClick={toggleNav}><li className="menu-item"><span>.Home</span></li></Link>
-                <Link to="/projects" onClick={toggleNav}><li className="menu-item"><span>.Projects</span></li></Link>
-                <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><span>.Contact</span></li></Link>
-			</ul>       
-    </Navbar>
-</section>
-)
-}
+const Navbar = ({navToggleClicked, toggleNav}) => {
+
+    return (
+    <section>
+        <Nav>
+            <div className={navToggleClicked ? "clicked" : ""} onClick={toggleNav} >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+                <ul className="top-nav" id="js-menu">
+                    <Link to="/" onClick={toggleNav}><li className="menu-item"><span>.Home</span></li></Link>
+                    <Link to="/projects" onClick={toggleNav}><li className="menu-item"><span>.Projects</span></li></Link>
+                    <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><span>.Contact</span></li></Link>
+                </ul>       
+        </Nav>
+    </section>
+    )
+    }
 
 export default Navbar;

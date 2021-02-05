@@ -11,16 +11,20 @@ const colorsObj = {
 const { white, yellow, pink, darkGreen, black } = colorsObj;
 
 const SectionTitle = styled.h1`
-margin-top: 220px;
 align-self: center;
-font-size: 5rem;
+font-size: 50px;
 display: flex;
 flex-direction: column;
+border-top: 5px solid ${darkGreen};
 span{
     color: ${yellow};
 }
 span:first-child {
     color: ${black};
 }
+@media (min-width: 668px) {
+    //In the example below, 12px is the minimum font-size and 24px is the maximum. 400px is the start of the viewport range and 800px is where it should stop scaling. The inclusion or absence of the units after each value is important.
+    font-size: calc(70px + (60 - 16)*(100vw - 668px)/(1200 - 668));
+  }
 `
 export { SectionTitle };

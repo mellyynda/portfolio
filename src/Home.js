@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import StyleContext from './StyleContext';
 import {ReactComponent as ReactLogo} from './img/logo.svg';
 import logo from './img/logo192.png';
 // import Clear from './img/Clear.png';
@@ -18,11 +17,17 @@ const SETTINGS = '&units=metric'
 
  let apiCallsNo = 0;
 
-function Home() {
+ const colorsObj = {
+    white: '#FFFFFA',
+    yellow: '#E3B505',
+    pink: '#D30C7B',
+    darkGreen: '#0D5C63',
+    black: '#2C1320'
+}
 
-    const { white, yellow, pink, darkGreen, black } = useContext(StyleContext);
+const { white, yellow, pink, darkGreen, black } = colorsObj;
 
-    const StyledDiv = styled.div`
+const StyledDiv = styled.div`
     background: linear-gradient(to right, ${darkGreen} 0%, ${darkGreen} 50%, ${white} 50%, ${white} 100%);
     height:100vh;
     width:100%;
@@ -106,6 +111,8 @@ function Home() {
         }
     }
     `
+
+function Home() {
 
     const [weatherData, setWeatherData] = useState(null);
     const [userData, setUserData] = useState(null);
