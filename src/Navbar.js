@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
-const colorsObj = {
-    white: '#FFFFFA',
-    yellow: '#E3B505',
-    pink: '#D30C7B',
-    darkGreen: '#0D5C63',
-    black: '#2C1320'
-}
+import { colorsObj } from './StyledComp';
 
 const { white, yellow, pink, darkGreen, black } = colorsObj;
 
@@ -81,10 +74,6 @@ const Nav = styled.nav`
     ul li {
         padding: 15px 0;
         font-size: 22px;
-    }
-    ul li:hover,
-    ul li:active,
-    ul li:focus{
         span {
             border-top:3px solid ${darkGreen};
         }

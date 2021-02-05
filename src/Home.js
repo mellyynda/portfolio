@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {ReactComponent as ReactLogo} from './img/logo.svg';
-import logo from './img/logo192.png';
 // import Clear from './img/Clear.png';
 // import Clouds from './img/Clouds.png';
 // import MistFog from './img/Mist-Fog.png';
@@ -9,108 +7,59 @@ import logo from './img/logo192.png';
 // import Snow from './img/Snow.png';
 // import Haze from './img/Haze.png';
 import line from './img/line.png';
-import { SectionTitle } from './StyledComp';
+import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledComp';
 
+const { white, yellow, pink, darkGreen, black } = colorsObj;
+
+const StyledDiv = styled(SectionScreen)`
+h1 {
+    transform: translateX(${titlePadding}px);
+}
+`
+
+const Content = styled.section`
+width: 100%;
+max-width: 800px;
+margin: 0 auto;
+.nice-text {
+    padding: 20px;
+}
+`
+const WeatherCard = styled.section`
+margin:0 20px 20px;
+padding: 15px;
+max-width: 320px;
+background: rgb(211,12,123);
+background: linear-gradient(139deg, ${pink} 63%, ${yellow} 100%);
+border-radius: 5px;
+form>label {
+    display: block;
+}
+*{
+    color: ${white};
+}
+input{
+    color:${black};
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 0.2rem;
+    border: none;
+    margin-top: 5px;
+}
+input[type='text'] {
+    background-color: ${white};
+    width: 100%;
+    max-width: 220px;
+}
+label[for='city'] {
+    font-size: 1.3rem;
+}
+`
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const API_KEY = '&appid=1f7c80d8a27983216c1e30554ff70078';
 const SETTINGS = '&units=metric'
 
- let apiCallsNo = 0;
-
- const colorsObj = {
-    white: '#FFFFFA',
-    yellow: '#E3B505',
-    pink: '#D30C7B',
-    darkGreen: '#0D5C63',
-    black: '#2C1320'
-}
-
-const { white, yellow, pink, darkGreen, black } = colorsObj;
-
-const StyledDiv = styled.div`
-    background: linear-gradient(to right, ${darkGreen} 0%, ${darkGreen} 50%, ${white} 50%, ${white} 100%);
-    height:100vh;
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Helvetica Neue', sans-serif;
-    letter-spacing: -1px;
-    img {
-        width: 85px;
-        margin-top: 20px;
-    }
-    svg {
-        width: 25px;
-        align-self:center;
-        fill:${black};
-    }
-    `
-    const Content = styled.section`
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-   
-    img {
-        width: 10%;
-        padding: 50px 0;
-    }
-    h2 { 
-        font-family: 'Open Sans', sans-serif; 
-        font-size: 30px; 
-        font-weight: 300; 
-        line-height: 32px; 
-        padding: 15px;
-    }
-    p { 
-        font-family: 'Open Sans', sans-serif; 
-        font-size: 1.1rem; 
-        line-height: 24px; 
-        padding: 0 0 0 15px; 
-        text-align: justify; 
-        text-justify: inter-word; 
-    }
-    p:first-child {
-        font-family: 'Iowan Old Style', sans-serif;
-        padding: 100px 20px 30px;
-        font-weight: bold;
-        background: url(${line}) no-repeat center center ; 
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-    section {
-        margin:0 20px 20px;
-        padding: 15px;
-        max-width: 320px;
-        background: rgb(211,12,123);
-        background: linear-gradient(239deg, rgba(211,12,123,1) 63%, rgba(227,181,5,1) 100%);
-        border-radius: 5px;
-        form>label {
-            display: block;
-        }
-        *{
-            color: ${white};
-        }
-        input{
-            color:${black};
-            font-size: 1rem;
-            padding: 10px;
-            border-radius: 0.2rem;
-            border: none;
-            margin-top: 5px;
-        }
-        input[type='text'] {
-            background-color: ${white};
-            width: 100%;
-            max-width: 220px;
-        }
-        label[for='city'] {
-            font-size: 1.3rem;
-        }
-    }
-    `
+let apiCallsNo = 0;
 
 function Home() {
 
@@ -176,15 +125,11 @@ function Home() {
     return (
         <section>
             <StyledDiv>
-                <img src={logo}></img>
-                <ReactLogo />
-                <ReactLogo />
-                <ReactLogo />
                 <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
             </StyledDiv>
             <Content>
-                {weatherData ? <><p>I am a passionate aspiring front-end web developer based in Stockholm and today is a {setSthlmW(weatherData.weather[0].main)} gaining new skills and hopefully creating something that matters. Hope you are having a great day yourself!</p></> : null}
-                <section>
+                {weatherData ? <div className="nice-text"><p >I am a passionate aspiring front-end web developer based in Stockholm and today is a {setSthlmW(weatherData.weather[0].main)} gaining new skills and hopefully creating something that matters.</p> <p> Hope you are having a great day yourself!</p></div> : null}
+                <WeatherCard>
                     <form onSubmit={getWeather}>
                     <label htmlFor='city'>Check the weather in your city:</label>
                     <input type='text' name='city' placeholder='enter a city'></input>
@@ -200,7 +145,7 @@ function Home() {
                         <p>Feels like: {userData.main.feels_like}°C</p>
                     </div> 
                     : null}
-                </section>
+                </WeatherCard>
             </Content>
         </section>
     );

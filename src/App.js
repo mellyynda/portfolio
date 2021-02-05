@@ -9,14 +9,8 @@ import Navbar from './Navbar';
 import Home from './Home';
 import Projects from './Projects';
 import Contact from './Contact';
+import { colorsObj } from './StyledComp';
 
-const colorsObj = {
-    white: '#FFFFFA',
-    yellow: '#E3B505',
-    pink: '#D30C7B',
-    darkGreen: '#0D5C63',
-    black: '#2C1320'
-}
 
 const GlobalStyle = createGlobalStyle`
 * {

@@ -1,16 +1,29 @@
 import styled from 'styled-components';
 
-const colorsObj = {
+export const colorsObj = {
     white: '#FFFFFA',
     yellow: '#E3B505',
     pink: '#D30C7B',
     darkGreen: '#0D5C63',
     black: '#2C1320'
-}
+};
 
 const { white, yellow, pink, darkGreen, black } = colorsObj;
 
+const screenWidth = window.innerWidth;
+export let titlePadding = 25 / 100 * screenWidth;
+
+const SectionScreen = styled.div`
+background: linear-gradient(to right, ${white} 0%, ${white} 50%, ${darkGreen} 50%, ${darkGreen} 100%);
+height: 100vh;
+display: flex;
+justify-content: center;
+margin-bottom: 90px;
+`
+
 const SectionTitle = styled.h1`
+transform: translateX(-${titlePadding}px);
+transform-origin: center center;
 align-self: center;
 font-size: 50px;
 display: flex;
@@ -27,4 +40,4 @@ span:first-child {
     font-size: calc(70px + (60 - 16)*(100vw - 668px)/(1200 - 668));
   }
 `
-export { SectionTitle };
+export { SectionScreen, SectionTitle };

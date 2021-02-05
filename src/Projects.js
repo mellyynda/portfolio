@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SectionTitle } from './StyledComp';
+import { SectionScreen, SectionTitle } from './StyledComp';
 import notes from './img/projects/quire/notes.gif';
 import quireMobEd from './img/projects/quire/quire-mobile-editor.png';
 import quireMob from './img/projects/quire/quire-mobile.png';
@@ -15,9 +15,7 @@ import homeMob from './img/projects/homepage/home-web.jpg';
 import mockupMob from './img/projects/mockups/mockup-mobile.png';
 import mockupWeb from './img/projects/mockups/mockup-web.png';
 import proto from './img/projects/proto.png';
-
 import Card from './Card';
-import ProjectsContext from './ProjectsContext';
 
 const projects = [
     {
@@ -71,33 +69,6 @@ const projects = [
     }
 ]
 
-console.log('quireMobEd:', projects[0].pics[1].includes('mobile'));
-console.log(notes, quireMobEd);
-
-const colorsObj = {
-    white: '#FFFFFA',
-    yellow: '#E3B505',
-    pink: '#D30C7B',
-    darkGreen: '#0D5C63',
-    black: '#2C1320'
-}
-
-const { white, yellow, pink, darkGreen, black } = colorsObj;
-
-const screenWidth = window.innerWidth;
-var titlePadding = 25 / 100 * screenWidth;
-
-const SectionScreen = styled.div`
-background: linear-gradient(to right, ${white} 0%, ${white} 50%, ${darkGreen} 50%, ${darkGreen} 100%);
-height: 100vh;
-display: flex;
-justify-content: center;
-margin-bottom: 90px;
-h1{
-    transform: translateX(-${titlePadding}px);
-    transform-origin: center center;
-}
-`
 const ProjectsWrapper = styled.div`
  @media screen and (min-width: 1300px) {
     display: flex;
@@ -109,19 +80,14 @@ const ProjectsWrapper = styled.div`
 const Projects = () => {
 
     return (
-    <ProjectsContext.Provider value={projects}>
         <section>
             <SectionScreen>
                 <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
             </SectionScreen>
             <ProjectsWrapper>
                 {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} />))}
-                {/* <Card pics={projects[0].pics} link={projects[0].link} title={projects[0].title} description={projects[0].description} />
-                <Card pics={projects[0].pics} link={projects[0].link} title={projects[0].title} description={projects[0].description} />
-                <Card pics={projects[0].pics} link={projects[0].link} title={projects[0].title} description={projects[0].description} /> */}
             </ProjectsWrapper>
         </section>
-    </ProjectsContext.Provider>
     )
 }
 export default Projects;
