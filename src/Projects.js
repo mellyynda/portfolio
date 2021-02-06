@@ -85,7 +85,7 @@ const Projects = () => {
                 <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
             </SectionScreen>
             <ProjectsWrapper>
-                {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} />))}
+                {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} key={project.name} />))}
             </ProjectsWrapper>
         </section>
     )
