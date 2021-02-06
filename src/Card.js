@@ -60,9 +60,9 @@ const Card = ({pics, link, title, description}) => {
         <a href={link} target='_blank'>
             <div>
                 {!showMore ? 
-                <img src={pics[0]} style={pics[0].includes('proto') ? mobImgStyle : null}></img> : 
+                <img src={pics[0]} style={pics[0].includes('proto') ? mobImgStyle : null} alt={title}></img> : 
                 pics.map(image => {
-                    return(<img src={image} style={image.includes('mobile') ? mobImgStyle : null}></img>)
+                    return(<img src={image} style={image.includes('mobile') ? mobImgStyle : null} alt={title}></img>)
                 })
                 }  
             </div>  

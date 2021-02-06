@@ -51,9 +51,9 @@ const Contact = () => {
             <SectionTitle><span>CON</span><span>TACT<span>.</span></span></SectionTitle>
             <LinksWrapper>
                 <div>
-                <p><a href="https://github.com/mellyynda" target="_blank"><img src={githubLogo}></img><span>GitHub</span></a></p>
-                <p><a href="https://www.linkedin.com/in/melindasava/" target="_blank"><img src={inLogo}></img><span>LinkedIn</span></a></p>
-                <p><a href="https://www.canva.com/design/DAESWpf9b9U/oyeK-DdA67DI4MTnIsnoUQ/view?utm_content=DAESWpf9b9U" target="_blank"><img src={canvaLogo}></img><span>Canva Resume</span></a></p>
+                <p><a href="https://github.com/mellyynda" target="_blank"><img src={githubLogo} alt="Go to Github"></img><span>GitHub</span></a></p>
+                <p><a href="https://www.linkedin.com/in/melindasava/" target="_blank"><img src={inLogo} alt="Go to LinkedIn"></img><span>LinkedIn</span></a></p>
+                <p><a href="https://www.canva.com/design/DAESWpf9b9U/oyeK-DdA67DI4MTnIsnoUQ/view?utm_content=DAESWpf9b9U" target="_blank"><img src={canvaLogo} alt="Go to Canva"></img><span>Canva Resume</span></a></p>
                 </div>
             </LinksWrapper>
         </StyledDiv>
