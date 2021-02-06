@@ -15,6 +15,7 @@ import homeMob from './img/projects/homepage/home-web.jpg';
 import mockupMob from './img/projects/mockups/mockup-mobile.png';
 import mockupWeb from './img/projects/mockups/mockup-web.png';
 import proto from './img/projects/proto.png';
+import scrollIcon from './img/projects/scroll-icon.png';
 import Card from './Card';
 
 const projects = [
@@ -69,6 +70,15 @@ const projects = [
     }
 ]
 
+const margLeft = window.innerWidth / 4;
+
+const IconScroll = styled.img`
+position: absolute;
+bottom: 25px;
+left: ${margLeft - 32.5}px;
+width: 65px;
+`
+
 const ProjectsWrapper = styled.div`
  @media screen and (min-width: 1300px) {
     display: flex;
@@ -83,6 +93,7 @@ const Projects = () => {
         <section>
             <SectionScreen>
                 <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
+                <IconScroll src={scrollIcon} />
             </SectionScreen>
             <ProjectsWrapper>
                 {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} key={project.name} />))}
