@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { SectionScreen, SectionTitle } from './StyledComp';
 import notes from './img/projects/quire/notes.gif';
@@ -87,13 +88,19 @@ const ProjectsWrapper = styled.div`
  }
 `
 
-const Projects = () => {
 
+const Projects = () => {
+const [removedScroll, setRemovedScroll] = useState(false)
+
+useEffect(() => {
+    window.addEventListener("scroll", () => setRemovedScroll(true));
+    return () => window.removeEventListener("scroll", () => setRemovedScroll(true));
+}, [])
     return (
         <section>
             <SectionScreen>
                 <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
-                <IconScroll src={scrollIcon} />
+                {removedScroll ? null: <IconScroll src={scrollIcon} />}
             </SectionScreen>
             <ProjectsWrapper>
                 {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} key={project.name} />))}
