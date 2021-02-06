@@ -25,49 +25,74 @@ const projects = [
         title: "Quire - Note saving app",
         link: "https://github.com/Viktor-Hultman/quire_notebook_assignment_paperclip",
         description: "It is a browser based program that let's you save notes directly from your computer or mobile device.",
-        pics: [notes, quireMobEd, quireMob, quirePad ]
+        pics: [notes, quireMobEd, quireMob, quirePad ],
+        embedd: null
     },
     {
         name: "guestbook",
         title: "Guestbook ",
         link: "https://github.com/mellyynda/Guestbook",
         description: "It is a project built for KYH Yrkeshögskola - Front End Developer Education Program that allows the user to add participants to specific events directly from his computer or mobile device. ",
-        pics: [guest, guestMob, guestWeb ]
+        pics: [guest, guestMob, guestWeb ],
+        embedd: null
     },
     {
         name: "mockups",
         title: "Mockups",
         link: "https://xd.adobe.com/view/9d825c5d-1e99-44ce-ae25-1bdcfd8fe5ff-c8d1/",
         description: "",
-        pics: [ mockupWeb, mockupMob ]
+        pics: [ mockupWeb, mockupMob ],
+        embedd: null
     },
+    // {
+    //     name: "prototypes",
+    //     title: "Prototypes",
+    //     link: "https://www.figma.com/proto/uUnNd6QaqVxiwuiOh5f239/EU-Bikes-Prototype-problem-fix?node-id=1%3A5&scaling=scale-down",
+    //     description: "",
+    //     pics: [ proto ]
+    // },
     {
         name: "prototypes",
         title: "Prototypes",
-        link: "https://www.figma.com/proto/uUnNd6QaqVxiwuiOh5f239/EU-Bikes-Prototype-problem-fix?node-id=1%3A5&scaling=scale-down",
+        link: null,
         description: "",
-        pics: [ proto ]
+        pics: [],
+        embedd: <div className="embedded-content"><iframe style={{ border: "1px solid rgba(0, 0, 0, 0.1)"}} width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FuUnNd6QaqVxiwuiOh5f239%2FEU-Bikes-Prototype-problem-fix%3Fnode-id%3D1%253A5%26scaling%3Dscale-down" allowFullScreen></iframe></div>
     },
     {
         name: "printeria",
         title: "Print website",
         link: "https://github.com/mellyynda/calculatorReloaded",
         description: "Printeria is a mobile first, responsive website of a fictive t-shirt print company.",
-        pics: [ printWeb, printMob ]
+        pics: [ printWeb, printMob ],
+        embedd: null
     },
+    // {
+    //     name: "documentation",
+    //     title: "Technical documentation",
+    //     link: "https://codepen.io/mellyynda/pen/rNNBQZx",
+    //     description: "Technical documentation data model.",
+    //     pics: [ techDoc ],
+    //     embedd: null
+    // },
     {
         name: "documentation",
         title: "Technical documentation",
-        link: "https://codepen.io/mellyynda/pen/rNNBQZx",
+        link: null,
         description: "Technical documentation data model.",
-        pics: [ techDoc ]
+        pics: [ ],
+        embedd: <div className="embedded-content"><iframe height="400" style={{width: "100%"}} scrolling="no" title="freeCodeCampTechnicalDocumentation" src="https://codepen.io/mellyynda/embed/rNNBQZx?height=265&theme-id=light&default-tab=html,result" frameBorder="no" loading="lazy" allowTransparency="true" allowFullScreen="true">
+        See the Pen <a href='https://codepen.io/mellyynda/pen/rNNBQZx'>freeCodeCampTechnicalDocumentation</a> by mellyynda
+        (<a href='https://codepen.io/mellyynda'>@mellyynda</a>) on <a href='https://codepen.io'>CodePen</a>.
+        </iframe></div>
     },
     {
         name: "homepage",
         title: "Personal homepage",
         link: "https://github.com/mellyynda/Presentation-Website",
         description: "Mobile first, fully responsive simple presentation website.",
-        pics: [ homeMob, homeWeb ]
+        pics: [ homeMob, homeWeb ],
+        embedd: null
     }
 ]
 
@@ -103,7 +128,7 @@ useEffect(() => {
                 {removedScroll ? null: <IconScroll src={scrollIcon} />}
             </SectionScreen>
             <ProjectsWrapper>
-                {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} key={project.name} />))}
+                {projects.map(project => (<Card pics={project.pics} link={project.link} title={project.title} description={project.description} embedd={project.embedd} key={project.name} />))}
             </ProjectsWrapper>
         </section>
     )
