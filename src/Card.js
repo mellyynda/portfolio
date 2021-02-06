@@ -34,6 +34,7 @@ const Toggle = styled.span`
     display: block;
     width: 100px;
     margin: 0 auto;
+    cursor: pointer;
 `
 
 const Card = ({pics, link, title, description}) => {

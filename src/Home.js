@@ -80,6 +80,7 @@ form>label {
     input[type='submit'] {
         color: ${white};
         background-color: ${darkGreen};
+        cursor: pointer;
     }
 }
 `
