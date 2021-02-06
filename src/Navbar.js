@@ -7,8 +7,6 @@ const { white, yellow, pink, darkGreen, black } = colorsObj;
 const Nav = styled.nav`
     display: block;
     z-index: 1;
-    -webkit-user-select: none;
-    user-select: none;
     div {
         width: 50px;
         height: 50px;
@@ -51,20 +49,26 @@ const Nav = styled.nav`
         position: fixed;
         list-style: none;
         text-align: left;
-        width: 60%;
+        width: 50vw;
+        height: 100vh;
         top: 0;
         left: 0;
         padding: 50px;
         padding-top: 100px;
-        padding-left: 15%;
         
         background: ${white};
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
+
+        z-index: 3;
         
         transform-origin: 0% 0%;
         transform: translate(-100%, 0);
+        @media screen and (min-width: 1218px ) {
+            display: flex;
+            justify-content: space-around;
+        }
     }
     ul a {
         font-weight: 600;
@@ -72,8 +76,8 @@ const Nav = styled.nav`
         color: ${black};
     }
     ul li {
-        padding: 15px 0;
         font-size: 22px;
+        padding: 25px 0;
         span {
             border-top:3px solid ${darkGreen};
         }
