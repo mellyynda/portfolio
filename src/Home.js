@@ -6,7 +6,6 @@ import styled from 'styled-components';
 // import Rain from './img/Rain.png';
 // import Snow from './img/Snow.png';
 // import Haze from './img/Haze.png';
-import line from './img/line.png';
 import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledComp';
 
 const { white, yellow, pink, darkGreen, black } = colorsObj;
@@ -18,41 +17,73 @@ h1 {
 `
 
 const Content = styled.section`
-width: 100%;
-max-width: 800px;
-margin: 0 auto;
+position: absolute;
+top:0;
+left: 0;
+width: 50%;
+height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+
 .nice-text {
-    padding: 20px;
+    margin: 20px;
+    p {
+        margin-bottom: 18px;
+    }
+    p:first-child{
+        width: fit-content;
+        border-top: 5px solid ${yellow};
+        font-weight: 600;
+        span:first-child{
+            font-weight: 400;
+            font-style: italic;
+        }
+    }
+    p:nth-child(2){
+        font-style: italic;
+    }
+    .weather {
+        font-weight: 600;
+        font-style: italic;
+        color: ${pink};
+    }
 }
 `
 const WeatherCard = styled.section`
-margin:0 20px 20px;
+position: absolute;
+bottom: 15px;
+margin: 20px 0;
 padding: 15px;
-max-width: 320px;
-background: rgb(211,12,123);
-background: linear-gradient(139deg, ${pink} 63%, ${yellow} 100%);
+width: 100%;
+max-width: wrap-content;
+background: #ebecf0;
+box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//background: linear-gradient(139deg, ${pink} 63%, ${yellow} 100%);
 border-radius: 5px;
+
 form>label {
     display: block;
+    font-weight: 600;
 }
-*{
-    color: ${white};
-}
-input{
-    color:${black};
-    font-size: 1rem;
-    padding: 10px;
-    border-radius: 0.2rem;
-    border: none;
-    margin-top: 5px;
-}
-input[type='text'] {
-    background-color: ${white};
+.inp {
     width: 100%;
-    max-width: 220px;
-}
-label[for='city'] {
-    font-size: 1.3rem;
+    border-radius: 0.2rem;
+    input{
+        padding: 10px;
+        border: none;
+        background-color: ${white};
+        margin-top: 10px;
+    }
+    input[type='text'] {
+        max-width: 100%;
+        margin-right: -2px;
+    }
+    input[type='submit'] {
+        color: ${white};
+        background-color: ${darkGreen};
+    }
 }
 `
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
@@ -93,24 +124,43 @@ function Home() {
     const setSthlmW = (main) => {
         console.log("in Sthlm", main);
         //console.log("insetSthlm:", weatherData.weather[0].main);
+        let day = "new";
+        let message = messages[1];
         switch(main) {
             case "Snow":
-                return <span>{'snowy'} day {messages[0]}</span>;
+                day = 'snowy';
+                message = messages[0];
+                break;
             case "Clouds":
-                return <span>{'cloudy'} day {messages[0]}</span>;
+                day = 'cloudy';
+                message = messages[0];
+                break;
             case "Fog":
-                return <span>{'foggy'} day {messages[0]}</span>;
+                day = 'foggy';
+                message = messages[0];
+                break;
             case "Rain":
-                return <span>{'rainy'} day {messages[0]}</span>;
+                day = 'rainy';
+                message = messages[0];
+                break;
+            case "Drizzle":
+                day = 'drizzly';
+                message = messages[0];
+                break;
             case "Clear":
-                return <span>{'sunny'} day {messages[1]}</span>;
+                day = 'sunny';
+                break;
             case "Haze":
-                return <span>{'hazy'} day {messages[0]}</span>;
+                day = 'hazy';
+                message = messages[0];
+                break;
             case "Mist":
-                return <span>{'misty'} day {messages[0]}</span>;
-            default:
-                <span>{'new'} day {messages[1]}</span>;
+                day = 'misty';
+                message = messages[0];
+                break;
         }
+        
+        return <span><span className="weather">{day}</span> day in Stockholm, <span className="weather">{message}</span></span>;
     }
 
     const getWeather = (e) => {
@@ -128,12 +178,14 @@ function Home() {
                 <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
             </StyledDiv>
             <Content>
-                {weatherData ? <div className="nice-text"><p >I am a passionate aspiring front-end web developer based in Stockholm and today is a {setSthlmW(weatherData.weather[0].main)} gaining new skills and hopefully creating something that matters.</p> <p> Hope you are having a great day yourself!</p></div> : null}
+                {weatherData ? <div className="nice-text"><p>I am a <span>passionate</span> front-end web developer.</p><p><q>Today is a {setSthlmW(weatherData.weather[0].main)} gaining some new skills.</q></p> <p> Have a great day yourself!</p></div> : null}
                 <WeatherCard>
                     <form onSubmit={getWeather}>
-                    <label htmlFor='city'>Check the weather in your city:</label>
-                    <input type='text' name='city' placeholder='enter a city'></input>
-                    <input type='submit' value='Go'></input>
+                        <label htmlFor='city'>Check the weather in your city:</label>
+                        <div className="inp">
+                            <input type='text' name='city' placeholder='enter a city'></input>
+                            <input type='submit' value='GO'></input>
+                        </div>
                     </form>
                     {userData ? 
                     <div>
