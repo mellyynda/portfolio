@@ -11,6 +11,7 @@ import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledCo
 const { white, yellow, pink, darkGreen, black } = colorsObj;
 
 const StyledDiv = styled(SectionScreen)`
+margin-bottom: 0;
 h1 {
     transform: translateX(${titlePadding}px);
 }
@@ -32,8 +33,7 @@ align-items: center;
     p {
         margin-bottom: 18px;
     }
-    p:first-child{
-        width: fit-content;
+    p:first-child {
         border-top: 5px solid ${yellow};
         font-weight: 600;
         span:first-child{
@@ -52,16 +52,14 @@ align-items: center;
 }
 `
 const WeatherCard = styled.section`
-position: absolute;
-bottom: 15px;
-margin: 20px 0;
+// position: absolute;
+// bottom: 0;
+margin: 20px 0 0;
 padding: 15px;
-width: 100%;
-max-width: wrap-content;
 background: #ebecf0;
 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-//background: linear-gradient(139deg, ${pink} 63%, ${yellow} 100%);
-border-radius: 5px;
+//border-radius: 5px;
+max-width: 100%;
 
 form>label {
     display: block;
@@ -69,7 +67,6 @@ form>label {
 }
 .inp {
     width: 100%;
-    border-radius: 0.2rem;
     input{
         padding: 10px;
         border: none;
@@ -90,7 +87,7 @@ const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const API_KEY = '&appid=1f7c80d8a27983216c1e30554ff70078';
 const SETTINGS = '&units=metric'
 
-let apiCallsNo = 0;
+let mainInSthlm = '';
 
 function Home() {
 
@@ -99,26 +96,37 @@ function Home() {
     const [city, setCity] = useState('Stockholm,SE');
     const messages = ["but that won't stop me from", "so i'll have fun by"];
     const [responseMessage , setResponseMessage] = useState('');
+    const [openW, setOpenW] = useState(false);
 
     useEffect(() => {
-    fetch(API_URL + city + API_KEY + SETTINGS)
-        .then(response => response.json())
-        .then(data => {
-            
-            if(apiCallsNo < 1) {
-               setWeatherData(data);
-            } else {
+        fetch(API_URL + 'Stockholm,SE' + API_KEY + SETTINGS)
+            .then(response => response.json())
+            .then(data => {
+                setWeatherData(data);
+              //  setUserData(data);
+                // apiCallsNo++;
+                // console.log(apiCallsNo);
+                console.log(data);
+                console.log('in effect');
+            })
+            .catch( err => { 
+                console.log(err);
+            })
+    },[]);
+    useEffect(() => {
+        fetch(API_URL + city + API_KEY + SETTINGS)
+            .then(response => response.json())
+            .then(data => {
+               // setWeatherData(data);
                 setUserData(data);
-            } 
-            apiCallsNo++;
-            console.log(apiCallsNo);
-            console.log(data);
-            console.log('in effect');
-        })
-        // .catch( error => { 
-        //     setWeatherParam("new");
-        //     console.log(error);
-        // })
+                // apiCallsNo++;
+                // console.log(apiCallsNo);
+                console.log(data);
+                console.log('in effect');
+            })
+            .catch( err => { 
+                console.log(err);
+            })
     }, [city])
 
     const setSthlmW = (main) => {
@@ -147,9 +155,16 @@ function Home() {
                 day = 'drizzly';
                 message = messages[0];
                 break;
-            case "Clear":
-                day = 'sunny';
-                break;
+            case "Clear": {
+                let time = new Date();
+                if (time.getHours() > 7 && time.getHours() < 17) {
+                    day = 'sunny';
+                    break;
+                } else {
+                    day = 'clear sky';
+                    break;
+                }                
+            }                
             case "Haze":
                 day = 'hazy';
                 message = messages[0];
@@ -170,6 +185,7 @@ function Home() {
         setCity(val);
         setResponseMessage(`${val.replace(/(^\w|\s\w)/g, m => m.toUpperCase())}`);
         console.log(responseMessage);
+        setOpenW(true);
     }
 
     return (
@@ -184,19 +200,24 @@ function Home() {
                         <label htmlFor='city'>Check the weather in your city:</label>
                         <div className="inp">
                             <input type='text' name='city' placeholder='enter a city'></input>
-                            <input type='submit' value='GO'></input>
+                            <input type='submit' value='Go'></input>
                         </div>
                     </form>
-                    {userData ? 
-                    <div>
-                        <h2>{responseMessage}</h2>
-                        <p>Description: {userData.weather[0].description}</p>
-                        <p>Temperature: {userData.main.temp}°C</p>
-                        <p>Maximum: {userData.main.temp_max}°C</p>
-                        <p>Min: {userData.main.temp_min}°C</p>
-                        <p>Feels like: {userData.main.feels_like}°C</p>
-                    </div> 
-                    : null}
+                    {userData && openW ? 
+                        <div>
+                            <h2>{responseMessage}</h2>
+                            <p>Description: {userData.weather[0].description}</p>
+                            <p>Temperature: {userData.main.temp}°C</p>
+                            <p>Maximum: {userData.main.temp_max}°C</p>
+                            <p>Min: {userData.main.temp_min}°C</p>
+                            <p>Feels like: {userData.main.feels_like}°C</p>
+                        </div> 
+                        : null
+                    }
+                    {openW ?
+                    <span onClick={() => setOpenW(!openW)} style={{display: "block" ,width: "100%", textAlign : "center", cursor : "pointer", color: pink}}>close △</span> :
+                    null
+                    }
                 </WeatherCard>
             </Content>
         </section>

@@ -8,6 +8,7 @@ const { white, yellow, pink, darkGreen, black } = colorsObj;
 
 const StyledDiv = styled(SectionScreen)`
 background: linear-gradient(to left, ${white} 0%, ${white} 50%, ${yellow} 50%, ${yellow} 100%);
+margin-bottom: 0;
 h1 {
     transform: translateX(${titlePadding}px);
     border-top: 5px solid ${yellow};    
