@@ -39,7 +39,6 @@ div p{
 div p img:first-child {
  max-width: 30px;
 }
-
 `
 
 const Contact = () => {
