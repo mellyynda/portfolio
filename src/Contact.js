@@ -28,17 +28,20 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 div p{
-    margin-bottom: 35px;
+    margin-bottom: 45px;
     a{
         display: flex;
         align-items: center;
         img {
             margin-right: 20px;
+            width: 35px;
+            @media (min-width: 508px) {
+                //img width goes from 35 to 65 between  screens of 508 and 1900
+                width: calc(40px + (65 - 40)*(100vw - 508px)/(1900 - 668));
+                max-width: 65;
+            }
         }
     }
-}
-div p img:first-child {
- max-width: 30px;
 }
 `
 
