@@ -55,6 +55,8 @@ const Nav = styled.nav`
         left: 0;
         padding: 50px;
         padding-top: 100px;
+        padding-left: 15%;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         
         background: ${white};
         list-style-type: none;
@@ -65,7 +67,9 @@ const Nav = styled.nav`
         
         transform-origin: 0% 0%;
         transform: translate(-100%, 0);
-        @media screen and (min-width: 1218px ) {
+        @media screen and (min-width: 1024px ) {
+            height: auto;
+            padding-left: 50px;
             display: flex;
             justify-content: space-around;
         }
