@@ -21,6 +21,7 @@ const Nav = styled.nav`
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        z-index: 4;
     }
     div span {
         display: block;
@@ -30,7 +31,7 @@ const Nav = styled.nav`
         position: relative;
         background: ${white};
         border-radius: 3px;
-        z-index: 1;
+        z-index: 4;
     }
     div span:last-child {
         margin-bottom: 0;
@@ -68,10 +69,13 @@ const Nav = styled.nav`
         transform-origin: 0% 0%;
         transform: translate(-100%, 0);
         @media screen and (min-width: 1024px ) {
+            left: auto;
+            right: 0;
             height: auto;
             padding-left: 50px;
             display: flex;
             justify-content: space-around;
+            transform: translate(100%, 0);
         }
     }
     ul a {

@@ -69,9 +69,15 @@ const Contact = () => {
             <SectionTitle><span>CON</span><span>TACT<span>.</span></span></SectionTitle>
             <LinksWrapper>
                 <div>
-                <p><a href="https://github.com/mellyynda" target="_blank"><img src={githubLogo} alt="Go to Github"></img><span>GitHub</span></a></p>
-                <p><a href="https://www.linkedin.com/in/melindasava/" target="_blank"><img src={inLogo} alt="Go to LinkedIn"></img><span>LinkedIn</span></a></p>
-                <p onClick={() => setShowResume(true)}><a href="#resume"><img src={canvaLogo} alt="Go to Canva"></img><span>Canva Resume</span></a></p>
+                <p>
+                    <a href="https://github.com/mellyynda" target="_blank" rel="noopener"><img src={githubLogo} alt="Go to Github"></img><span>GitHub</span></a>
+                </p>
+                <p>
+                    <a href="https://www.linkedin.com/in/melindasava/" target="_blank" rel="noopener"><img src={inLogo} alt="Go to LinkedIn"></img><span>LinkedIn</span></a>
+                </p>
+                <p onClick={() => setShowResume(true)}>
+                    <a href="#resume"><img src={canvaLogo} alt="Go to Canva"></img><span>Show Resume</span></a>
+                </p>
                 </div>
             </LinksWrapper>
         </StyledDiv>
@@ -83,7 +89,7 @@ const Contact = () => {
                     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAESWpf9b9U&#x2F;view?embed">
                 </iframe>
             </div>
-            <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAESWpf9b9U&#x2F;view?utm_content=DAESWpf9b9U&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Melinda_Sava_resume&amp;cover_letter</a> by Melinda Sava    
+            <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAESWpf9b9U&#x2F;view?utm_content=DAESWpf9b9U&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Open in new window</a> 
             <HideResume onClick={() => setShowResume(false)}>hide resume △</HideResume>
         </Resume > :
         null }

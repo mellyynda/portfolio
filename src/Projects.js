@@ -57,7 +57,7 @@ const projects = [
         link: null,
         description: "",
         pics: [],
-        embedd: <div className="embedded-content"><iframe style={{ border: "1px solid rgba(0, 0, 0, 0.1)"}} width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FuUnNd6QaqVxiwuiOh5f239%2FEU-Bikes-Prototype-problem-fix%3Fnode-id%3D1%253A5%26scaling%3Dscale-down" allowFullScreen></iframe></div>
+        embedd: <div className="embedded-content"><iframe style={{ border: "1px solid rgba(0, 0, 0, 0.1)"}} width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FuUnNd6QaqVxiwuiOh5f239%2FEU-Bikes-Prototype-problem-fix%3Fnode-id%3D1%253A5%26scaling%3Dscale-down" allowFullScreen={true}></iframe></div>
     },
     {
         name: "printeria",
@@ -81,7 +81,7 @@ const projects = [
         link: null,
         description: "Technical documentation data model.",
         pics: [ ],
-        embedd: <div className="embedded-content"><iframe height="400" style={{width: "100%"}} scrolling="no" title="freeCodeCampTechnicalDocumentation" src="https://codepen.io/mellyynda/embed/rNNBQZx?height=265&theme-id=light&default-tab=html,result" frameBorder="no" loading="lazy" allowTransparency="true" allowFullScreen="true">
+        embedd: <div className="embedded-content"><iframe height="400" style={{width: "100%"}} scrolling="no" title="freeCodeCampTechnicalDocumentation" src="https://codepen.io/mellyynda/embed/rNNBQZx?height=265&theme-id=light&default-tab=html,result" frameBorder="no" loading="lazy" allowtransparency="true" allowFullScreen={true}>
         See the Pen <a href='https://codepen.io/mellyynda/pen/rNNBQZx'>freeCodeCampTechnicalDocumentation</a> by mellyynda
         (<a href='https://codepen.io/mellyynda'>@mellyynda</a>) on <a href='https://codepen.io'>CodePen</a>.
         </iframe></div>
