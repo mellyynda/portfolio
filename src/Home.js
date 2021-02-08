@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-// import Clear from './img/Clear.png';
-// import Clouds from './img/Clouds.png';
-// import MistFog from './img/Mist-Fog.png';
-// import Rain from './img/Rain.png';
-// import Snow from './img/Snow.png';
-// import Haze from './img/Haze.png';
+import Clear from './img/weather/Clear.png';
+import Clouds from './img/weather/Clouds.png';
+import MistFog from './img/weather/Mist-Fog.png';
+import Rain from './img/weather/Rain.png';
+import Snow from './img/weather/Snow.png';
+import Haze from './img/weather/Haze.png';
 import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledComp';
 
 const { white, yellow, pink, darkGreen, black } = colorsObj;
@@ -28,8 +28,14 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 
+img {
+    max-width: 200px;
+    width: 50%;
+    order: -1;
+}
+
 .nice-text {
-    margin: 20px;
+    margin: 20px 20px 0;
     p {
         margin-bottom: 18px;
     }
@@ -98,6 +104,8 @@ function Home() {
     const messages = ["but that won't stop me from", "so i'll have fun by"];
     const [responseMessage , setResponseMessage] = useState('');
     const [openW, setOpenW] = useState(false);
+    //const [weatherPic, setWeatherPic] = useState(null);
+    let weatherPic = null;
 
     useEffect(() => {
         fetch(API_URL + 'Stockholm,SE' + API_KEY + SETTINGS)
@@ -139,27 +147,33 @@ function Home() {
             case "Snow":
                 day = 'snowy';
                 message = messages[0];
+                weatherPic = Snow;
                 break;
             case "Clouds":
                 day = 'cloudy';
                 message = messages[0];
+                weatherPic = Clouds;
                 break;
             case "Fog":
                 day = 'foggy';
                 message = messages[0];
+                weatherPic = MistFog;
                 break;
             case "Rain":
                 day = 'rainy';
                 message = messages[0];
+                weatherPic = Rain;
                 break;
             case "Drizzle":
                 day = 'drizzly';
                 message = messages[0];
+                weatherPic = Rain;
                 break;
             case "Clear": {
                 let time = new Date();
                 if (time.getHours() > 7 && time.getHours() < 17) {
                     day = 'sunny';
+                   weatherPic = Clear;
                     break;
                 } else {
                     day = 'clear sky';
@@ -169,10 +183,12 @@ function Home() {
             case "Haze":
                 day = 'hazy';
                 message = messages[0];
+                weatherPic = Haze;
                 break;
             case "Mist":
                 day = 'misty';
                 message = messages[0];
+                weatherPic = MistFog;
                 break;
         }
         
@@ -195,7 +211,9 @@ function Home() {
                 <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
             </StyledDiv>
             <Content>
-                {weatherData ? <div className="nice-text"><p>I am a <span>passionate</span> front-end web developer.</p><p><q>Today is a {setSthlmW(weatherData.weather[0].main)} gaining some new skills.</q></p> <p> Have a great day yourself!</p></div> : null}
+                {/* {weatherPic ? <img src={weatherPic} alt='cuurent weather' /> : null} */}
+                {weatherData ? <div className="nice-text"><p>I am a <span>passionate</span> front-end web developer.</p><p><q>Today is a {setSthlmW(weatherData.weather[0].main)} gaining some new skills.</q></p>  <p> Have a great day yourself!</p></div> : null}
+                <img src={weatherPic} />
                 <WeatherCard>
                     <form onSubmit={getWeather}>
                         <label htmlFor='city'>Check the weather in your city:</label>
