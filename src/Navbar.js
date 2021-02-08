@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { colorsObj } from './StyledComp';
 
-const { white, yellow, pink, darkGreen, black } = colorsObj;
+const { white, darkGreen, black } = colorsObj;
 
 const Nav = styled.nav`
     display: block;
@@ -10,7 +10,6 @@ const Nav = styled.nav`
     div {
         width: 50px;
         height: 50px;
-        display: block;
         cursor: pointer;
         position: fixed;
         top: 30px;
@@ -28,7 +27,6 @@ const Nav = styled.nav`
         width: 33px;
         height: 4px;
         margin-bottom: 5px;
-        position: relative;
         background: ${white};
         border-radius: 3px;
         z-index: 4;
@@ -60,7 +58,6 @@ const Nav = styled.nav`
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         
         background: ${white};
-        list-style-type: none;
         -webkit-font-smoothing: antialiased;
         /* to stop flickering of text in safari */
 
@@ -105,11 +102,11 @@ const Navbar = ({navToggleClicked, toggleNav}) => {
                 <span></span>
                 <span></span>
             </div>
-                <ul className="top-nav" id="js-menu">
-                    <Link to="/" onClick={toggleNav}><li className="menu-item"><span>.Home</span></li></Link>
-                    <Link to="/projects" onClick={toggleNav}><li className="menu-item"><span>.Projects</span></li></Link>
-                    <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><span>.Contact</span></li></Link>
-                </ul>       
+            <ul className="top-nav" id="js-menu">
+                <Link to="/" onClick={toggleNav}><li className="menu-item"><span>.Home</span></li></Link>
+                <Link to="/projects" onClick={toggleNav}><li className="menu-item"><span>.Projects</span></li></Link>
+                <Link to="/contact" onClick={toggleNav}><li id="contact" className="menu-item"><span>.Contact</span></li></Link>
+            </ul>       
         </Nav>
     </section>
     )

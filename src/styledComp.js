@@ -13,8 +13,6 @@ const { white, yellow, darkGreen, black } = colorsObj;
 const SectionScreen = styled.div`
 background: linear-gradient(to right, ${white} 0%, ${white} 50%, ${darkGreen} 50%, ${darkGreen} 100%);
 height: 100vh;
-// display: flex;
-// justify-content: center;
 margin-bottom: 90px;
 `
 const HalfScreen = styled.div`

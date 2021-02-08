@@ -101,6 +101,7 @@ const margLeft = window.innerWidth / 4;
 const IconScroll = styled.img`
 position: absolute;
 bottom: 25px;
+//divided windows width to 4 and subtracted half of the icons width
 left: ${margLeft - 32.5}px;
 width: 65px;
 `
