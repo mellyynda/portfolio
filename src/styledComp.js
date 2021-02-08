@@ -8,23 +8,28 @@ export const colorsObj = {
     black: '#2C1320'
 };
 
-const { white, yellow, pink, darkGreen, black } = colorsObj;
-
-const screenWidth = window.innerWidth;
-export let titlePadding = 25 / 100 * screenWidth;
+const { white, yellow, darkGreen, black } = colorsObj;
 
 const SectionScreen = styled.div`
 background: linear-gradient(to right, ${white} 0%, ${white} 50%, ${darkGreen} 50%, ${darkGreen} 100%);
 height: 100vh;
-display: flex;
-justify-content: center;
+// display: flex;
+// justify-content: center;
 margin-bottom: 90px;
+`
+const HalfScreen = styled.div`
+position: absolute;
+top: 0;
+left: 0;
+width: 50%;
+height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 `
 
 const SectionTitle = styled.h1`
-transform: translateX(-${titlePadding}px);
-transform-origin: center center;
-align-self: center;
 font-size: 50px;
 display: flex;
 flex-direction: column;
@@ -41,4 +46,4 @@ span:first-child {
     font-size: calc(70px + (160 - 70)*(100vw - 668px)/(1900 - 668));
   }
 `
-export { SectionScreen, SectionTitle };
+export { SectionScreen, SectionTitle, HalfScreen };

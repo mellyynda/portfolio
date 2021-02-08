@@ -6,28 +6,19 @@ import MistFog from './img/weather/Mist-Fog.png';
 import Rain from './img/weather/Rain.png';
 import Snow from './img/weather/Snow.png';
 import Haze from './img/weather/Haze.png';
-import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledComp';
+import { SectionScreen, SectionTitle, colorsObj, HalfScreen } from './StyledComp';
 
-const { white, yellow, pink, darkGreen, black } = colorsObj;
+const { white, yellow, pink, darkGreen } = colorsObj;
 
 const StyledDiv = styled(SectionScreen)`
 margin-bottom: 0;
-h1 {
-    transform: translateX(${titlePadding}px);
-}
 `
 
-const Content = styled.section`
-position: absolute;
-top:0;
-left: 0;
-width: 50%;
-height: 100vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+const HalfScreenRight = styled(HalfScreen)`
+left: 50%;
+`
 
+const Content = styled(HalfScreen)`
 img {
     max-width: 200px;
     width: 50%;
@@ -208,7 +199,9 @@ function Home() {
     return (
         <section>
             <StyledDiv>
-                <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
+                <HalfScreenRight>
+                    <SectionTitle><span>WEL</span><span>COME<span>.</span></span></SectionTitle>
+                </HalfScreenRight>
             </StyledDiv>
             <Content>
                 {/* {weatherPic ? <img src={weatherPic} alt='cuurent weather' /> : null} */}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { SectionScreen, SectionTitle } from './StyledComp';
+import { SectionScreen, SectionTitle, HalfScreen } from './StyledComp';
 import notes from './img/projects/quire/notes.gif';
 import quireMobEd from './img/projects/quire/quire-mobile-editor.png';
 import quireMob from './img/projects/quire/quire-mobile.png';
@@ -10,12 +10,12 @@ import guestMob from './img/projects/guestbook/guestbook-mobile.png';
 import guestWeb from './img/projects/guestbook/guestbook-web.png';
 import printMob from './img/projects/printeria/printeria-mobile.png';
 import printWeb from './img/projects/printeria/printeria-web.png';
-import techDoc from './img/projects/tech/tech-doc.jpg';
+//import techDoc from './img/projects/tech/tech-doc.jpg';
 import homeWeb from './img/projects/homepage/home-mobile.png';
 import homeMob from './img/projects/homepage/home-web.jpg';
 import mockupMob from './img/projects/mockups/mockup-mobile.png';
 import mockupWeb from './img/projects/mockups/mockup-web.png';
-import proto from './img/projects/proto.png';
+//import proto from './img/projects/proto.png';
 import scrollIcon from './img/projects/scroll-icon.png';
 import Card from './Card';
 
@@ -124,7 +124,9 @@ useEffect(() => {
     return (
         <section>
             <SectionScreen>
-                <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
+                <HalfScreen>
+                    <SectionTitle><span>PROJ</span><span>ECTS<span>.</span></span></SectionTitle>
+                </HalfScreen>
                 {removedScroll ? null: <IconScroll src={scrollIcon} />}
             </SectionScreen>
             <ProjectsWrapper>

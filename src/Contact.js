@@ -1,33 +1,28 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { SectionScreen, SectionTitle, titlePadding, colorsObj } from './StyledComp';
+import { SectionScreen, SectionTitle, colorsObj, HalfScreen } from './StyledComp';
 import githubLogo from './img/contact/github-brands.svg';
 import canvaLogo from './img/contact/cv.svg';
 import inLogo from './img/contact/linkedin-brands.svg';
 
-const { white, yellow, pink, darkGreen, black } = colorsObj;
+const { white, yellow, darkGreen } = colorsObj;
 
 const StyledDiv = styled(SectionScreen)`
 background: linear-gradient(to left, ${white} 0%, ${white} 50%, ${yellow} 50%, ${yellow} 100%);
 margin-bottom: 0;
 h1 {
-    transform: translateX(${titlePadding}px);
     border-top: 5px solid ${yellow};    
     span {
         color: ${darkGreen};
     }
 }
 `
-const LinksWrapper = styled.section`
-position: absolute;
-top: 0;
-left: 0;
-width: 50%;
-height: 100vh;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+
+const HalfScreenRight = styled(HalfScreen)`
+left: 50%;
+`
+
+const LinksWrapper = styled(HalfScreen)`
 div p{
     margin-bottom: 45px;
     a{
@@ -66,7 +61,9 @@ const Contact = () => {
 
     return (<>
         <StyledDiv>
-            <SectionTitle><span>CON</span><span>TACT<span>.</span></span></SectionTitle>
+            <HalfScreenRight>
+                <SectionTitle><span>CON</span><span>TACT<span>.</span></span></SectionTitle>
+            </HalfScreenRight>
             <LinksWrapper>
                 <div>
                 <p>
