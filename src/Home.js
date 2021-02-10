@@ -83,9 +83,7 @@ form>label {
 `
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const API_KEY = '&appid=1f7c80d8a27983216c1e30554ff70078';
-const SETTINGS = '&units=metric'
-
-let mainInSthlm = '';
+const SETTINGS = '&units=metric';
 
 function Home() {
 
@@ -93,7 +91,6 @@ function Home() {
     const [userData, setUserData] = useState(null);
     const [city, setCity] = useState(null);
     const messages = ["but that won't stop me from", "so i'll have fun by"];
-    const [responseMessage , setResponseMessage] = useState('');
     const [openW, setOpenW] = useState(false);
     const [noCityMessage, setNoCityMessage] = useState(null);
     let weatherPic = null;
@@ -127,7 +124,6 @@ function Home() {
 
     const setSthlmW = (main) => {
         console.log("in Sthlm", main);
-        //console.log("insetSthlm:", weatherData.weather[0].main);
         let day = "new";
         let message = messages[1];
         switch(main) {
@@ -189,9 +185,7 @@ function Home() {
         console.log(val);
         if (val) {
             setCity(val);
-            setResponseMessage(`${val.replace(/(^\w|\s\w)/g, m => m.toUpperCase())}`);
             setOpenW(true);
-            console.log(responseMessage);
         } else {
             setNoCityMessage('Please add a city');
             setOpenW(false);
@@ -206,8 +200,13 @@ function Home() {
                 </HalfScreenRight>
             </StyledDiv>
             <Content>
-                {/* {weatherPic ? <img src={weatherPic} alt='cuurent weather' /> : null} */}
-                {weatherData ? <div className="nice-text"><p>I am a <span>passionate</span> front-end web developer.</p><p><q>Today is a {setSthlmW(weatherData.weather[0].main)} gaining some new skills.</q></p>  <p> Have a great day yourself!</p></div> : null}
+                {weatherData ? 
+                <div className="nice-text">
+                    <p>I am a <span>passionate</span> front-end web developer.</p>
+                    <p><q>Today is a {setSthlmW(weatherData.weather[0].main)} gaining some new skills.</q></p>  
+                    <p> Have a great day yourself!</p>
+                </div> : 
+                null}
                 <img src={weatherPic} />
                 <WeatherCard>
                     <form onSubmit={getWeather}>
@@ -218,16 +217,16 @@ function Home() {
                         </div>
                     </form>
                     {userData && openW ? 
-                            (userData.cod === '404') ?
-                            <p>{userData.message}</p> :
-                            <div>
-                                <h2>{responseMessage}</h2>
+                        (userData.cod === '404') ?
+                            <p>{userData.message}</p> 
+                            : <div>
+                                <h2>{userData.name}, {userData.sys.country}</h2>
                                 <p>Description: {userData.weather[0].description}</p>
                                 <p>Temperature: {userData.main.temp}°C</p>
                                 <p>Maximum: {userData.main.temp_max}°C</p>
                                 <p>Min: {userData.main.temp_min}°C</p>
                                 <p>Feels like: {userData.main.feels_like}°C</p>
-                            </div>
+                              </div>
                         : null
                     }
                     {openW ?
