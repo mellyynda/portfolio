@@ -218,7 +218,7 @@ function Home() {
                         </div>
                     </form>
                     {userData && openW ? 
-                            (userData.cod === '404') ?
+                            !(userData.cod === '200') ?
                             <p>{userData.message}</p> :
                             <div>
                                 <h2>{responseMessage}</h2>
