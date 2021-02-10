@@ -219,7 +219,7 @@ function Home() {
                     </form>
                     {userData && openW ? 
                             (userData.cod === '404') ?
-                            <p>Could not find city</p> :
+                            <p>{userData.message}</p> :
                             <div>
                                 <h2>{responseMessage}</h2>
                                 <p>Description: {userData.weather[0].description}</p>
