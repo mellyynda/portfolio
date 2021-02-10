@@ -91,10 +91,12 @@ function Home() {
 
     const [weatherData, setWeatherData] = useState(null);
     const [userData, setUserData] = useState(null);
-    const [city, setCity] = useState('Stockholm,SE');
+    const [city, setCity] = useState(null);
     const messages = ["but that won't stop me from", "so i'll have fun by"];
     const [responseMessage , setResponseMessage] = useState('');
     const [openW, setOpenW] = useState(false);
+    const [noCityMessage, setNoCityMessage] = useState(null);
+    const [badCityMessage, setBadCityMessage] = useState(null);
     //const [weatherPic, setWeatherPic] = useState(null);
     let weatherPic = null;
 
@@ -103,30 +105,26 @@ function Home() {
             .then(response => response.json())
             .then(data => {
                 setWeatherData(data);
-              //  setUserData(data);
-                // apiCallsNo++;
-                // console.log(apiCallsNo);
                 console.log(data);
-                console.log('in effect');
+                console.log('in effect');        
             })
             .catch( err => { 
                 console.log(err);
             })
     },[]);
     useEffect(() => {
-        fetch(API_URL + city + API_KEY + SETTINGS)
-            .then(response => response.json())
-            .then(data => {
-               // setWeatherData(data);
-                setUserData(data);
-                // apiCallsNo++;
-                // console.log(apiCallsNo);
-                console.log(data);
-                console.log('in effect');
-            })
-            .catch( err => { 
-                console.log(err);
-            })
+        if (city){
+            fetch(API_URL + city + API_KEY + SETTINGS)
+                .then(response => response.json())
+                .then(data => {
+                    setUserData(data);
+                    console.log(data);
+                    console.log('in effect');
+                })
+                .catch( err => { 
+                    console.log(err);
+                }) 
+        }
     }, [city])
 
     const setSthlmW = (main) => {
@@ -187,13 +185,19 @@ function Home() {
     }
 
     const getWeather = (e) => {
+        setNoCityMessage(null);
         e.preventDefault();
         let val = e.target.querySelector('input').value.trim();
         console.log(val);
-        setCity(val);
-        setResponseMessage(`${val.replace(/(^\w|\s\w)/g, m => m.toUpperCase())}`);
-        console.log(responseMessage);
-        setOpenW(true);
+        if (val) {
+            setCity(val);
+            setResponseMessage(`${val.replace(/(^\w|\s\w)/g, m => m.toUpperCase())}`);
+            setOpenW(true);
+            console.log(responseMessage);
+        } else {
+            setNoCityMessage('Please add a city');
+            setOpenW(false);
+        }
     }
 
     return (
@@ -216,18 +220,23 @@ function Home() {
                         </div>
                     </form>
                     {userData && openW ? 
-                        <div>
-                            <h2>{responseMessage}</h2>
-                            <p>Description: {userData.weather[0].description}</p>
-                            <p>Temperature: {userData.main.temp}°C</p>
-                            <p>Maximum: {userData.main.temp_max}°C</p>
-                            <p>Min: {userData.main.temp_min}°C</p>
-                            <p>Feels like: {userData.main.feels_like}°C</p>
-                        </div> 
+                            <div>
+                                <h2>{responseMessage}</h2>
+                                <p>Description: {userData.weather[0].description}</p>
+                                <p>Temperature: {userData.main.temp}°C</p>
+                                <p>Maximum: {userData.main.temp_max}°C</p>
+                                <p>Min: {userData.main.temp_min}°C</p>
+                                <p>Feels like: {userData.main.feels_like}°C</p>
+                                
+                            </div> 
                         : null
                     }
                     {openW ?
                     <span onClick={() => setOpenW(!openW)} style={{display: "block" ,width: "100%", textAlign : "center", cursor : "pointer", color: pink}}>close △</span> :
+                    null
+                    }
+                    {noCityMessage ?
+                    <span>{noCityMessage}</span> :
                     null
                     }
                 </WeatherCard>
