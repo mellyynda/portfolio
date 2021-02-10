@@ -96,8 +96,6 @@ function Home() {
     const [responseMessage , setResponseMessage] = useState('');
     const [openW, setOpenW] = useState(false);
     const [noCityMessage, setNoCityMessage] = useState(null);
-    const [badCityMessage, setBadCityMessage] = useState(null);
-    //const [weatherPic, setWeatherPic] = useState(null);
     let weatherPic = null;
 
     useEffect(() => {
@@ -113,7 +111,7 @@ function Home() {
             })
     },[]);
     useEffect(() => {
-        if (city){
+        if (city) {
             fetch(API_URL + city + API_KEY + SETTINGS)
                 .then(response => response.json())
                 .then(data => {
@@ -220,6 +218,8 @@ function Home() {
                         </div>
                     </form>
                     {userData && openW ? 
+                            (userData.cod === '404') ?
+                            <p>Could not find city</p> :
                             <div>
                                 <h2>{responseMessage}</h2>
                                 <p>Description: {userData.weather[0].description}</p>
@@ -227,8 +227,7 @@ function Home() {
                                 <p>Maximum: {userData.main.temp_max}°C</p>
                                 <p>Min: {userData.main.temp_min}°C</p>
                                 <p>Feels like: {userData.main.feels_like}°C</p>
-                                
-                            </div> 
+                            </div>
                         : null
                     }
                     {openW ?
