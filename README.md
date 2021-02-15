@@ -1,2 +1,2 @@
-# @mellyynda Portfolio Single Page Application
-## Work in Progress
+## @mellyynda Portfolio SPA
+### Check out [the published version](http://mellyynda-portfolio.surge.sh/)
