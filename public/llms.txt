@@ -17,6 +17,7 @@
 - AI theme generator for Cashier Builder (Worldline / PaymentIQ, 2026, prototype): merchants describe a look or paste a website URL and Claude generates a payment-checkout theme (colours, fonts, design tokens) with live preview.
 - Velora Casino (2026, integration demo): a fictional casino showing how merchants integrate a headless payment cashier: iframe, no-iframe and fully custom UI deposit modes.
 - Payment Backoffice in React (Worldline / PaymentIQ, 2022–2026): PSP routing rules, user management with roles, and withdrawal approvals, migrated from KnockoutJS to React/TypeScript.
+- A team that reviews together (Worldline / PaymentIQ, team leadership): introduced Scrum and made PR reviews a shared routine in the team channel; PR volume tripled, PR throughput rose 50%, typical review wait halved, team-channel activity grew to 5–10 messages a day.
 - Minimera (personal project, 2026): Swedish second-hand marketplace where Claude fills in a listing from a photo; built with Next.js, TypeScript, Supabase and Tailwind.
 
 ## Pages

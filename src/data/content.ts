@@ -261,6 +261,26 @@ const projects: Record<Lang, Project[]> = {
       note: 'Screenshots from a test merchant.',
     },
     {
+      id: 'team',
+      title: 'A team that reviews together',
+      context: 'Worldline / PaymentIQ · Team leadership',
+      summary:
+        'How a quiet, siloed five-person frontend team became one that ships, reviews and jokes together in the open.',
+      points: [
+        'Introduced Scrum: sprint planning, daily stand-ups, retrospectives and stakeholder reviews.',
+        'Made PR reviews a shared routine in the team channel: PR volume tripled, PR throughput rose 50% and the typical review wait halved.',
+        'Team-channel activity grew to 5–10 messages a day, like this PR spree, complete with a merge-or-rebase debate.',
+      ],
+      tags: ['Scrum', 'Code review', 'Team leadership', 'Agile'],
+      media: {
+        kind: 'images',
+        items: [
+          { src: '/work/team-pr-spree.webp', width: 1600, height: 1254, alt: 'The team Slack channel on a busy day: a stream of pull requests with celebration reactions, a joke that all PRs need a rebase, a merge-or-rebase thread and a “PR spree!” message' },
+        ],
+      },
+      note: 'Names, photos and repository links changed for privacy.',
+    },
+    {
       id: 'minimera',
       title: 'Minimera: second-hand marketplace',
       context: 'Personal project · 2026',
@@ -325,6 +345,26 @@ const projects: Record<Lang, Project[]> = {
         ],
       },
       note: 'Skärmbilder från en testhandlare.',
+    },
+    {
+      id: 'team',
+      title: 'Ett team som granskar kod tillsammans',
+      context: 'Worldline / PaymentIQ · Teamledarskap',
+      summary:
+        'Hur ett tyst och uppdelat frontendteam på fem personer blev ett team som levererar, granskar och skämtar tillsammans, öppet.',
+      points: [
+        'Införde Scrum: sprintplanering, daily stand-ups, retrospektiv och avstämningar med intressenter.',
+        'Gjorde PR-granskning till en gemensam rutin i teamkanalen: antalet PR:er tredubblades, genomströmningen ökade med 50 % och den typiska väntetiden på review halverades.',
+        'Aktiviteten i teamkanalen växte till 5–10 meddelanden om dagen, som den här PR-festen, komplett med en debatt om merge eller rebase.',
+      ],
+      tags: ['Scrum', 'Kodgranskning', 'Teamledarskap', 'Agilt'],
+      media: {
+        kind: 'images',
+        items: [
+          { src: '/work/team-pr-spree.webp', width: 1600, height: 1254, alt: 'Teamets Slack-kanal en intensiv dag: en ström av pull requests med firande reaktioner, ett skämt om att alla PR:er behöver en rebase, en tråd om merge eller rebase och meddelandet ”PR spree!”' },
+        ],
+      },
+      note: 'Namn, bilder och repolänkar ändrade av integritetsskäl.',
     },
     {
       id: 'minimera',

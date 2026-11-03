@@ -83,7 +83,7 @@ const w = c.words;
                     </video>
                   </figure>
                 ) : (
-                  <div class="shots">
+                  <div class={`shots${p.media.items.length === 1 ? ' single' : ''}`}>
                     {p.media.items.map((img) => (
                       <a href={asset(img.src)} target="_blank" rel="noopener">
                         <img src={asset(img.src)} width={img.width} height={img.height} alt={img.alt} loading="lazy" decoding="async" />
