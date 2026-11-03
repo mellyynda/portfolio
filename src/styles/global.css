@@ -4,7 +4,7 @@
   --sand: #f0dcc2;
   --blush: #f4c4ae;
   --saffron: #eba535;
-  --rust: #c4512f;
+  --rust: #b34727;
   --wine: #6b1f36;
   --plum: #2a141f;
 
@@ -75,8 +75,15 @@ a {
   color: inherit;
 }
 :focus-visible {
-  outline: 3px solid var(--saffron);
+  outline: 3px solid var(--ink);
   outline-offset: 3px;
+}
+.chrome :focus-visible {
+  outline-color: var(--cream);
+  box-shadow: 0 0 0 6px var(--plum);
+}
+.menu :focus-visible {
+  outline-color: var(--plum);
 }
 
 .skip {
@@ -118,6 +125,17 @@ a {
   text-decoration: none;
   color: #fff;
   mix-blend-mode: difference;
+}
+.mark:focus-visible {
+  mix-blend-mode: normal;
+  color: var(--saffron);
+  background: var(--plum);
+  border-radius: 999px;
+  padding: 0 0.6rem;
+  margin-left: -0.6rem;
+  outline: 3px solid var(--cream);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 7px var(--plum);
 }
 .chrome-right {
   display: flex;
@@ -228,7 +246,9 @@ a {
   padding-left: 0.6em;
 }
 .menu a:hover {
-  color: var(--rust);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
 }
 .menu .n {
   font-family: var(--sans);

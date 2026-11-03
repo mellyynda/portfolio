@@ -77,6 +77,7 @@ const w = c.words;
                       width={p.media.width}
                       height={p.media.height}
                       aria-label={p.media.label}
+                      aria-describedby={`project-${p.id}-summary`}
                     >
                       <source src={asset(p.media.src)} type="video/mp4" />
                     </video>
@@ -94,7 +95,7 @@ const w = c.words;
               {p.note && <p class="media-note">{p.note}</p>}
               <p class="project-context">{p.context}</p>
               <h3 id={`project-${p.id}-h`}>{p.title}</h3>
-              <p class="project-summary">{p.summary}</p>
+              <p class="project-summary" id={`project-${p.id}-summary`}>{p.summary}</p>
               <ul class="project-points">
                 {p.points.map((pt) => <li>{pt}</li>)}
               </ul>

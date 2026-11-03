@@ -98,10 +98,12 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Hoppa till innehåll'}</a>
-    <a class="mark" href={asset(paths[lang])} aria-label="Melinda Sava">.Mel</a>
+    <nav class="home-nav" aria-label={lang === 'en' ? 'Home' : 'Startsida'}>
+      <a class="mark" href={asset(paths[lang])} aria-label="Melinda Sava">.Mel</a>
+    </nav>
     <header class="chrome">
       <div class="chrome-right">
-        <a class="lang-pill" href={asset(paths[altLang])} hreflang={altLang} lang={altLang} title={c.nav.switchHint}>{altLang.toUpperCase()}</a>
+        <a class="lang-pill" href={asset(paths[altLang])} hreflang={altLang} lang={altLang} aria-label={c.nav.switchLabel} title={c.nav.switchHint}>{altLang.toUpperCase()}</a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" data-open={c.menuLabel} data-close={c.closeLabel} aria-label={c.menuLabel}>
           <span></span><span></span><span></span>
         </button>
@@ -127,6 +129,7 @@ const jsonLd = {
           btn.setAttribute('aria-expanded', String(open));
           btn.setAttribute('aria-label', (open ? btn.dataset.close : btn.dataset.open) ?? '');
           document.documentElement.classList.toggle('menu-open', open);
+          for (const el of document.querySelectorAll<HTMLElement>('main, footer, .skip, .home-nav, .lang-pill')) el.inert = open;
           if (open) menu.querySelector('a')?.focus();
         };
         btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
