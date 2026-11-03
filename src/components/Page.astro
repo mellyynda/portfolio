@@ -69,6 +69,8 @@ const w = c.words;
                     <video
                       data-autoplay
                       controls
+                      controlslist="nodownload noremoteplayback"
+                      disablepictureinpicture
                       muted
                       loop
                       playsinline
@@ -225,6 +227,7 @@ const w = c.words;
     const autoPausing = new WeakSet<HTMLVideoElement>();
 
     for (const v of videos) {
+      v.addEventListener('contextmenu', (e) => e.preventDefault());
       v.addEventListener('play', () => userPaused.delete(v));
       v.addEventListener('pause', () => {
         if (autoPausing.has(v)) autoPausing.delete(v);
