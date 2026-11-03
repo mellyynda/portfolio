@@ -226,6 +226,21 @@ const w = c.words;
     const userPaused = new WeakSet<HTMLVideoElement>();
     const autoPausing = new WeakSet<HTMLVideoElement>();
 
+    type WebkitVideo = HTMLVideoElement & { webkitDisplayingFullscreen?: boolean };
+    type LockableOrientation = ScreenOrientation & { lock?: (o: string) => Promise<void> };
+    const isFullscreen = (v: HTMLVideoElement) =>
+      document.fullscreenElement === v || Boolean((v as WebkitVideo).webkitDisplayingFullscreen);
+
+    document.addEventListener('fullscreenchange', () => {
+      const orientation = screen.orientation as LockableOrientation | undefined;
+      const el = document.fullscreenElement;
+      if (el instanceof HTMLVideoElement && el.videoWidth > el.videoHeight) {
+        orientation?.lock?.('landscape').catch(() => {});
+      } else if (!el) {
+        orientation?.unlock?.();
+      }
+    });
+
     for (const v of videos) {
       v.addEventListener('contextmenu', (e) => e.preventDefault());
       v.addEventListener('play', () => userPaused.delete(v));
@@ -240,7 +255,7 @@ const w = c.words;
         (entries) => {
           for (const e of entries) {
             const v = e.target as HTMLVideoElement;
-            if (document.fullscreenElement === v) continue;
+            if (isFullscreen(v)) continue;
             if (e.isIntersecting && !reduce.matches && !userPaused.has(v)) {
               v.play().catch(() => {});
             } else if (!e.isIntersecting && !v.paused) {
