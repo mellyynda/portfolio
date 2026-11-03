@@ -1,0 +1,145 @@
+---
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
+import '@fontsource-variable/manrope';
+import '../styles/global.css';
+import { SITE_URL, EMAIL, LINKEDIN, GITHUB, paths, asset, type Content } from '../data/content';
+
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const lang = c.lang;
+const url = SITE_URL + paths[lang];
+const altLang = lang === 'en' ? 'sv' : 'en';
+const ogImage = `${SITE_URL}/og.png`;
+
+const current = c.jobs[0].roles[0];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Melinda Sava',
+      jobTitle: [c.role, current.title],
+      description: c.description,
+      email: `mailto:${EMAIL}`,
+      url: SITE_URL + '/',
+      image: ogImage,
+      sameAs: [LINKEDIN, GITHUB],
+      address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
+      worksFor: { '@type': 'Organization', name: 'Worldline / PaymentIQ' },
+      knowsLanguage: [
+        { '@type': 'Language', name: 'English', alternateName: 'en' },
+        { '@type': 'Language', name: 'Swedish', alternateName: 'sv' },
+      ],
+      knowsAbout: c.skills.flatMap((g) => g.items).concat(['Fintech', 'Payment platforms', 'Engineering management']),
+      alumniOf: [
+        { '@type': 'EducationalOrganization', name: 'KYH Yrkeshögskola' },
+        { '@type': 'EducationalOrganization', name: 'Mihai Viteazul National Intelligence Academy' },
+      ],
+      hasOccupation: c.jobs.flatMap((j) =>
+        j.roles.map((r) => ({
+          '@type': 'Role',
+          roleName: r.title,
+          startDate: r.start,
+          ...(r.end ? { endDate: r.end } : {}),
+          memberOf: { '@type': 'Organization', name: j.org },
+        })),
+      ),
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${url}#page`,
+      url,
+      name: c.title,
+      inLanguage: lang,
+      dateModified: new Date().toISOString().slice(0, 10),
+      mainEntity: { '@id': `${SITE_URL}/#person` },
+    }
+  ],
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.title}</title>
+    <meta name="description" content={c.description} />
+    <meta name="author" content="Melinda Sava" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={url} />
+    <link rel="alternate" hreflang="en" href={SITE_URL + paths.en} />
+    <link rel="alternate" hreflang="sv" href={SITE_URL + paths.sv} />
+    <link rel="alternate" hreflang="x-default" href={SITE_URL + paths.en} />
+    <meta name="geo.region" content="SE-AB" />
+    <meta name="geo.placename" content="Stockholm" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fbf3e7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d1117" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={c.title} />
+    <meta property="og:description" content={c.description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={c.locale} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'sv_SE' : 'en_SE'} />
+    <meta property="profile:first_name" content="Melinda" />
+    <meta property="profile:last_name" content="Sava" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="sitemap" href={asset('/sitemap.xml')} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Hoppa till innehåll'}</a>
+    <a class="mark" href={asset(paths[lang])} aria-label="Melinda Sava">.Mel</a>
+    <header class="chrome">
+      <div class="chrome-right">
+        <a class="lang-pill" href={asset(paths[altLang])} hreflang={altLang} lang={altLang} title={c.nav.switchHint}>{altLang.toUpperCase()}</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" data-open={c.menuLabel} data-close={c.closeLabel} aria-label={c.menuLabel}>
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+    <nav id="site-menu" class="menu" aria-label={lang === 'en' ? 'Main' : 'Huvudmeny'}>
+      <ol>
+        <li><a href="#top"><span class="n">01</span>{c.homeLabel}</a></li>
+        <li><a href="#about"><span class="n">02</span>{c.nav.about}</a></li>
+        <li><a href="#projects"><span class="n">03</span>{c.nav.projects}</a></li>
+        <li><a href="#work"><span class="n">04</span>{c.nav.work}</a></li>
+        <li><a href="#skills"><span class="n">05</span>{c.nav.skills}</a></li>
+        <li><a href="#contact"><span class="n">06</span>{c.nav.contact}</a></li>
+      </ol>
+      <a class="menu-lang" href={asset(paths[altLang])} hreflang={altLang} lang={altLang}>{c.nav.switchLabel} →</a>
+    </nav>
+    <slot />
+    <script>
+      const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+      const menu = document.getElementById('site-menu');
+      if (btn && menu) {
+        const set = (open: boolean) => {
+          btn.setAttribute('aria-expanded', String(open));
+          btn.setAttribute('aria-label', (open ? btn.dataset.close : btn.dataset.open) ?? '');
+          document.documentElement.classList.toggle('menu-open', open);
+          if (open) menu.querySelector('a')?.focus();
+        };
+        btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+        menu.addEventListener('click', (e) => {
+          if ((e.target as HTMLElement).closest('a')) set(false);
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+            set(false);
+            btn.focus();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

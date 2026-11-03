@@ -1,0 +1,19 @@
+---
+interface Props {
+  word: readonly [string, string] | readonly string[];
+  theme: 'wine' | 'saffron' | 'rust' | 'blush' | 'plum' | 'sand';
+  index: string;
+}
+const { word, theme, index } = Astro.props;
+const [a, b] = word;
+const len = Math.max(a.length, b.length + 1);
+---
+<div class={`panel panel-${theme}`} aria-hidden="true">
+  <div class="panel-inner">
+    <p class="big" style={`--len:${len}`}>
+      <span class="l1">{a}</span>
+      <span class="l2">{b}<i class="dot"></i></span>
+    </p>
+  </div>
+  <span class="panel-index">{index} / 06</span>
+</div>

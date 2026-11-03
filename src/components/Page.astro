@@ -1,0 +1,253 @@
+---
+import Base from '../layouts/Base.astro';
+import Panel from './Panel.astro';
+import { EMAIL, LINKEDIN, GITHUB, asset, type Content } from '../data/content';
+
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const year = new Date().getFullYear();
+const w = c.words;
+---
+<Base c={c}>
+  <main id="main">
+    <section class="split-sec" id="top" aria-labelledby="name">
+      <div class="content hero">
+        <h1 id="name">Melinda Sava</h1>
+        <p class="role">{c.role}</p>
+        <p class="lede">{c.lede}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={`mailto:${EMAIL}`}>{c.cta.primary}</a>
+          <a class="btn" href={LINKEDIN} rel="me noopener" target="_blank">{c.cta.secondary} ↗</a>
+          <a class="btn" href={GITHUB} rel="me noopener" target="_blank">GitHub ↗</a>
+        </div>
+        <dl class="stats">
+          {c.stats.map((s) => {
+            const m = s.value.match(/^(\D*?)(\d+)(.*)$/);
+            return (
+              <div>
+                <dt>{s.label}</dt>
+                <dd>
+                  {m ? (
+                    <>
+                      {m[1]}<span class="count" data-to={m[2]}>{m[2]}</span>{m[3]}
+                    </>
+                  ) : (
+                    s.value
+                  )}
+                </dd>
+              </div>
+            );
+          })}
+        </dl>
+      </div>
+      <Panel word={w.hero} theme="wine" index="01" />
+    </section>
+
+    <section class="split-sec flip" id="about" aria-labelledby="about-h">
+      <div class="content">
+        <h2 id="about-h" class="sec-label">{c.aboutTitle}</h2>
+        <div class="prose">
+          {c.about.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <Panel word={w.about} theme="saffron" index="02" />
+    </section>
+
+    <section class="split-sec" id="projects" aria-labelledby="projects-h">
+      <div class="content">
+        <h2 id="projects-h" class="sec-label">{c.projectsTitle}</h2>
+        <p class="section-intro">{c.projectsIntro}</p>
+        <div class="projects">
+          {c.projects.map((p) => (
+            <article class="project" id={`project-${p.id}`} aria-labelledby={`project-${p.id}-h`}>
+              <div class="frame">
+                <div class="frame-bar"><span></span><span></span><span></span></div>
+                {p.media.kind === 'video' ? (
+                  <figure class="video">
+                    <video
+                      data-autoplay
+                      controls
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      poster={asset(p.media.poster)}
+                      width={p.media.width}
+                      height={p.media.height}
+                      aria-label={p.media.label}
+                    >
+                      <source src={asset(p.media.src)} type="video/mp4" />
+                    </video>
+                  </figure>
+                ) : (
+                  <div class="shots">
+                    {p.media.items.map((img) => (
+                      <a href={asset(img.src)} target="_blank" rel="noopener">
+                        <img src={asset(img.src)} width={img.width} height={img.height} alt={img.alt} loading="lazy" decoding="async" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {p.note && <p class="media-note">{p.note}</p>}
+              <p class="project-context">{p.context}</p>
+              <h3 id={`project-${p.id}-h`}>{p.title}</h3>
+              <p class="project-summary">{p.summary}</p>
+              <ul class="project-points">
+                {p.points.map((pt) => <li>{pt}</li>)}
+              </ul>
+              <ul class="chips">
+                {p.tags.map((t) => <li>{t}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+      <Panel word={w.projects} theme="rust" index="03" />
+    </section>
+
+    <section class="split-sec flip" id="work" aria-labelledby="work-h">
+      <div class="content">
+        <h2 id="work-h" class="sec-label">{c.workTitle}</h2>
+        <ol class="timeline">
+          {c.jobs.map((job) => (
+            <li class="job">
+              <h3 class="org">
+                {job.org} <span class="place">{job.place}</span>
+              </h3>
+              {job.roles.map((r) => (
+                <article class="role-item">
+                  <h4>{r.title}</h4>
+                  <p class="period">
+                    <time datetime={r.start}>{r.period}</time>
+                  </p>
+                  <ul>
+                    {r.points.map((p) => <li>{p}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </li>
+          ))}
+        </ol>
+      </div>
+      <Panel word={w.work} theme="blush" index="04" />
+    </section>
+
+    <section class="split-sec" id="skills" aria-labelledby="skills-h">
+      <div class="content">
+        <h2 id="skills-h" class="sec-label">{c.skillsTitle}</h2>
+        {c.skills.map((g) => (
+          <div class="skill-group">
+            {g.name && <h3>{g.name}</h3>}
+            <ul class="chips chips-lg">
+              {g.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+        ))}
+        <h2 id="edu-h" class="sub-label">{c.eduTitle}</h2>
+        <ul class="plain-list" aria-labelledby="edu-h">
+          {c.education.map((e) => (
+            <li>
+              <strong>{e.name}</strong>
+              {e.org && <span>{e.org}</span>}
+              <span class="period">{e.period}</span>
+            </li>
+          ))}
+        </ul>
+        <h2 id="langs-h" class="sub-label">{c.langsTitle}</h2>
+        <ul class="langs" aria-labelledby="langs-h">
+          {c.languages.map((l) => (
+            <li>
+              <span>{l.name}</span>
+              <strong>{l.level}</strong>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Panel word={w.skills} theme="plum" index="05" />
+    </section>
+
+    <section class="split-sec flip" id="contact" aria-labelledby="contact-h">
+      <div class="content contact">
+        <h2 id="contact-h" class="sec-label">{c.contactTitle}</h2>
+        <p class="contact-text">{c.contactText}</p>
+        <ul class="contact-links">
+          <li><a href={`mailto:${EMAIL}`}><span class="k">Email</span><span class="v">{EMAIL}</span></a></li>
+          <li><a href={LINKEDIN} rel="me noopener" target="_blank"><span class="k">LinkedIn</span><span class="v">in/melindasava ↗</span></a></li>
+          <li><a href={GITHUB} rel="me noopener" target="_blank"><span class="k">GitHub</span><span class="v">@mellyynda ↗</span></a></li>
+        </ul>
+      </div>
+      <Panel word={w.contact} theme="sand" index="06" />
+    </section>
+  </main>
+  <footer class="footer">
+    <p>© {year} Melinda Sava · Stockholm</p>
+    <p>{c.footer}</p>
+  </footer>
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const counters = Array.from(document.querySelectorAll<HTMLElement>('.count'));
+    if (!reduceMotion && counters.length) {
+      for (const el of counters) el.textContent = '0';
+      const run = (el: HTMLElement, delay: number) => {
+        const to = Number(el.dataset.to);
+        const dur = 1200 + Math.min(to, 50) * 14;
+        let start = 0;
+        const tick = (t: number) => {
+          if (!start) start = t + delay;
+          const p = Math.max(0, Math.min(1, (t - start) / dur));
+          const eased = 1 - Math.pow(1 - p, 4);
+          el.textContent = String(Math.round(to * eased));
+          if (p < 1) requestAnimationFrame(tick);
+          else el.closest('dd')?.classList.add('done');
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            io.unobserve(e.target);
+            run(e.target as HTMLElement, counters.indexOf(e.target as HTMLElement) * 150);
+          });
+        },
+        { threshold: 0.6 },
+      );
+      counters.forEach((el) => io.observe(el));
+    }
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]'));
+    const userPaused = new WeakSet<HTMLVideoElement>();
+    const autoPausing = new WeakSet<HTMLVideoElement>();
+
+    for (const v of videos) {
+      v.addEventListener('play', () => userPaused.delete(v));
+      v.addEventListener('pause', () => {
+        if (autoPausing.has(v)) autoPausing.delete(v);
+        else userPaused.add(v);
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            const v = e.target as HTMLVideoElement;
+            if (document.fullscreenElement === v) continue;
+            if (e.isIntersecting && !reduce.matches && !userPaused.has(v)) {
+              v.play().catch(() => {});
+            } else if (!e.isIntersecting && !v.paused) {
+              autoPausing.add(v);
+              v.pause();
+            }
+          }
+        },
+        { threshold: 0.35 },
+      );
+      videos.forEach((v) => io.observe(v));
+    }
+  </script>
+</Base>

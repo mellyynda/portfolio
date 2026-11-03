@@ -1,0 +1,31 @@
+# Melinda Sava
+
+> Senior Software Developer and Engineering Manager in Stockholm, Sweden. Specialises in React, TypeScript and Vue for fintech and payment platforms, and in AI-assisted software development. Works in English (C2) and Swedish (C1).
+
+## Profile
+
+- Current: Engineering Manager & Software Developer at Worldline / PaymentIQ, Stockholm (since March 2026; at the company since January 2022)
+- Previously: Frontend Development Team Lead (Nov 2025 – Mar 2026), Software Developer (Jan 2022 – Nov 2025), both at Worldline / PaymentIQ; Development Intern at Automile (2021–2022); Operational Officer at the Romanian Ministry of Internal Affairs (2011–2019)
+- Core skills: React, TypeScript, JavaScript, Vue, Node.js, REST APIs, SDKs and integrations, Playwright, Vitest, Cypress, GitHub Actions, CI/CD, Core Web Vitals, web accessibility (WCAG), Coralogix, OpenSearch, Sentry, Scrum, Kanban
+- AI-assisted development: Claude Code, GitHub Copilot CLI, Cursor, Codex, Anthropic SDK, MCP tool integrations, parallel coding agents in Git worktrees
+- Selected results: rebuilt the Cashier payment app from Vue 2 to React/TypeScript, from first commit to production in under 4 months; launched the Cashier Plus premium tier in about 10 weeks; completed a KnockoutJS to React migration; raised PR throughput 50% in the team they led
+- Education: Front End Developer, KYH Yrkeshögskola Stockholm (2020–2022); Professional Agile Leadership I, Scrum.org (2025); MSc and BSc in Psychology – Intelligence, Mihai Viteazul National Intelligence Academy, Bucharest
+- Swedish search terms: senior systemutvecklare, mjukvaruutvecklare, frontendutvecklare, React-utvecklare, TypeScript-utvecklare, engineering manager, tech lead, fintech, betallösningar, Stockholm
+
+## Selected work
+
+- AI theme generator for Cashier Builder (Worldline / PaymentIQ, 2026, prototype): merchants describe a look or paste a website URL and Claude generates a payment-checkout theme (colours, fonts, design tokens) with live preview.
+- Velora Casino (2026, integration demo): a fictional casino showing how merchants integrate a headless payment cashier: iframe, no-iframe and fully custom UI deposit modes.
+- Payment Backoffice in React (Worldline / PaymentIQ, 2022–2026): PSP routing rules, user management with roles, and withdrawal approvals, migrated from KnockoutJS to React/TypeScript.
+- Minimera (personal project, 2026): Swedish second-hand marketplace where Claude fills in a listing from a photo; built with Next.js, TypeScript, Supabase and Tailwind.
+
+## Pages
+
+- [Profile (English)](https://mellyynda.github.io/portfolio/): experience, skills, education and contact
+- [Profil (svenska)](https://mellyynda.github.io/portfolio/sv/): same content in Swedish
+
+## Contact
+
+- Email: melinda.sava.td@gmail.com
+- LinkedIn: https://www.linkedin.com/in/melindasava/
+- GitHub: https://github.com/mellyynda
