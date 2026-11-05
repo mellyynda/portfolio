@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Panel from './Panel.astro';
 import Starfield from './Starfield.astro';
+import ThemeFx from './ThemeFx.astro';
 import { EMAIL, LINKEDIN, GITHUB, asset, type Content } from '../data/content';
 
 interface Props {
@@ -192,6 +193,7 @@ const w = c.words;
     <p>© {year} Melinda Sava · Stockholm</p>
     <p>{c.footer}</p>
   </footer>
+  <ThemeFx />
   <script>
     const calm = () => document.documentElement.dataset.theme === 'accessible';
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || calm();
