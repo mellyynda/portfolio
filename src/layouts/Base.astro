@@ -1,6 +1,8 @@
 ---
 import '@fontsource-variable/bricolage-grotesque/wdth.css';
 import '@fontsource-variable/manrope';
+import '@fontsource/atkinson-hyperlegible/400.css';
+import '@fontsource/atkinson-hyperlegible/700.css';
 import '../styles/global.css';
 import { SITE_URL, EMAIL, LINKEDIN, GITHUB, paths, asset, type Content } from '../data/content';
 
@@ -12,6 +14,7 @@ const lang = c.lang;
 const url = SITE_URL + paths[lang];
 const altLang = lang === 'en' ? 'sv' : 'en';
 const ogImage = `${SITE_URL}/og.png`;
+const themeIds = ['classic', 'modern', 'accessible'] as const;
 
 const current = c.jobs[0].roles[0];
 const jsonLd = {
@@ -97,7 +100,8 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>
       try {
-        if (localStorage.getItem('theme') === 'modern') document.documentElement.dataset.theme = 'modern';
+        var t = localStorage.getItem('theme');
+        if (t === 'modern' || t === 'accessible') document.documentElement.dataset.theme = t;
       } catch (e) {}
     </script>
   </head>
@@ -108,17 +112,27 @@ const jsonLd = {
     </nav>
     <header class="chrome">
       <div class="chrome-right">
-        <button
-          class="theme-pill"
-          type="button"
-          aria-pressed="false"
-          data-to-modern={c.vibe.toModern}
-          data-to-classic={c.vibe.toClassic}
-          data-modern-short={c.vibe.modernShort}
-          data-classic-short={c.vibe.classicShort}
-          aria-label={c.vibe.toModern}
-          title={c.vibe.toModern}
-        >{c.vibe.modernShort}</button>
+        <div class="theme-switch">
+          <button class="theme-pill" type="button" aria-expanded="false" aria-controls="theme-menu">
+            <span class="theme-pill-k">{c.themes.label}<span class="sr-only">:</span></span>
+            {themeIds.map((id) => <span class="theme-pill-v" data-theme-name={id} hidden={id !== 'classic'}>{c.themes[id].name}</span>)}
+            <span class="theme-pill-caret" aria-hidden="true">▾</span>
+          </button>
+          <div id="theme-menu" class="theme-menu" hidden>
+            <fieldset>
+              <legend>{c.themes.legend}</legend>
+              {themeIds.map((id) => (
+                <label class="theme-opt">
+                  <input type="radio" name="theme" value={id} checked={id === 'classic'} aria-describedby={`theme-${id}-desc`} />
+                  <span class="theme-opt-text">
+                    <span class="theme-opt-name">{c.themes[id].name}</span>
+                    <span class="theme-opt-desc" id={`theme-${id}-desc`}>{c.themes[id].desc}</span>
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+          </div>
+        </div>
         <a class="lang-pill" href={asset(paths[altLang])} hreflang={altLang} lang={altLang} aria-label={c.nav.switchLabel} title={c.nav.switchHint}>{altLang.toUpperCase()}</a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" data-open={c.menuLabel} data-close={c.closeLabel} aria-label={c.menuLabel}>
           <span></span><span></span><span></span>
@@ -142,13 +156,18 @@ const jsonLd = {
       <p id="vibe-q" class="vibe-q">{c.vibe.question}</p>
       <p class="vibe-hint">{c.vibe.hint}</p>
       <div class="vibe-actions">
-        <button class="btn btn-primary vibe-go" type="button">{c.vibe.makeModern}</button>
-        <button class="btn vibe-no" type="button">{c.vibe.dismiss}</button>
+        <button class="btn btn-primary" type="button" data-pick="modern">{c.vibe.makeModern}</button>
+        <button class="btn" type="button" data-pick="accessible">{c.vibe.makeAccessible}</button>
+        <button class="btn" type="button" data-pick="classic">{c.vibe.dismiss}</button>
       </div>
     </aside>
     <script>
+      type Theme = 'classic' | 'modern' | 'accessible';
+      const themes: Theme[] = ['classic', 'modern', 'accessible'];
       const root = document.documentElement;
       const pill = document.querySelector<HTMLButtonElement>('.theme-pill');
+      const panel = document.getElementById('theme-menu');
+      const radios = Array.from(document.querySelectorAll<HTMLInputElement>('#theme-menu input[name="theme"]'));
       const vibe = document.querySelector<HTMLElement>('.vibe');
       const store = {
         get: () => {
@@ -164,41 +183,73 @@ const jsonLd = {
           } catch {}
         },
       };
-      const apply = (modern: boolean) => {
-        if (modern) root.dataset.theme = 'modern';
-        else delete root.dataset.theme;
-        if (pill) {
-          const label = (modern ? pill.dataset.toClassic : pill.dataset.toModern) ?? '';
-          pill.textContent = (modern ? pill.dataset.classicShort : pill.dataset.modernShort) ?? '';
-          pill.setAttribute('aria-label', label);
-          pill.title = label;
-          pill.setAttribute('aria-pressed', String(modern));
-        }
+      const current = (): Theme => (themes.includes(root.dataset.theme as Theme) ? (root.dataset.theme as Theme) : 'classic');
+      const apply = (theme: Theme) => {
+        if (theme === 'classic') delete root.dataset.theme;
+        else root.dataset.theme = theme;
+        for (const r of radios) r.checked = r.value === theme;
+        for (const el of document.querySelectorAll<HTMLElement>('.theme-pill-v')) el.hidden = el.dataset.themeName !== theme;
+        document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
       };
-      const setTheme = (modern: boolean) => {
-        apply(modern);
-        store.set(modern ? 'modern' : 'classic');
+      const setTheme = (theme: Theme) => {
+        apply(theme);
+        store.set(theme);
       };
-      apply(root.dataset.theme === 'modern');
+      apply(current());
+
+      const open = (show: boolean, refocus = false) => {
+        if (!pill || !panel) return;
+        panel.hidden = !show;
+        pill.setAttribute('aria-expanded', String(show));
+        if (show) (radios.find((r) => r.checked) ?? radios[0])?.focus();
+        else if (refocus) pill.focus();
+      };
+      let pointerPick = false;
       pill?.addEventListener('click', () => {
-        setTheme(root.dataset.theme !== 'modern');
+        open(pill.getAttribute('aria-expanded') !== 'true');
         if (vibe) vibe.hidden = true;
       });
-      if (vibe) {
-        const close = (modern: boolean) => {
-          setTheme(modern);
+      panel?.addEventListener('pointerdown', () => (pointerPick = true));
+      panel?.addEventListener('keydown', (e) => {
+        pointerPick = false;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          open(false, true);
+        } else if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+          e.preventDefault();
+          open(false, true);
+        }
+      });
+      for (const r of radios) {
+        r.addEventListener('change', () => {
+          if (!r.checked) return;
+          setTheme(r.value as Theme);
+          if (pointerPick) open(false, true);
+          pointerPick = false;
+        });
+      }
+      document.addEventListener('pointerdown', (e) => {
+        if (panel && !panel.hidden && !(e.target as Element).closest('.theme-switch')) open(false);
+      });
+      document.querySelector('.theme-switch')?.addEventListener('focusout', (e) => {
+        const next = (e as FocusEvent).relatedTarget as Node | null;
+        if (next && !(e.currentTarget as HTMLElement).contains(next)) open(false);
+      });
+
+      if (vibe && !store.get()) {
+        const close = (theme: Theme) => {
+          setTheme(theme);
           vibe.hidden = true;
           pill?.focus();
         };
-        if (!store.get()) {
-          vibe.hidden = false;
-          vibe.querySelector<HTMLButtonElement>('.vibe-go')?.addEventListener('click', () => close(true));
-          vibe.querySelector<HTMLButtonElement>('.vibe-no')?.addEventListener('click', () => close(false));
-          vibe.querySelector<HTMLButtonElement>('.vibe-close')?.addEventListener('click', () => close(false));
-          vibe.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') close(false);
-          });
+        vibe.hidden = false;
+        for (const b of vibe.querySelectorAll<HTMLButtonElement>('[data-pick]')) {
+          b.addEventListener('click', () => close(b.dataset.pick as Theme));
         }
+        vibe.querySelector<HTMLButtonElement>('.vibe-close')?.addEventListener('click', () => close('classic'));
+        vibe.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') close('classic');
+        });
       }
     </script>
     <script>
@@ -209,7 +260,7 @@ const jsonLd = {
           btn.setAttribute('aria-expanded', String(open));
           btn.setAttribute('aria-label', (open ? btn.dataset.close : btn.dataset.open) ?? '');
           document.documentElement.classList.toggle('menu-open', open);
-          for (const el of document.querySelectorAll<HTMLElement>('main, footer, .skip, .home-nav, .lang-pill, .theme-pill, .vibe')) el.inert = open;
+          for (const el of document.querySelectorAll<HTMLElement>('main, footer, .skip, .home-nav, .lang-pill, .theme-switch, .vibe')) el.inert = open;
           if (open) menu.querySelector('a')?.focus();
         };
         btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
