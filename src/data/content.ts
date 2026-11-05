@@ -469,7 +469,7 @@ export const content = {
     eyebrow: 'Stockholm · Fintech & betallösningar',
     words: {
       hero: ['VÄLKOM', 'MEN'],
-      about: ['OM', 'MIG'],
+      about: ['OM ', 'MIG'], // trailing space: two separate words
       projects: ['PRO', 'JEKT'],
       work: ['ERFA', 'RENHET'],
       skills: ['KOMPE', 'TENS'],

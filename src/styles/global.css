@@ -1605,6 +1605,9 @@ html[data-theme='accessible'] {
 [data-theme='accessible'] .big .l2 {
   padding-left: 0;
 }
+[data-theme='accessible'] .big.two-words {
+  column-gap: 0.3em;
+}
 [data-theme='accessible'] .big .dot {
   display: none;
 }
