@@ -414,7 +414,7 @@ export const content = {
     themes: {
       label: 'Theme',
       legend: 'Choose how the page looks',
-      classic: { name: 'Classic', desc: 'Warm colours and big letters' },
+      classic: { name: 'Retro', desc: 'Warm 70s and 80s vibes' },
       modern: { name: 'Modern', desc: 'Dark with bright colours' },
       accessible: { name: 'Easy to read', desc: 'Clear text, strong contrast, no movement' },
     },
@@ -469,7 +469,7 @@ export const content = {
     eyebrow: 'Stockholm · Fintech & betallösningar',
     words: {
       hero: ['VÄLKOM', 'MEN'],
-      about: ['OM', 'MIG'],
+      about: ['OM ', 'MIG'], // trailing space: two separate words
       projects: ['PRO', 'JEKT'],
       work: ['ERFA', 'RENHET'],
       skills: ['KOMPE', 'TENS'],
@@ -489,7 +489,7 @@ export const content = {
     themes: {
       label: 'Utseende',
       legend: 'Välj hur sidan ska se ut',
-      classic: { name: 'Klassisk', desc: 'Varma färger och stora bokstäver' },
+      classic: { name: 'Retro', desc: 'Varm 70- och 80-talskänsla' },
       modern: { name: 'Modern', desc: 'Mörk med starka färger' },
       accessible: { name: 'Lättläst', desc: 'Tydlig text, stark kontrast, ingen rörelse' },
     },

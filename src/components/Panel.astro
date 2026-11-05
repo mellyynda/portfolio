@@ -7,13 +7,16 @@ interface Props {
   index: string;
 }
 const { word, theme, index } = Astro.props;
-const [a, b] = word;
+const [rawA, b] = word;
+// a trailing space on the first half marks two separate words (e.g. 'OM ' + 'MIG')
+const twoWords = /\s$/.test(rawA);
+const a = rawA.trimEnd();
 const len = Math.max(a.length, b.length + 1);
 ---
 <div class={`panel panel-${theme}`} aria-hidden="true">
   <Starfield />
   <div class="panel-inner">
-    <p class="big" style={`--len:${len}`}>
+    <p class:list={['big', { 'two-words': twoWords }]} style={`--len:${len}`}>
       <span class="l1">{a}</span>
       <span class="l2">{b}<i class="dot"></i></span>
     </p>
