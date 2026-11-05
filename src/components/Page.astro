@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Panel from './Panel.astro';
+import Starfield from './Starfield.astro';
 import { EMAIL, LINKEDIN, GITHUB, asset, type Content } from '../data/content';
 
 interface Props {
@@ -42,7 +43,9 @@ const w = c.words;
           })}
         </dl>
       </div>
-      <Panel word={w.hero} theme="wine" index="01" />
+      <Panel word={w.hero} theme="wine" index="01">
+        <Starfield />
+      </Panel>
     </section>
 
     <section class="split-sec flip" id="about" aria-labelledby="about-h">

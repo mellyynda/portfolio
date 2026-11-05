@@ -9,6 +9,7 @@ const [a, b] = word;
 const len = Math.max(a.length, b.length + 1);
 ---
 <div class={`panel panel-${theme}`} aria-hidden="true">
+  <slot />
   <div class="panel-inner">
     <p class="big" style={`--len:${len}`}>
       <span class="l1">{a}</span>
