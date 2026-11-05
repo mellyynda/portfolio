@@ -383,6 +383,15 @@ const projects: Record<Lang, Project[]> = {
   ],
 };
 
+const panelWords = {
+  hero: ['WEL', 'COME'],
+  about: ['AB', 'OUT'],
+  projects: ['WO', 'RK'],
+  work: ['EXPE', 'RIENCE'],
+  skills: ['SKI', 'LLS'],
+  contact: ['CON', 'TACT'],
+} as const;
+
 export const content = {
   en: {
     lang: 'en',
@@ -392,14 +401,7 @@ export const content = {
       'Melinda Sava is a senior software developer and engineering manager in Stockholm, Sweden, specialising in React, TypeScript and Vue for fintech and payment platforms, with a focus on AI-assisted development.',
     nav: { projects: 'Work', work: 'Experience', skills: 'Skills', contact: 'Contact', about: 'About me', switchLabel: 'Svenska', switchHint: 'Läs på svenska' },
     eyebrow: 'Stockholm, Sweden · Fintech & payments',
-    words: {
-      hero: ['WEL', 'COME'],
-      about: ['AB', 'OUT'],
-      projects: ['WO', 'RK'],
-      work: ['EXPE', 'RIENCE'],
-      skills: ['SKI', 'LLS'],
-      contact: ['CON', 'TACT'],
-    },
+    words: panelWords,
     menuLabel: 'Menu',
     closeLabel: 'Close menu',
     homeLabel: 'Welcome',
@@ -467,14 +469,8 @@ export const content = {
       'Melinda Sava är senior systemutvecklare, frontendutvecklare och engineering manager i Stockholm med fokus på React, TypeScript och Vue för fintech och betallösningar, och på AI-assisterad utveckling.',
     nav: { projects: 'Projekt', work: 'Erfarenhet', skills: 'Kompetens', contact: 'Kontakt', about: 'Om mig', switchLabel: 'English', switchHint: 'Read in English' },
     eyebrow: 'Stockholm · Fintech & betallösningar',
-    words: {
-      hero: ['VÄLKOM', 'MEN'],
-      about: ['OM ', 'MIG'], // trailing space: two separate words
-      projects: ['PRO', 'JEKT'],
-      work: ['ERFA', 'RENHET'],
-      skills: ['KOMPE', 'TENS'],
-      contact: ['KON', 'TAKT'],
-    },
+    // Decorative panel words stay in English in every language.
+    words: panelWords,
     menuLabel: 'Meny',
     closeLabel: 'Stäng menyn',
     homeLabel: 'Välkommen',
