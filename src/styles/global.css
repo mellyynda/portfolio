@@ -894,8 +894,25 @@ h1 {
   padding: 8rem clamp(1.25rem, 5vw, 5rem);
 }
 
-/* ---------- theme toggle + "too boring?" prompt ---------- */
+/* ---------- theme switcher + "too boring?" prompt ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.theme-switch {
+  position: relative;
+}
 .theme-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   height: 2.75rem;
   padding: 0 0.9rem;
   border: 0;
@@ -914,6 +931,94 @@ h1 {
 }
 .theme-pill:hover {
   transform: translateY(-1px);
+}
+.theme-pill-k {
+  font-weight: 600;
+  opacity: 0.85;
+}
+.theme-pill-v[hidden] {
+  display: none;
+}
+.theme-pill-caret {
+  font-size: 0.7em;
+  transition: transform 0.15s;
+}
+.theme-pill[aria-expanded='true'] .theme-pill-caret {
+  transform: rotate(180deg);
+}
+@media (max-width: 30rem) {
+  .theme-pill-k {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+.theme-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  width: min(19rem, calc(100vw - 2rem));
+  padding: 0.75rem;
+  background: var(--bg);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--saffron);
+}
+.theme-menu[hidden] {
+  display: none;
+}
+.theme-menu fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.theme-menu legend {
+  padding: 0.25rem 0.5rem 0.5rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.theme-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.theme-opt:hover {
+  background: var(--chip);
+}
+.theme-opt:has(:checked) {
+  background: var(--chip);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.theme-opt input {
+  flex: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--accent);
+}
+.theme-opt-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.theme-opt-name {
+  font-weight: 800;
+}
+.theme-opt-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.chrome .theme-menu :focus-visible {
+  outline-color: var(--ink);
+  box-shadow: none;
 }
 
 .vibe {
@@ -1306,4 +1411,413 @@ html[data-theme='modern'] {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 30px 60px -20px rgb(139 92 246 / 0.6);
+}
+[data-theme='modern'] .theme-menu {
+  background: rgb(18 20 40 / 0.92);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 30px 60px -20px rgb(139 92 246 / 0.6);
+}
+[data-theme='modern'] .chrome .theme-menu :focus-visible {
+  outline-color: var(--glow-b);
+}
+
+/* ---------- accessible "easy to read" theme (opt-in, same layout) ---------- */
+html[data-theme='accessible'] {
+  --bg: #ffffff;
+  --ink: #0b0c0c;
+  --muted: #3b3b3b;
+  --line: #6f6f6f;
+  --chip: #f1f3f6;
+  --accent: #0b4ea2;
+  --accent-ink: #ffffff;
+  --link: #0b4ea2;
+  --panel-bg: #e8eef7;
+  --focus: #ffdd00;
+  --focus-ring: #0b0c0c;
+  --display: 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif;
+  --sans: 'Atkinson Hyperlegible', Verdana, system-ui, sans-serif;
+  color-scheme: light;
+  scroll-behavior: auto;
+}
+@media (prefers-color-scheme: dark) {
+  html[data-theme='accessible'] {
+    --bg: #121212;
+    --ink: #f5f5f5;
+    --muted: #d4d4d4;
+    --line: #9a9a9a;
+    --chip: #222222;
+    --accent: #9cc3ff;
+    --accent-ink: #0b0c0c;
+    --link: #9cc3ff;
+    --panel-bg: #1c2533;
+    color-scheme: dark;
+  }
+}
+[data-theme='accessible'] *,
+[data-theme='accessible'] *::before,
+[data-theme='accessible'] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+[data-theme='accessible'] body {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  word-spacing: 0.06em;
+}
+
+/* focus: double ring that stays visible on any background */
+[data-theme='accessible'] :focus-visible,
+[data-theme='accessible'] .chrome :focus-visible,
+[data-theme='accessible'] .menu :focus-visible,
+[data-theme='accessible'] .chrome .theme-menu :focus-visible,
+[data-theme='accessible'] .mark:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--focus);
+}
+[data-theme='accessible'] .skip {
+  background: var(--focus);
+  color: #0b0c0c;
+  font-weight: 700;
+}
+
+/* links are always underlined */
+[data-theme='accessible'] a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+[data-theme='accessible'] a:hover {
+  text-decoration-thickness: 0.2em;
+}
+
+/* chrome */
+[data-theme='accessible'] .mark {
+  color: var(--ink);
+  mix-blend-mode: normal;
+  background: var(--bg);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0 0.6rem;
+  margin-left: -0.6rem;
+  font-size: 1.3rem;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+[data-theme='accessible'] .mark:focus-visible {
+  color: var(--ink);
+  background: var(--bg);
+}
+[data-theme='accessible'] .lang-pill,
+[data-theme='accessible'] .theme-pill {
+  background: var(--bg);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: none;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+[data-theme='accessible'] .lang-pill {
+  text-decoration: underline;
+}
+[data-theme='accessible'] .theme-pill:hover {
+  transform: none;
+  background: var(--chip);
+}
+[data-theme='accessible'] .theme-pill-k {
+  opacity: 1;
+  font-weight: 400;
+}
+[data-theme='accessible'] .theme-pill[aria-expanded='true'] .theme-pill-caret {
+  transform: none;
+}
+[data-theme='accessible'] .menu-btn,
+[data-theme='accessible'] .menu-open .menu-btn {
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--bg);
+}
+[data-theme='accessible'] .menu-btn span {
+  background: var(--bg);
+}
+[data-theme='accessible'] .theme-menu {
+  box-shadow: none;
+  border-radius: 8px;
+}
+[data-theme='accessible'] .theme-menu legend,
+[data-theme='accessible'] .theme-opt-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+[data-theme='accessible'] .theme-opt-desc {
+  font-size: 1rem;
+}
+[data-theme='accessible'] .theme-opt:has(:checked) {
+  box-shadow: inset 0 0 0 3px var(--ink);
+}
+
+/* menu */
+[data-theme='accessible'] .menu {
+  background: var(--bg);
+  color: var(--ink);
+}
+[data-theme='accessible'] .menu a,
+[data-theme='accessible'] .menu li:nth-child(even) a {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-stretch: normal;
+  font-size: clamp(1.4rem, min(5vh, 7vw), 2.4rem);
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--link);
+  padding-left: 0;
+}
+[data-theme='accessible'] .menu .n {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+[data-theme='accessible'] .menu .menu-lang {
+  font-size: 1.25rem;
+}
+
+/* panels: calm, one readable word */
+[data-theme='accessible'] .panel,
+[data-theme='accessible'] .panel .l2 {
+  background: var(--panel-bg);
+  color: var(--ink);
+}
+[data-theme='accessible'] .big {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: normal;
+  font-size: clamp(2rem, 9cqi, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+}
+[data-theme='accessible'] .big .l2 {
+  padding-left: 0;
+}
+[data-theme='accessible'] .big .dot {
+  display: none;
+}
+[data-theme='accessible'] .panel-index {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  writing-mode: horizontal-tb;
+}
+
+/* type: no all-caps, no tight tracking, nothing under 1rem */
+[data-theme='accessible'] h1,
+[data-theme='accessible'] .role,
+[data-theme='accessible'] .section-intro,
+[data-theme='accessible'] .contact-text,
+[data-theme='accessible'] .prose p:first-child,
+[data-theme='accessible'] .project h3,
+[data-theme='accessible'] .org,
+[data-theme='accessible'] .langs strong,
+[data-theme='accessible'] .contact-links .v,
+[data-theme='accessible'] .vibe-q {
+  font-family: var(--sans);
+  font-stretch: normal;
+  letter-spacing: 0;
+}
+[data-theme='accessible'] h1 {
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1.15;
+}
+[data-theme='accessible'] .role {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+[data-theme='accessible'] .sec-label,
+[data-theme='accessible'] .sub-label,
+[data-theme='accessible'] .eyebrow,
+[data-theme='accessible'] .project-context,
+[data-theme='accessible'] .skill-group h3,
+[data-theme='accessible'] .contact-links .k {
+  text-transform: none;
+  letter-spacing: 0;
+}
+[data-theme='accessible'] .sec-label {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+}
+[data-theme='accessible'] .sub-label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+[data-theme='accessible'] .skill-group h3 {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+[data-theme='accessible'] .section-intro,
+[data-theme='accessible'] .contact-text,
+[data-theme='accessible'] .prose p:first-child {
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.55;
+}
+[data-theme='accessible'] .prose p,
+[data-theme='accessible'] .lede,
+[data-theme='accessible'] .project-summary {
+  font-size: 1.25rem;
+}
+[data-theme='accessible'] .prose p + p {
+  margin-top: 1.4rem;
+}
+[data-theme='accessible'] .lede {
+  border-top-color: var(--accent);
+}
+[data-theme='accessible'] .role-sub,
+[data-theme='accessible'] .stats dt,
+[data-theme='accessible'] .media-note,
+[data-theme='accessible'] .place,
+[data-theme='accessible'] .period,
+[data-theme='accessible'] .project-context,
+[data-theme='accessible'] .eyebrow,
+[data-theme='accessible'] .contact-links .k,
+[data-theme='accessible'] .footer,
+[data-theme='accessible'] .vibe-hint {
+  font-size: 1.05rem;
+}
+[data-theme='accessible'] .project-context,
+[data-theme='accessible'] .period,
+[data-theme='accessible'] .eyebrow {
+  font-weight: 700;
+  color: var(--ink);
+}
+[data-theme='accessible'] .project-points,
+[data-theme='accessible'] .project-points li::marker,
+[data-theme='accessible'] .role-item li::marker {
+  color: var(--ink);
+}
+[data-theme='accessible'] .project h3 {
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+[data-theme='accessible'] .org {
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  border-bottom: 4px solid var(--accent);
+}
+[data-theme='accessible'] .role-item h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+[data-theme='accessible'] .role-item,
+[data-theme='accessible'] .plain-list li {
+  border-bottom-color: var(--line);
+}
+
+/* hero stats: plain numbers, no tilt */
+[data-theme='accessible'] .stats > div {
+  --stat: var(--accent);
+}
+[data-theme='accessible'] .stats dd {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-stretch: normal;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+[data-theme='accessible'] .stats dd,
+[data-theme='accessible'] .stats > div:nth-child(n) dd,
+[data-theme='accessible'] .chips-lg li:nth-child(n),
+[data-theme='accessible'] .btn-primary:hover,
+[data-theme='accessible'] .shots a:hover img {
+  transform: none;
+}
+[data-theme='accessible'] .stats dt {
+  max-width: 18rem;
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* buttons */
+[data-theme='accessible'] .btn {
+  min-height: 3rem;
+  padding: 0 1.25rem;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+[data-theme='accessible'] .btn:hover {
+  background: var(--chip);
+  color: var(--ink);
+}
+[data-theme='accessible'] .btn-primary,
+[data-theme='accessible'] .btn-primary:hover,
+[data-theme='accessible'] .vibe .btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* projects, chips */
+[data-theme='accessible'] .frame,
+[data-theme='accessible'] .project:nth-child(even) .frame {
+  border-radius: 8px;
+  box-shadow: none;
+}
+[data-theme='accessible'] .chips li,
+[data-theme='accessible'] .chips-lg li:nth-child(n) {
+  background: var(--chip);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+[data-theme='accessible'] .langs strong {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* contact, footer, prompt */
+[data-theme='accessible'] .contact-links a {
+  color: var(--ink);
+  text-decoration: none;
+}
+[data-theme='accessible'] .contact-links .v {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+[data-theme='accessible'] .contact-links a:hover {
+  background: var(--chip);
+  color: var(--ink);
+  padding-inline: 0;
+}
+[data-theme='accessible'] .footer {
+  background: #0b0c0c;
+  color: #ffffff;
+}
+[data-theme='accessible'] .vibe {
+  box-shadow: none;
+  border-radius: 8px;
 }

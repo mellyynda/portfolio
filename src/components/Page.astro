@@ -190,7 +190,8 @@ const w = c.words;
     <p>{c.footer}</p>
   </footer>
   <script>
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const calm = () => document.documentElement.dataset.theme === 'accessible';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || calm();
     const counters = Array.from(document.querySelectorAll<HTMLElement>('.count'));
     if (!reduceMotion && counters.length) {
       for (const el of counters) el.textContent = '0';
@@ -256,7 +257,7 @@ const w = c.words;
           for (const e of entries) {
             const v = e.target as HTMLVideoElement;
             if (isFullscreen(v)) continue;
-            if (e.isIntersecting && !reduce.matches && !userPaused.has(v)) {
+            if (e.isIntersecting && !reduce.matches && !calm() && !userPaused.has(v)) {
               v.play().catch(() => {});
             } else if (!e.isIntersecting && !v.paused) {
               autoPausing.add(v);
@@ -268,5 +269,16 @@ const w = c.words;
       );
       videos.forEach((v) => io.observe(v));
     }
+
+    document.addEventListener('themechange', () => {
+      if (calm()) {
+        for (const el of counters) el.textContent = el.dataset.to ?? el.textContent;
+        for (const v of videos) {
+          if (v.paused || isFullscreen(v)) continue;
+          autoPausing.add(v);
+          v.pause();
+        }
+      }
+    });
   </script>
 </Base>
