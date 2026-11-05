@@ -191,9 +191,23 @@ const jsonLd = {
         for (const el of document.querySelectorAll<HTMLElement>('.theme-pill-v')) el.hidden = el.dataset.themeName !== theme;
         document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
       };
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let lastPointer: { x: number; y: number } | null = null;
+      document.addEventListener('pointerdown', (e) => (lastPointer = { x: e.clientX, y: e.clientY }), { capture: true });
+      document.addEventListener('keydown', () => (lastPointer = null), { capture: true });
       const setTheme = (theme: Theme) => {
-        apply(theme);
-        store.set(theme);
+        const run = () => {
+          apply(theme);
+          store.set(theme);
+        };
+        if (theme === current() || reduceMotion.matches || !document.startViewTransition) return run();
+        const r = pill?.getBoundingClientRect();
+        const x = lastPointer?.x ?? (r ? r.left + r.width / 2 : innerWidth);
+        const y = lastPointer?.y ?? (r ? r.top + r.height / 2 : 0);
+        root.style.setProperty('--reveal-x', `${x}px`);
+        root.style.setProperty('--reveal-y', `${y}px`);
+        root.style.setProperty('--reveal-r', `${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))}px`);
+        document.startViewTransition(run);
       };
       apply(current());
 

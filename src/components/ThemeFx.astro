@@ -1,0 +1,84 @@
+---
+// Theme switch reveal (all themes) plus modern-only scroll reveal.
+---
+<style is:global>
+  /* circular reveal when switching themes (driven by document.startViewTransition in Base.astro) */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-new(root) {
+    animation: fx-theme-reveal 0.75s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+  @keyframes fx-theme-reveal {
+    from {
+      clip-path: circle(0 at var(--reveal-x, 100%) var(--reveal-y, 0));
+    }
+    to {
+      clip-path: circle(var(--reveal-r, 150vmax) at var(--reveal-x, 100%) var(--reveal-y, 0));
+    }
+  }
+
+  /* scroll reveal: .fx-reveal is only added by JS, so content stays visible without it */
+  html[data-theme='modern'] .fx-reveal {
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--fx-i, 0) * 70ms);
+  }
+  html[data-theme='modern'] .fx-reveal:not(.fx-in) {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-new(root) {
+      animation: none;
+    }
+    html[data-theme='modern'] .fx-reveal,
+    html[data-theme='modern'] .fx-reveal:not(.fx-in) {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  if ('IntersectionObserver' in window) {
+    const groups = [
+      '.stats > div',
+      '.prose > p',
+      '.projects > .project',
+      '.timeline > .job',
+      '.skill-group',
+      '.contact-links > li',
+      '.split-sec > .content > *',
+    ];
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add('fx-in');
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    const seen = new Set<Element>();
+    for (const sel of groups) {
+      for (const el of document.querySelectorAll<HTMLElement>(sel)) {
+        if (seen.has(el) || el.querySelector('.fx-reveal') || el.closest('.fx-reveal')) continue;
+        seen.add(el);
+        const i = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+        el.style.setProperty('--fx-i', String(Math.min(i, 6)));
+        el.classList.add('fx-reveal');
+        io.observe(el);
+      }
+    }
+  }
+</script>
