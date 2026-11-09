@@ -462,6 +462,9 @@ h1 {
   font-weight: 600;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
+.role-part {
+  display: block;
+}
 .role-sub {
   color: var(--muted);
   font-weight: 600;

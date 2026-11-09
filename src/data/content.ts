@@ -383,6 +383,15 @@ const projects: Record<Lang, Project[]> = {
   ],
 };
 
+const panelWords = {
+  hero: ['WEL', 'COME'],
+  about: ['AB', 'OUT'],
+  projects: ['WO', 'RK'],
+  work: ['EXPE', 'RIENCE'],
+  skills: ['SKI', 'LLS'],
+  contact: ['CON', 'TACT'],
+} as const;
+
 export const content = {
   en: {
     lang: 'en',
@@ -392,14 +401,7 @@ export const content = {
       'Melinda Sava is a senior software developer and engineering manager in Stockholm, Sweden, specialising in React, TypeScript and Vue for fintech and payment platforms, with a focus on AI-assisted development.',
     nav: { projects: 'Work', work: 'Experience', skills: 'Skills', contact: 'Contact', about: 'About me', switchLabel: 'Svenska', switchHint: 'Läs på svenska' },
     eyebrow: 'Stockholm, Sweden · Fintech & payments',
-    words: {
-      hero: ['WEL', 'COME'],
-      about: ['AB', 'OUT'],
-      projects: ['WO', 'RK'],
-      work: ['EXPE', 'RIENCE'],
-      skills: ['SKI', 'LLS'],
-      contact: ['CON', 'TACT'],
-    },
+    words: panelWords,
     menuLabel: 'Menu',
     closeLabel: 'Close menu',
     homeLabel: 'Welcome',
@@ -418,15 +420,15 @@ export const content = {
       modern: { name: 'Modern', desc: 'Dark with bright colours' },
       accessible: { name: 'Easy to read', desc: 'Clear text, strong contrast, no movement' },
     },
-    role: 'Senior Software Developer (TypeScript)',
+    role: ['Engineering Manager', 'Senior Software Developer'],
     roleSub: 'React · TypeScript · Engineering Manager',
-    lede: 'I’m a passionate software developer specializing in React, Vue, TypeScript, and complex web applications, with experience building enterprise software, payment platforms, and third-party integrations.',
+    lede: 'I’m passionate about building great software, from writing the code to leading the team that ships it. I specialize in React, TypeScript and Vue, and I’ve delivered payment platforms, enterprise systems and third-party integrations.',
     cta: { primary: 'Get in touch', secondary: 'LinkedIn' },
     stats: [
-      { value: '< 4 mo', label: 'Cashier V3: from first commit to production release' },
-      { value: '13', label: 'Cashier V3 releases since launch' },
       { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
       { value: '+50%', label: 'PR throughput in the team I led' },
+      { value: '10×', label: 'team-channel engagement' },
+      { value: '3×', label: 'PR volume in the team I led' },
     ],
     aboutTitle: 'About me',
     about: [
@@ -467,14 +469,8 @@ export const content = {
       'Melinda Sava är senior systemutvecklare, frontendutvecklare och engineering manager i Stockholm med fokus på React, TypeScript och Vue för fintech och betallösningar, och på AI-assisterad utveckling.',
     nav: { projects: 'Projekt', work: 'Erfarenhet', skills: 'Kompetens', contact: 'Kontakt', about: 'Om mig', switchLabel: 'English', switchHint: 'Read in English' },
     eyebrow: 'Stockholm · Fintech & betallösningar',
-    words: {
-      hero: ['VÄLKOM', 'MEN'],
-      about: ['OM ', 'MIG'], // trailing space: two separate words
-      projects: ['PRO', 'JEKT'],
-      work: ['ERFA', 'RENHET'],
-      skills: ['KOMPE', 'TENS'],
-      contact: ['KON', 'TAKT'],
-    },
+    // Decorative panel words stay in English in every language.
+    words: panelWords,
     menuLabel: 'Meny',
     closeLabel: 'Stäng menyn',
     homeLabel: 'Välkommen',
@@ -493,15 +489,15 @@ export const content = {
       modern: { name: 'Modern', desc: 'Mörk med starka färger' },
       accessible: { name: 'Lättläst', desc: 'Tydlig text, stark kontrast, ingen rörelse' },
     },
-    role: 'Senior mjukvaruutvecklare (TypeScript)',
+    role: ['Engineering Manager', 'Senior mjukvaruutvecklare'],
     roleSub: 'React · TypeScript · Engineering Manager',
-    lede: 'Jag är en passionerad mjukvaruutvecklare specialiserad på React, Vue, TypeScript och komplexa webbapplikationer, med erfarenhet av att bygga affärssystem, betalplattformar och tredjepartsintegrationer.',
+    lede: 'Jag brinner för att bygga riktigt bra mjukvara, från att skriva koden till att leda teamet som levererar den. Jag är specialiserad på React, TypeScript och Vue och har levererat betalplattformar, affärssystem och tredjepartsintegrationer.',
     cta: { primary: 'Hör av dig', secondary: 'LinkedIn' },
     stats: [
-      { value: '< 4 mån', label: 'Cashier V3: från första commit till produktionsrelease' },
-      { value: '13', label: 'releaser av Cashier V3 sedan lanseringen' },
       { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
       { value: '+50 %', label: 'genomströmning av PR:er i teamet jag ledde' },
+      { value: '10×', label: 'engagemang i teamkanalen' },
+      { value: '3×', label: 'fler PR:er i teamet jag ledde' },
     ],
     aboutTitle: 'Om mig',
     about: [
