@@ -254,7 +254,9 @@ const jsonLd = {
         if (next && !(e.currentTarget as HTMLElement).contains(next)) open(false);
       });
 
-      if (vibe && !store.get()) {
+      // Opt-in only: the theme prompt never opens on its own, so the first view stays on the content.
+      // Add ?theme-prompt to the URL to show it.
+      if (vibe && new URLSearchParams(location.search).has('theme-prompt')) {
         const close = (theme: Theme) => {
           setTheme(theme);
           vibe.hidden = true;
