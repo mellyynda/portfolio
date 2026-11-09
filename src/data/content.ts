@@ -427,7 +427,7 @@ export const content = {
     stats: [
       { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
       { value: '+50%', label: 'PR throughput in the team I led' },
-      { value: '10×', label: 'team-channel activity, up from ~1 message a day' },
+      { value: '10×', label: 'team-channel engagement' },
       { value: '3×', label: 'PR volume in the team I led' },
     ],
     aboutTitle: 'About me',
@@ -496,7 +496,7 @@ export const content = {
     stats: [
       { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
       { value: '+50 %', label: 'genomströmning av PR:er i teamet jag ledde' },
-      { value: '10×', label: 'aktivitet i teamkanalen, från ~1 meddelande om dagen' },
+      { value: '10×', label: 'engagemang i teamkanalen' },
       { value: '3×', label: 'fler PR:er i teamet jag ledde' },
     ],
     aboutTitle: 'Om mig',
