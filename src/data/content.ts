@@ -27,7 +27,7 @@ const skillGroups = {
   en: [
     {
       name: '',
-      items: ['React, Vue, TypeScript, JavaScript', 'Github Actions, CI/CD', 'Claude(CLI), Copilot(CLI), Cursor, Codex', 'Parallel AI agent workflows (git worktrees)', 'Custom AI Skills&Tool Integrations (MCP)', 'Anthropic SDK', 'RESTful API', 'SDKs & Integrations', 'Playwright, Vitest, Cypress', 'Responsive Design, Web Accessibility (a11y), WCAG', 'Styled Components, Vuetify, Tailwind, Bulma, Bootstrap, Material UI etc.', 'Coralogix, OpenSearch, Sentry', 'Git&Github&Gitlab', 'Node.js & Express.js', 'Firebase, Supabase, PostgresSQL', 'Leaflet&Here maps', 'Agile methodology (SCRUM&Kanban)'],
+      items: ['React, Vue, TypeScript, JavaScript', 'GitHub Actions, CI/CD', 'Claude (CLI), Copilot (CLI), Cursor, Codex', 'Parallel AI agent workflows (git worktrees)', 'Custom AI skills & tool integrations (MCP)', 'Anthropic SDK', 'RESTful API', 'SDKs & Integrations', 'Playwright, Vitest, Cypress', 'Responsive Design, Web Accessibility (a11y), WCAG', 'Styled Components, Vuetify, Tailwind, Bulma, Bootstrap, Material UI etc.', 'Coralogix, OpenSearch, Sentry', 'Git, GitHub & GitLab', 'Node.js & Express.js', 'Firebase, Supabase, PostgreSQL', 'Leaflet & HERE Maps', 'Agile methodology (Scrum & Kanban)'],
     },
   ],
   sv: [
@@ -42,19 +42,19 @@ const jobs: Record<Lang, Job[]> = {
   en: [
     {
       org: 'Worldline / PaymentIQ',
-      place: 'Jan 2022 - Present',
+      place: 'Jan 2022 – Present',
       roles: [
         {
           title: 'Engineering Manager & Software Developer',
-          period: 'Mar 2026 - Present',
+          period: 'Mar 2026 – Present',
           start: '2026-03',
           points: [
             'Leading engineering for payment products: defined code ownership across 10 repositories and automated release and review workflows.',
-            'Completed stalled migration from KnockoutJS to React/TypeScript, delivering remaining views with a safe, per-merchant rollout.',
-            'Led the rebuilding of the Cashier payment app from end-of-life Vue 2 to React/TypeScript: shipped V3 from first commit to production release in under 4 months, then delivered 13 releases since.',
+            'Completed a stalled migration from KnockoutJS to React/TypeScript, delivering remaining views with a safe, per-merchant rollout.',
+            'Led the rebuilding of the Cashier payment app from end-of-life Vue 2 to React/TypeScript: shipped V3 from first commit to production release in under 4 months, followed by weekly releases.',
             'Led delivery of Cashier Plus, a paid premium cashier tier, from planning to launch in about 10 weeks: refined broad product requirements and shipped a self-service Cashier Builder and Analytics in the Backoffice.',
-            'Leading company-wide white-labelling for B2B branding: defined the strategy and delivery plan, coordinated frontend, backend, DevOps and shipped per-domain builds, brand-name checks in every repository and merchant setup instructions.',
-            'Improved performance and reliability of payment applications through Core Web Vitals work, diagnosed and fixed issues affecting checkout conversion and did production incident analysis with Coralogix and OpenSearch (including AI driven).',
+            'Leading company-wide white-labelling for B2B branding: defined the strategy and delivery plan, coordinated frontend, backend and DevOps, and shipped per-domain builds, brand-name checks in every repository and merchant setup instructions.',
+            'Improved performance and reliability of payment applications through Core Web Vitals work, diagnosed and fixed issues affecting checkout conversion, and did production incident analysis with Coralogix and OpenSearch (including AI-driven analysis).',
             'Strengthened quality and security through Playwright end-to-end testing, GitHub Actions CI checks, and improved vulnerability management with automated cross-repository security alerts.',
             'Designed and shared AI-assisted engineering workflows: coordinated parallel coding agents in isolated Git worktrees, reviewed and tested changes before merge, and introduced task-based model selection skills to manage token costs.',
             'Prototyped an AI-powered theme generator for Cashier Builder that generates custom styling to make the Cashier match the merchant’s website design.',
@@ -62,20 +62,20 @@ const jobs: Record<Lang, Job[]> = {
         },
         {
           title: 'Frontend Development Team Lead',
-          period: 'Nov 2025 - Mar 2026',
+          period: 'Nov 2025 – Mar 2026',
           start: '2025-11',
           end: '2026-03',
           points: [
-            'Introduced Scrum to a previously fragmented team, establishing sprint planning, daily standups, retrospectives, and stakeholder reviews to strengthen collaboration, shared ownership, and delivery visibility.',
-            'Turned a quiet, siloed 5 person team into an engaged one: grew team-channel activity to 5–10 messages a day, made PR reviews a shared routine in the team channel which tripled PR volume, increased PR throughput by 50% and halved typical review wait.',
+            'Introduced Scrum to a previously fragmented team, establishing sprint planning, daily stand-ups, retrospectives, and stakeholder reviews to strengthen collaboration, shared ownership, and delivery visibility.',
+            'Turned a quiet, siloed 5-person team into an engaged one: grew team-channel activity to 5–10 messages a day, made PR reviews a shared routine in the team channel which tripled PR volume, increased PR throughput by 50% and halved typical review wait.',
             'Led technical coordination of the Backoffice React/TypeScript migration, delivering 7 core views, improving migration workflows, cross-developer collaboration, and consistency across shared components.',
-            'Improved delivery and test quality: removed manual approval from Backoffice deployments, reduced CI overhead, restructured the Cypress end-to-end suite, added unit tests to the bootstrapper(sdk) pipeline, and added regression tests for cross-origin data access.',
+            'Improved delivery and test quality: removed manual approval from Backoffice deployments, reduced CI overhead, restructured the Cypress end-to-end suite, added unit tests to the bootstrapper (SDK) pipeline, and added regression tests for cross-origin data access.',
             'Laid the groundwork for white-labelling by preparing 5 frontend repositories and adding support for new environments.',
           ],
         },
         {
           title: 'Software Developer',
-          period: 'Jan 2022 - Nov 2025',
+          period: 'Jan 2022 – Nov 2025',
           start: '2022-01',
           end: '2025-11',
           points: [
@@ -90,27 +90,27 @@ const jobs: Record<Lang, Job[]> = {
     },
     {
       org: 'Automile',
-      place: 'Sept 2021 - Jan 2022',
+      place: 'Sept 2021 – Jan 2022',
       roles: [
         {
-          title: 'Development intern',
-          period: 'Sept 2021 - Jan 2022',
+          title: 'Development Intern',
+          period: 'Sept 2021 – Jan 2022',
           start: '2021-09',
           end: '2022-01',
-          points: ['Working with Typescript, Leaflet and Here Maps in order to develop new features for Automile’s web application.'],
+          points: ['Developed features for Automile’s web application using TypeScript, Leaflet and HERE Maps.'],
         },
       ],
     },
     {
-      org: 'Romainian Internal Affair Ministery',
-      place: '2011 - 2019',
+      org: 'Romanian Ministry of Internal Affairs',
+      place: '2011 – 2019',
       roles: [
         {
-          title: 'Operational officer',
-          period: '2011 - 2019',
+          title: 'Operational Officer',
+          period: '2011 – 2019',
           start: '2011',
           end: '2019',
-          points: ['Coordinated operational projects and teams, analysis, reporting and recruitment processes. Managing projects based on the national strategy and goals and coordinating the activity of 7 to 10 people.'],
+          points: ['Coordinated operational projects and teams, analysis, reporting and recruitment processes. Managed projects based on the national strategy and goals, and coordinated the work of 7 to 10 people.'],
         },
       ],
     },
@@ -127,7 +127,7 @@ const jobs: Record<Lang, Job[]> = {
           points: [
             'Leder utvecklingen av betalprodukter: har definierat kodägarskap i 10 repon och automatiserat release- och review-flöden.',
             'Slutförde en avstannad migrering från KnockoutJS till React/TypeScript och levererade de återstående vyerna med en säker utrullning per handlare.',
-            'Ledde ombyggnaden av betalappen Cashier från Vue 2 (end-of-life) till React/TypeScript: levererade V3 från första commit till produktionsrelease på under 4 månader, och har sedan dess levererat 13 releaser.',
+            'Ledde ombyggnaden av betalappen Cashier från Vue 2 (end-of-life) till React/TypeScript: levererade V3 från första commit till produktionsrelease på under 4 månader, följt av veckovisa releaser.',
             'Ledde leveransen av Cashier Plus, en betald premiumnivå av kassan, från planering till lansering på cirka 10 veckor: förfinade breda produktkrav och levererade en självbetjänad Cashier Builder och Analytics i Backoffice.',
             'Leder företagsövergripande white-labelling för B2B-varumärken: definierade strategin och leveransplanen, samordnade frontend, backend och DevOps samt levererade byggen per domän, varumärkeskontroller i alla repon och installationsinstruktioner för handlare.',
             'Förbättrade prestanda och tillförlitlighet i betalapplikationer genom arbete med Core Web Vitals, diagnostiserade och åtgärdade problem som påverkade konverteringen i kassan och gjorde incidentanalys i produktion med Coralogix och OpenSearch (även AI-driven).',
@@ -142,7 +142,7 @@ const jobs: Record<Lang, Job[]> = {
           start: '2025-11',
           end: '2026-03',
           points: [
-            'Införde Scrum i ett tidigare splittrat team med sprintplanering, daily standups, retrospektiv och avstämningar med intressenter för att stärka samarbete, gemensamt ägarskap och insyn i leveranserna.',
+            'Införde Scrum i ett tidigare splittrat team med sprintplanering, daily stand-ups, retrospektiv och avstämningar med intressenter för att stärka samarbete, gemensamt ägarskap och insyn i leveranserna.',
             'Gjorde ett tyst och uppdelat team på 5 personer engagerat: ökade aktiviteten i teamkanalen till 5–10 meddelanden om dagen, gjorde PR-granskning till en gemensam rutin i teamkanalen vilket tredubblade antalet PR:er, ökade genomströmningen av PR:er med 50 % och halverade den typiska väntetiden på review.',
             'Ledde den tekniska samordningen av migreringen av Backoffice till React/TypeScript, levererade 7 centrala vyer och förbättrade migreringsflöden, samarbetet mellan utvecklare och enhetligheten i delade komponenter.',
             'Förbättrade leverans- och testkvalitet: tog bort manuellt godkännande av Backoffice-driftsättningar, minskade CI-overhead, strukturerade om Cypress-sviten för end-to-end-tester, lade till enhetstester i pipelinen för bootstrappern (SDK) och lade till regressionstester för dataåtkomst mellan origins.',
@@ -422,7 +422,7 @@ export const content = {
     },
     role: ['Engineering Manager', 'Senior Software Developer'],
     roleSub: 'React · TypeScript · Engineering Manager',
-    lede: 'I’m passionate about building great software, from writing the code to leading the team that ships it. I specialize in React, TypeScript and Vue, and I’ve delivered payment platforms, enterprise systems and third-party integrations.',
+    lede: 'I’m passionate about building great software, from writing the code to leading the team that ships it. I specialise in React, TypeScript and Vue, and I’ve delivered payment platforms, enterprise systems and third-party integrations.',
     cta: { primary: 'Get in touch', secondary: 'LinkedIn' },
     stats: [
       { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
@@ -432,7 +432,7 @@ export const content = {
     ],
     aboutTitle: 'About me',
     about: [
-      'I’ve helped modernize business-critical systems, including a large-scale migration from KnockoutJS to React and the rebuilding of a production payment application.',
+      'I’ve helped modernise business-critical systems, including a large-scale migration from KnockoutJS to React and the rebuilding of a production payment application.',
       'I also design AI-assisted development workflows, combining coding agents, custom automation, testing, and human oversight to improve how software is built.',
       'I enjoy solving complex problems, creating reliable and intuitive products, and working with people who care about building technology that makes a difference.',
     ],
@@ -448,9 +448,9 @@ export const content = {
     eduTitle: 'Education',
     education: [
       { name: 'Professional Agile Leadership I (PAL I)', org: 'Scrum.org', period: 'Aug 2025' },
-      { name: 'KYH Yrkeshögskola Stockholm - Front end Developer', org: '', period: '2020 - 2022' },
-      { name: 'Master’s of Psychology-Intelligence', org: 'Academia Nationala de Informatii Mihai Viteazul Bucuresti', period: '2011 - 2013' },
-      { name: 'Bachelor’s of Psychology-Intelligence', org: 'Academia Nationala de Informatii Mihai Viteazul Bucuresti', period: '2008 - 2011' },
+      { name: 'KYH Yrkeshögskola Stockholm – Front-end Developer', org: '', period: '2020 – 2022' },
+      { name: 'Master’s in Psychology – Intelligence', org: 'Academia Nationala de Informatii Mihai Viteazul, Bucharest', period: '2011 – 2013' },
+      { name: 'Bachelor’s in Psychology – Intelligence', org: 'Academia Nationala de Informatii Mihai Viteazul, Bucharest', period: '2008 – 2011' },
     ],
     langsTitle: 'Languages',
     languages: [
