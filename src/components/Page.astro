@@ -16,7 +16,7 @@ const w = c.words;
     <section class="split-sec" id="top" aria-labelledby="name">
       <div class="content hero">
         <h1 id="name">Melinda Sava</h1>
-        <p class="role">{c.role}</p>
+        <p class="role">{c.role.map((r, i) => <>{i > 0 && ' '}<span class="role-part">{r}</span></>)}</p>
         <p class="lede">{c.lede}</p>
         <div class="actions">
           <a class="btn btn-primary" href={`mailto:${EMAIL}`}>{c.cta.primary}</a>
