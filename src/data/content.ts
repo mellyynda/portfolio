@@ -425,8 +425,7 @@ export const content = {
     lede: 'I’m a passionate software developer specializing in React, Vue, TypeScript, and complex web applications, with experience building enterprise software, payment platforms, and third-party integrations.',
     cta: { primary: 'Get in touch', secondary: 'LinkedIn' },
     stats: [
-      { value: '< 4 mo', label: 'Cashier V3: from first commit to production release' },
-      { value: '13', label: 'Cashier V3 releases since launch' },
+      { value: '< 4 mo', label: 'Cashier V3: a complete rewrite, from first commit to production' },
       { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
       { value: '+50%', label: 'PR throughput in the team I led' },
     ],
@@ -494,8 +493,7 @@ export const content = {
     lede: 'Jag är en passionerad mjukvaruutvecklare specialiserad på React, Vue, TypeScript och komplexa webbapplikationer, med erfarenhet av att bygga affärssystem, betalplattformar och tredjepartsintegrationer.',
     cta: { primary: 'Hör av dig', secondary: 'LinkedIn' },
     stats: [
-      { value: '< 4 mån', label: 'Cashier V3: från första commit till produktionsrelease' },
-      { value: '13', label: 'releaser av Cashier V3 sedan lanseringen' },
+      { value: '< 4 mån', label: 'Cashier V3: helt omskriven, från första commit till produktion' },
       { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
       { value: '+50 %', label: 'genomströmning av PR:er i teamet jag ledde' },
     ],

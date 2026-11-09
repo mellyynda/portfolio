@@ -533,6 +533,10 @@ h1 {
 }
 .stats > div:nth-child(1) {
   --stat: var(--rust);
+  grid-column: 1 / -1;
+}
+.stats > div:nth-child(1) dt {
+  max-width: 22rem;
 }
 .stats > div:nth-child(2) {
   --stat: var(--wine);
