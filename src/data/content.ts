@@ -422,7 +422,7 @@ export const content = {
     },
     role: ['Engineering Manager', 'Senior Software Developer'],
     roleSub: 'React · TypeScript · Engineering Manager',
-    lede: 'I’m a passionate software developer specializing in React, Vue, TypeScript, and complex web applications, with experience building enterprise software, payment platforms, and third-party integrations.',
+    lede: 'I’m passionate about building great software, from writing the code to leading the team that ships it. I specialize in React, TypeScript and Vue, and I’ve delivered payment platforms, enterprise systems and third-party integrations.',
     cta: { primary: 'Get in touch', secondary: 'LinkedIn' },
     stats: [
       { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
@@ -491,7 +491,7 @@ export const content = {
     },
     role: ['Engineering Manager', 'Senior mjukvaruutvecklare'],
     roleSub: 'React · TypeScript · Engineering Manager',
-    lede: 'Jag är en passionerad mjukvaruutvecklare specialiserad på React, Vue, TypeScript och komplexa webbapplikationer, med erfarenhet av att bygga affärssystem, betalplattformar och tredjepartsintegrationer.',
+    lede: 'Jag brinner för att bygga riktigt bra mjukvara, från att skriva koden till att leda teamet som levererar den. Jag är specialiserad på React, TypeScript och Vue och har levererat betalplattformar, affärssystem och tredjepartsintegrationer.',
     cta: { primary: 'Hör av dig', secondary: 'LinkedIn' },
     stats: [
       { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
