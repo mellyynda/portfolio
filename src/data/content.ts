@@ -425,10 +425,10 @@ export const content = {
     lede: 'I’m a passionate software developer specializing in React, Vue, TypeScript, and complex web applications, with experience building enterprise software, payment platforms, and third-party integrations.',
     cta: { primary: 'Get in touch', secondary: 'LinkedIn' },
     stats: [
-      { value: '3×', label: 'PR volume in the team I led' },
+      { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
       { value: '+50%', label: 'PR throughput in the team I led' },
       { value: '10×', label: 'team-channel activity, up from ~1 message a day' },
-      { value: '~10 wk', label: 'Cashier Plus: from planning to launch' },
+      { value: '3×', label: 'PR volume in the team I led' },
     ],
     aboutTitle: 'About me',
     about: [
@@ -494,10 +494,10 @@ export const content = {
     lede: 'Jag är en passionerad mjukvaruutvecklare specialiserad på React, Vue, TypeScript och komplexa webbapplikationer, med erfarenhet av att bygga affärssystem, betalplattformar och tredjepartsintegrationer.',
     cta: { primary: 'Hör av dig', secondary: 'LinkedIn' },
     stats: [
-      { value: '3×', label: 'fler PR:er i teamet jag ledde' },
+      { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
       { value: '+50 %', label: 'genomströmning av PR:er i teamet jag ledde' },
       { value: '10×', label: 'aktivitet i teamkanalen, från ~1 meddelande om dagen' },
-      { value: '~10 v', label: 'Cashier Plus: från planering till lansering' },
+      { value: '3×', label: 'fler PR:er i teamet jag ledde' },
     ],
     aboutTitle: 'Om mig',
     about: [
