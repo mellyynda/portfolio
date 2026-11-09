@@ -964,6 +964,9 @@ h1 {
   top: calc(100% + 0.6rem);
   right: 0;
   width: min(19rem, calc(100vw - 2rem));
+  max-height: calc(100svh - 6rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.75rem;
   background: var(--bg);
   color: var(--ink);
@@ -973,6 +976,15 @@ h1 {
 }
 .theme-menu[hidden] {
   display: none;
+}
+/* narrow screens: the pill isn't at the right edge, so anchor the menu to the whole button group to keep it on screen */
+@media (max-width: 40rem) {
+  .chrome-right {
+    position: relative;
+  }
+  .theme-switch {
+    position: static;
+  }
 }
 .theme-menu fieldset {
   margin: 0;
