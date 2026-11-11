@@ -53,7 +53,7 @@ async function overLimit(env: Env, ip: string): Promise<boolean> {
   const hourKey = `ip:${ip}:${now.toISOString().slice(0, 13)}`;
   const dayKey = `all:${now.toISOString().slice(0, 10)}`;
   const [ipCount, dayCount] = await Promise.all([kv.get(hourKey), kv.get(dayKey)]).then((v) => v.map((n) => Number(n ?? 0)));
-  if (ipCount >= Number(env.HOURLY_LIMIT_PER_IP ?? 5) || dayCount >= Number(env.DAILY_LIMIT_GLOBAL ?? 300)) return true;
+  if (ipCount >= Number(env.HOURLY_LIMIT_PER_IP ?? 10) || dayCount >= Number(env.DAILY_LIMIT_GLOBAL ?? 300)) return true;
   await Promise.all([
     kv.put(hourKey, String(ipCount + 1), { expirationTtl: 3600 + 60 }),
     kv.put(dayKey, String(dayCount + 1), { expirationTtl: 86400 + 60 }),
