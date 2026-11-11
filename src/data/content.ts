@@ -454,8 +454,8 @@ export const content = {
     ],
     langsTitle: 'Languages',
     languages: [
-      { name: 'English', level: 'C2' },
-      { name: 'Swedish', level: 'C1' },
+      { name: 'English', level: 'C1' },
+      { name: 'Swedish', level: 'B2' },
     ],
     contactTitle: 'Let’s talk',
     contactText: 'Open to conversations about senior frontend, tech lead and engineering manager roles in Sweden.',
@@ -523,8 +523,8 @@ export const content = {
     ],
     langsTitle: 'Språk',
     languages: [
-      { name: 'Engelska', level: 'C2' },
-      { name: 'Svenska', level: 'C1' },
+      { name: 'Engelska', level: 'C1' },
+      { name: 'Svenska', level: 'B2' },
     ],
     contactTitle: 'Hör av dig',
     contactText: 'Öppen för samtal om roller som senior frontendutvecklare, tech lead eller engineering manager i Sverige.',
