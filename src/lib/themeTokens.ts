@@ -13,6 +13,20 @@ export const FONTS = {
 } as const;
 export type FontId = keyof typeof FONTS;
 
+/**
+ * Width of each heading font's uppercase letters relative to condensed Bricolage, which the big panel words are sized for.
+ * Measured in Chromium, plus a small margin; system fonts get more because they differ between operating systems.
+ */
+export const DISPLAY_WIDTH: Record<FontId, number> = {
+  bricolage: 1,
+  manrope: 1.32,
+  fraunces: 1.45,
+  'space-mono': 1.32,
+  atkinson: 1.3,
+  'system-sans': 1.25,
+  'system-serif': 1.5,
+};
+
 export const RADII = { none: '0px', small: '6px', medium: '14px', large: '24px' } as const;
 export const SHADOWS = ['none', 'soft', 'hard', 'glow'] as const;
 export const BACKGROUNDS = ['plain', 'dots', 'grid', 'diagonal', 'gradient'] as const;
@@ -207,6 +221,7 @@ export function tokensToVars(t: ThemeTokens): Record<string, string> {
     '--ai-panel-text': c.panelText,
     '--ai-highlight': c.highlight,
     '--ai-display': FONTS[t.fonts.heading],
+    '--ai-display-w': String(DISPLAY_WIDTH[t.fonts.heading]),
     '--ai-body': FONTS[t.fonts.body],
     '--ai-radius': RADII[t.radius],
     '--ai-shadow': shadow,
