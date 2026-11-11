@@ -481,6 +481,7 @@ export const content = {
     contactTitle: 'Let’s talk',
     contactText: 'Open to conversations about senior frontend, tech lead and engineering manager roles in Sweden.',
     footer: 'Built with Astro. Static HTML, no tracking.',
+    footerAnalytics: 'Built with Astro. Anonymous visit stats via Umami: no cookies, no personal data. Theme prompts aren’t stored.',
   },
   sv: {
     lang: 'sv',
@@ -571,6 +572,7 @@ export const content = {
     contactTitle: 'Hör av dig',
     contactText: 'Öppen för samtal om roller som senior frontendutvecklare, tech lead eller engineering manager i Sverige.',
     footer: 'Byggd med Astro. Statisk HTML, ingen spårning.',
+    footerAnalytics: 'Byggd med Astro. Anonym besöksstatistik via Umami: inga kakor, inga personuppgifter. Temabeskrivningar sparas inte.',
   },
 } as const;
 
