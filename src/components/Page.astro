@@ -188,7 +188,7 @@ const w = c.words;
   </main>
   <footer class="footer">
     <p>© {year} Melinda Sava · Stockholm</p>
-    <p>{c.footer}</p>
+    <p>{import.meta.env.PROD && import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ? c.footerAnalytics : c.footer}</p>
   </footer>
   <ThemeFx />
   <script>

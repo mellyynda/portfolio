@@ -44,6 +44,7 @@ const t = c.aiTheme;
 
 <script>
   import { ensureContrast, tokensToVars, validateTokens, MAX_PROMPT_LENGTH } from '../lib/themeTokens';
+  import { track } from '../lib/analytics';
 
   const API = import.meta.env.PUBLIC_THEME_API_URL as string | undefined;
   const dialog = document.querySelector<HTMLDialogElement>('.ai-dialog');
@@ -177,6 +178,7 @@ const t = c.aiTheme;
         store.set(KEY_VARS, JSON.stringify(out.vars));
         if (customOpt) customOpt.hidden = false;
         setTheme('custom', out.vars);
+        track('theme-generated', { theme: out.name.slice(0, 60), lang: document.documentElement.lang });
         say(strings.success.replace('{name}', out.name) + (out.adjusted ? ' ' + strings.adjusted : ''), 'ok');
       } catch {
         say(strings.errorGeneric, 'error');

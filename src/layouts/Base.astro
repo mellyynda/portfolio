@@ -22,6 +22,15 @@ const altLang = lang === 'en' ? 'sv' : 'en';
 const ogImage = `${SITE_URL}/og.png`;
 // The AI theme generator only exists when the Worker URL is set at build time, so the live site never shows a broken button.
 const aiEnabled = Boolean(import.meta.env.PUBLIC_THEME_API_URL);
+// Cookieless Umami analytics: only in production builds with a website ID, and only on the listed domains.
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const umami = import.meta.env.PROD && umamiId
+  ? {
+      id: umamiId,
+      src: import.meta.env.PUBLIC_UMAMI_SCRIPT_URL || 'https://cloud.umami.is/script.js',
+      domains: import.meta.env.PUBLIC_UMAMI_DOMAINS || new URL(SITE_URL).hostname,
+    }
+  : null;
 const themeIds = aiEnabled ? (['classic', 'modern', 'accessible', 'custom'] as const) : (['classic', 'modern', 'accessible'] as const);
 // Pre-paint: apply the saved theme before first render. Stored custom vars are re-checked against a strict allowlist.
 const prePaint = `try {
@@ -120,6 +129,7 @@ const jsonLd = {
     <link rel="sitemap" href={asset('/sitemap.xml')} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline set:html={prePaint} />
+    {umami && <script is:inline defer src={umami.src} data-website-id={umami.id} data-domains={umami.domains} />}
   </head>
   <body>
     <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Hoppa till innehåll'}</a>

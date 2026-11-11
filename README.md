@@ -54,3 +54,26 @@ The first deploy also creates the `RATE_KV` namespace for the rate limits. Limit
 Then enable it on the site: in GitHub, go to **Settings → Secrets and variables → Actions → Variables** and add `PUBLIC_THEME_API_URL` = `https://portfolio-theme.<subdomain>.workers.dev/theme`. The next deploy of `main` shows the feature. Delete the variable to hide it again.
 
 **Set a spend limit:** in the [Anthropic Console](https://console.anthropic.com/settings/limits), set a low monthly spend limit for the workspace that owns the key (a few dollars is plenty for Claude Haiku), and consider a dedicated key for this Worker so you can revoke it on its own.
+
+## Analytics (optional)
+
+Page views and a `theme-generated` event are tracked with [Umami Cloud](https://umami.is) (free Hobby plan). Umami sets no cookies, stores nothing on the visitor’s device and collects no personal data, so no consent banner is needed. The footer says so in both languages.
+
+- The script loads (`defer`) only in production builds when `PUBLIC_UMAMI_WEBSITE_ID` is set, and only reports from `mellyynda.github.io`. Without the variable nothing loads and the footer keeps saying "no tracking". `npm run dev` never tracks.
+- `theme-generated` is sent after a theme is generated and applied, with the theme name and page language only. The visitor's prompt is never sent (see `src/lib/analytics.ts`).
+
+### Set up
+
+1. Create a free account at [cloud.umami.is](https://cloud.umami.is/signup).
+2. **Settings → Websites → Add website**: name `Portfolio`, domain `mellyynda.github.io`. Open the website's **Edit** page and copy the **Website ID** (a UUID).
+3. In GitHub, go to **Settings → Secrets and variables → Actions → Variables** and add `PUBLIC_UMAMI_WEBSITE_ID` = the website ID. The next deploy of `main` turns it on. Delete the variable to turn it off.
+
+Stats appear in the Umami dashboard under **Overview** (page views, `/portfolio/` vs `/portfolio/sv/`) and **Events** (`theme-generated`, with theme name and language as properties).
+
+To test locally against a real or dummy ID (reports from localhost only when you override the domain):
+
+```sh
+PUBLIC_UMAMI_WEBSITE_ID=<id> PUBLIC_UMAMI_DOMAINS=localhost npm run build && npm run preview
+```
+
+`PUBLIC_UMAMI_SCRIPT_URL` overrides the script URL (default `https://cloud.umami.is/script.js`), for example for a self-hosted Umami.
