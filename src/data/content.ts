@@ -5,7 +5,6 @@ export const SITE_URL = 'https://mellyynda.github.io' + BASE;
 export const asset = (path: string) => BASE + path;
 export const EMAIL = 'melinda.sava.td@gmail.com';
 export const LINKEDIN = 'https://www.linkedin.com/in/melindasava/';
-export const GITHUB = 'https://github.com/mellyynda';
 
 export const paths: Record<Lang, string> = { en: '/', sv: '/sv/' };
 

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Panel from './Panel.astro';
 import ThemeFx from './ThemeFx.astro';
-import { EMAIL, LINKEDIN, GITHUB, asset, type Content } from '../data/content';
+import { EMAIL, LINKEDIN, asset, type Content } from '../data/content';
 
 interface Props {
   c: Content;
@@ -21,7 +21,6 @@ const w = c.words;
         <div class="actions">
           <a class="btn btn-primary" href={`mailto:${EMAIL}`}>{c.cta.primary}</a>
           <a class="btn" href={LINKEDIN} rel="me noopener" target="_blank">{c.cta.secondary} ↗</a>
-          <a class="btn" href={GITHUB} rel="me noopener" target="_blank">GitHub ↗</a>
         </div>
         <dl class="stats">
           {c.stats.map((s) => {
@@ -180,7 +179,6 @@ const w = c.words;
         <ul class="contact-links">
           <li><a href={`mailto:${EMAIL}`}><span class="k">Email</span><span class="v">{EMAIL}</span></a></li>
           <li><a href={LINKEDIN} rel="me noopener" target="_blank"><span class="k">LinkedIn</span><span class="v">in/melindasava ↗</span></a></li>
-          <li><a href={GITHUB} rel="me noopener" target="_blank"><span class="k">GitHub</span><span class="v">@mellyynda ↗</span></a></li>
         </ul>
       </div>
       <Panel word={w.contact} theme="sand" index="06" />

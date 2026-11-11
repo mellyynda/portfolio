@@ -10,7 +10,7 @@ import '../styles/global.css';
 import '../styles/retro.css';
 import '../styles/ai-theme.css';
 import ThemeGenerator from '../components/ThemeGenerator.astro';
-import { SITE_URL, EMAIL, LINKEDIN, GITHUB, paths, asset, type Content } from '../data/content';
+import { SITE_URL, EMAIL, LINKEDIN, paths, asset, type Content } from '../data/content';
 
 interface Props {
   c: Content;
@@ -59,7 +59,7 @@ const jsonLd = {
       email: `mailto:${EMAIL}`,
       url: SITE_URL + '/',
       image: ogImage,
-      sameAs: [LINKEDIN, GITHUB],
+      sameAs: [LINKEDIN],
       address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
       worksFor: { '@type': 'Organization', name: 'Worldline / PaymentIQ' },
       knowsLanguage: [
