@@ -338,9 +338,18 @@ const jsonLd = {
           if (btn.getAttribute('aria-expanded') === 'true') set(false);
         });
         menu.addEventListener('click', (e) => {
-          // Only in-page links close the nav; closing it before a page change flashes the old page.
           if ((e.target as HTMLElement).closest('a[href^="#"]')) set(false);
         });
+        // Switching language from the open nav: play the nav's normal close transition, then navigate.
+        for (const link of document.querySelectorAll<HTMLAnchorElement>('.lang-pill, .menu-lang')) {
+          link.addEventListener('click', (e) => {
+            if (btn.getAttribute('aria-expanded') !== 'true' || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
+            set(false);
+            const secs = Math.max(0, ...getComputedStyle(menu).transitionDuration.split(',').map(parseFloat).filter((n) => !Number.isNaN(n)));
+            setTimeout(() => location.assign(link.href), secs * 1000);
+          });
+        }
         // Back/forward cache can restore the page with the nav still open.
         addEventListener('pageshow', (e) => {
           if (e.persisted && btn.getAttribute('aria-expanded') === 'true') set(false);
