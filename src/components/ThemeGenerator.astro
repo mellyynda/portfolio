@@ -1,0 +1,188 @@
+---
+// "Generate a theme" dialog. Only rendered when PUBLIC_THEME_API_URL is set at build time.
+import type { Content } from '../data/content';
+import { MAX_PROMPT_LENGTH } from '../lib/themeTokens';
+
+interface Props {
+  c: Content;
+}
+const { c } = Astro.props;
+const t = c.aiTheme;
+---
+<dialog class="ai-dialog" aria-labelledby="ai-title" aria-describedby="ai-intro">
+  <form class="ai-form" novalidate>
+    <button class="ai-close" type="button" aria-label={t.close} data-close>×</button>
+    <h2 id="ai-title" class="ai-title">{t.title}</h2>
+    <p id="ai-intro" class="ai-intro">{t.intro}</p>
+    <label class="ai-label" for="ai-prompt">{t.label}</label>
+    <div class="ai-row">
+      <input
+        id="ai-prompt"
+        class="ai-input"
+        name="prompt"
+        type="text"
+        maxlength={MAX_PROMPT_LENGTH}
+        autocomplete="off"
+        placeholder={t.placeholder}
+        aria-describedby="ai-note"
+        required
+      />
+      <button class="btn btn-primary ai-submit" type="submit">{t.submit}</button>
+    </div>
+    <p id="ai-note" class="ai-note">{t.note}</p>
+    <p class="ai-label" id="ai-examples-label">{t.examplesLabel}</p>
+    <ul class="ai-examples" aria-labelledby="ai-examples-label">
+      {t.examples.map((e) => <li><button type="button" class="ai-example">{e}</button></li>)}
+    </ul>
+    <p class="ai-status" role="status" aria-live="polite"></p>
+    <div class="ai-footer">
+      <button class="btn ai-reset" type="button">{t.reset}</button>
+    </div>
+  </form>
+</dialog>
+<script is:inline type="application/json" id="ai-strings" set:html={JSON.stringify(t)} />
+
+<script>
+  import { ensureContrast, tokensToVars, validateTokens, MAX_PROMPT_LENGTH } from '../lib/themeTokens';
+
+  const API = import.meta.env.PUBLIC_THEME_API_URL as string | undefined;
+  const dialog = document.querySelector<HTMLDialogElement>('.ai-dialog');
+  const strings = JSON.parse(document.getElementById('ai-strings')?.textContent ?? '{}') as Record<string, string>;
+  const KEY_TOKENS = 'theme-custom';
+  const KEY_VARS = 'theme-custom-vars';
+
+  const store = {
+    get: (k: string) => {
+      try {
+        return localStorage.getItem(k);
+      } catch {
+        return null;
+      }
+    },
+    set: (k: string, v: string) => {
+      try {
+        localStorage.setItem(k, v);
+      } catch {}
+    },
+    del: (k: string) => {
+      try {
+        localStorage.removeItem(k);
+      } catch {}
+    },
+  };
+
+  const customOpt = document.querySelector<HTMLElement>('.theme-opt[data-theme-opt="custom"]');
+  const setTheme = (theme: string, vars?: Record<string, string>) =>
+    document.dispatchEvent(new CustomEvent('settheme', { detail: { theme, vars } }));
+
+  /** Validate + contrast-check tokens. Returns CSS vars or a reason it failed. */
+  function prepare(raw: unknown): { vars: Record<string, string>; adjusted: boolean; name: string; tokens: unknown } | 'invalid' | 'unreadable' {
+    const tokens = validateTokens(raw);
+    if (!tokens) return 'invalid';
+    const checked = ensureContrast(tokens);
+    if (!checked) return 'unreadable';
+    return { vars: tokensToVars(checked.tokens), adjusted: checked.adjusted.length > 0, name: checked.tokens.name, tokens: checked.tokens };
+  }
+
+  // Re-validate whatever is stored on every load, so tampered or outdated values are dropped.
+  // Vars live on <html> but only take effect under [data-theme='custom'] (see ai-theme.css).
+  const root = document.documentElement;
+  const stored = store.get(KEY_TOKENS);
+  let parsed: unknown = null;
+  try {
+    parsed = stored ? JSON.parse(stored) : null;
+  } catch {}
+  const initial = parsed ? prepare(parsed) : 'invalid';
+  if (typeof initial === 'object') {
+    for (const [k, v] of Object.entries(initial.vars)) root.style.setProperty(k, v);
+    store.set(KEY_VARS, JSON.stringify(initial.vars));
+    if (customOpt) customOpt.hidden = false;
+  } else {
+    store.del(KEY_TOKENS);
+    store.del(KEY_VARS);
+    if (root.dataset.theme === 'custom') setTheme('classic');
+  }
+
+  if (dialog && API) {
+    const form = dialog.querySelector<HTMLFormElement>('.ai-form')!;
+    const input = dialog.querySelector<HTMLInputElement>('.ai-input')!;
+    const submit = dialog.querySelector<HTMLButtonElement>('.ai-submit')!;
+    const status = dialog.querySelector<HTMLElement>('.ai-status')!;
+    let opener: HTMLElement | null = null;
+    let busy = false;
+
+    const say = (msg: string, kind: 'info' | 'error' | 'ok' = 'info') => {
+      status.textContent = msg;
+      status.dataset.kind = kind;
+    };
+    const setBusy = (b: boolean) => {
+      busy = b;
+      form.setAttribute('aria-busy', String(b));
+      submit.disabled = b;
+      input.readOnly = b;
+      for (const el of dialog.querySelectorAll<HTMLButtonElement>('.ai-example')) el.disabled = b;
+    };
+
+    document.addEventListener('opengenerator', (e) => {
+      opener = (e as CustomEvent<HTMLElement | null>).detail ?? null;
+      say('');
+      dialog.showModal();
+      input.focus();
+    });
+    dialog.addEventListener('close', () => opener?.focus());
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    for (const b of dialog.querySelectorAll<HTMLButtonElement>('.ai-example')) {
+      b.addEventListener('click', () => {
+        input.value = b.textContent ?? '';
+        form.requestSubmit();
+      });
+    }
+
+    dialog.querySelector('.ai-reset')?.addEventListener('click', () => {
+      store.del(KEY_TOKENS);
+      store.del(KEY_VARS);
+      if (customOpt) customOpt.hidden = true;
+      setTheme('classic');
+      dialog.close();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (busy) return;
+      const prompt = input.value.trim().slice(0, MAX_PROMPT_LENGTH);
+      if (!prompt) {
+        say(strings.errorEmpty, 'error');
+        input.focus();
+        return;
+      }
+      setBusy(true);
+      say(strings.loading);
+      try {
+        const res = await fetch(API, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ prompt }),
+        });
+        if (res.status === 429) return say(strings.errorRate, 'error');
+        if (!res.ok) return say(strings.errorGeneric, 'error');
+        const data = (await res.json()) as { tokens?: unknown } | null;
+        const out = prepare(data?.tokens);
+        if (out === 'invalid') return say(strings.errorGeneric, 'error');
+        if (out === 'unreadable') return say(strings.errorUnreadable, 'error');
+        store.set(KEY_TOKENS, JSON.stringify(out.tokens));
+        store.set(KEY_VARS, JSON.stringify(out.vars));
+        if (customOpt) customOpt.hidden = false;
+        setTheme('custom', out.vars);
+        say(strings.success.replace('{name}', out.name) + (out.adjusted ? ' ' + strings.adjusted : ''), 'ok');
+      } catch {
+        say(strings.errorGeneric, 'error');
+      } finally {
+        setBusy(false);
+      }
+    });
+  }
+</script>

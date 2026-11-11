@@ -8,6 +8,8 @@ import '@fontsource/space-mono/400.css';
 import '@fontsource/space-mono/700.css';
 import '../styles/global.css';
 import '../styles/retro.css';
+import '../styles/ai-theme.css';
+import ThemeGenerator from '../components/ThemeGenerator.astro';
 import { SITE_URL, EMAIL, LINKEDIN, GITHUB, paths, asset, type Content } from '../data/content';
 
 interface Props {
@@ -18,7 +20,22 @@ const lang = c.lang;
 const url = SITE_URL + paths[lang];
 const altLang = lang === 'en' ? 'sv' : 'en';
 const ogImage = `${SITE_URL}/og.png`;
-const themeIds = ['classic', 'modern', 'accessible'] as const;
+// The AI theme generator only exists when the Worker URL is set at build time, so the live site never shows a broken button.
+const aiEnabled = Boolean(import.meta.env.PUBLIC_THEME_API_URL);
+const themeIds = aiEnabled ? (['classic', 'modern', 'accessible', 'custom'] as const) : (['classic', 'modern', 'accessible'] as const);
+// Pre-paint: apply the saved theme before first render. Stored custom vars are re-checked against a strict allowlist.
+const prePaint = `try {
+  var t = localStorage.getItem('theme');
+  if (t === 'modern' || t === 'accessible') document.documentElement.dataset.theme = t;${aiEnabled ? `
+  else if (t === 'custom') {
+    var v = JSON.parse(localStorage.getItem('theme-custom-vars') || 'null'), ok = v && typeof v === 'object';
+    if (ok) for (var k in v) if (!/^--ai-[a-z-]+$/.test(k) || typeof v[k] !== 'string' || !/^[#\\w\\s,'().%-]{1,400}$/.test(v[k])) ok = false;
+    if (ok) {
+      for (var k2 in v) document.documentElement.style.setProperty(k2, v[k2]);
+      document.documentElement.dataset.theme = 'custom';
+    }
+  }` : ''}
+} catch (e) {}`;
 
 const current = c.jobs[0].roles[0];
 const jsonLd = {
@@ -102,12 +119,7 @@ const jsonLd = {
 
     <link rel="sitemap" href={asset('/sitemap.xml')} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <script is:inline>
-      try {
-        var t = localStorage.getItem('theme');
-        if (t === 'modern' || t === 'accessible') document.documentElement.dataset.theme = t;
-      } catch (e) {}
-    </script>
+    <script is:inline set:html={prePaint} />
   </head>
   <body>
     <a class="skip" href="#main">{lang === 'en' ? 'Skip to content' : 'Hoppa till innehåll'}</a>
@@ -126,7 +138,7 @@ const jsonLd = {
             <fieldset>
               <legend>{c.themes.legend}</legend>
               {themeIds.map((id) => (
-                <label class="theme-opt">
+                <label class="theme-opt" data-theme-opt={id} hidden={id === 'custom'}>
                   <input type="radio" name="theme" value={id} checked={id === 'classic'} aria-describedby={`theme-${id}-desc`} />
                   <span class="theme-opt-text">
                     <span class="theme-opt-name">{c.themes[id].name}</span>
@@ -135,6 +147,11 @@ const jsonLd = {
                 </label>
               ))}
             </fieldset>
+            {aiEnabled && (
+              <button class="theme-gen" type="button" aria-haspopup="dialog">
+                <span aria-hidden="true">✨</span> {c.themes.generate}
+              </button>
+            )}
           </div>
         </div>
         <a class="lang-pill" href={asset(paths[altLang])} hreflang={altLang} lang={altLang} aria-label={c.nav.switchLabel} title={c.nav.switchHint}>{altLang.toUpperCase()}</a>
@@ -155,6 +172,7 @@ const jsonLd = {
       <a class="menu-lang" href={asset(paths[altLang])} hreflang={altLang} lang={altLang}>{c.nav.switchLabel} →</a>
     </nav>
     <slot />
+    {aiEnabled && <ThemeGenerator c={c} />}
     <aside class="vibe" aria-labelledby="vibe-q" hidden>
       <button class="vibe-close" type="button" aria-label={c.vibe.close}>×</button>
       <p id="vibe-q" class="vibe-q">{c.vibe.question}</p>
@@ -166,8 +184,9 @@ const jsonLd = {
       </div>
     </aside>
     <script>
-      type Theme = 'classic' | 'modern' | 'accessible';
-      const themes: Theme[] = ['classic', 'modern', 'accessible'];
+      type Theme = 'classic' | 'modern' | 'accessible' | 'custom';
+      const aiEnabled = Boolean(import.meta.env.PUBLIC_THEME_API_URL);
+      const themes: Theme[] = ['classic', 'modern', 'accessible', ...(aiEnabled ? (['custom'] as const) : [])];
       const root = document.documentElement;
       const pill = document.querySelector<HTMLButtonElement>('.theme-pill');
       const panel = document.getElementById('theme-menu');
@@ -187,7 +206,18 @@ const jsonLd = {
           } catch {}
         },
       };
-      const current = (): Theme => (themes.includes(root.dataset.theme as Theme) ? (root.dataset.theme as Theme) : 'classic');
+      const hasCustom = () => {
+        try {
+          return Boolean(localStorage.getItem('theme-custom-vars'));
+        } catch {
+          return false;
+        }
+      };
+      const current = (): Theme => {
+        const t = root.dataset.theme as Theme;
+        if (t === 'custom' && !(aiEnabled && hasCustom())) return 'classic';
+        return themes.includes(t) ? t : 'classic';
+      };
       const apply = (theme: Theme) => {
         if (theme === 'classic') delete root.dataset.theme;
         else root.dataset.theme = theme;
@@ -199,12 +229,13 @@ const jsonLd = {
       let lastPointer: { x: number; y: number } | null = null;
       document.addEventListener('pointerdown', (e) => (lastPointer = { x: e.clientX, y: e.clientY }), { capture: true });
       document.addEventListener('keydown', () => (lastPointer = null), { capture: true });
-      const setTheme = (theme: Theme) => {
+      const setTheme = (theme: Theme, vars?: Record<string, string>) => {
         const run = () => {
+          if (vars) for (const [k, v] of Object.entries(vars)) root.style.setProperty(k, v);
           apply(theme);
           store.set(theme);
         };
-        if (theme === current() || reduceMotion.matches || !document.startViewTransition) return run();
+        if ((theme === current() && !vars) || reduceMotion.matches || !document.startViewTransition) return run();
         const r = pill?.getBoundingClientRect();
         const x = lastPointer?.x ?? (r ? r.left + r.width / 2 : innerWidth);
         const y = lastPointer?.y ?? (r ? r.top + r.height / 2 : 0);
@@ -214,6 +245,14 @@ const jsonLd = {
         document.startViewTransition(run);
       };
       apply(current());
+      document.addEventListener('settheme', (e) => {
+        const { theme, vars } = (e as CustomEvent<{ theme: Theme; vars?: Record<string, string> }>).detail;
+        if (themes.includes(theme)) setTheme(theme, vars);
+      });
+      document.querySelector('.theme-gen')?.addEventListener('click', () => {
+        open(false);
+        document.dispatchEvent(new CustomEvent('opengenerator', { detail: pill }));
+      });
 
       const open = (show: boolean, refocus = false) => {
         if (!pill || !panel) return;
