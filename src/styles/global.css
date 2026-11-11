@@ -939,8 +939,15 @@ h1 {
   font-weight: 600;
   opacity: 0.85;
 }
-.theme-pill-v[hidden] {
+/* Driven by data-theme (set by the pre-paint script) so the right name shows on first paint, with no swap after load. */
+.theme-pill-v {
   display: none;
+}
+:root:not([data-theme]) .theme-pill-v[data-theme-name='classic'],
+[data-theme='modern'] .theme-pill-v[data-theme-name='modern'],
+[data-theme='accessible'] .theme-pill-v[data-theme-name='accessible'],
+[data-theme='custom'] .theme-pill-v[data-theme-name='custom'] {
+  display: inline;
 }
 .theme-pill-caret {
   font-size: 0.7em;

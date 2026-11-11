@@ -141,7 +141,7 @@ const jsonLd = {
         <div class="theme-switch">
           <button class="theme-pill" type="button" aria-expanded="false" aria-controls="theme-menu">
             <span class="theme-pill-k">{c.themes.label}<span class="sr-only">:</span></span>
-            {themeIds.map((id) => <span class="theme-pill-v" data-theme-name={id} hidden={id !== 'classic'}>{c.themes[id].name}</span>)}
+            {themeIds.map((id) => <span class="theme-pill-v" data-theme-name={id}>{c.themes[id].name}</span>)}
             <span class="theme-pill-caret" aria-hidden="true">▾</span>
           </button>
           <div id="theme-menu" class="theme-menu" hidden>
@@ -232,7 +232,6 @@ const jsonLd = {
         if (theme === 'classic') delete root.dataset.theme;
         else root.dataset.theme = theme;
         for (const r of radios) r.checked = r.value === theme;
-        for (const el of document.querySelectorAll<HTMLElement>('.theme-pill-v')) el.hidden = el.dataset.themeName !== theme;
         document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
       };
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -339,7 +338,12 @@ const jsonLd = {
           if (btn.getAttribute('aria-expanded') === 'true') set(false);
         });
         menu.addEventListener('click', (e) => {
-          if ((e.target as HTMLElement).closest('a')) set(false);
+          // Only in-page links close the nav; closing it before a page change flashes the old page.
+          if ((e.target as HTMLElement).closest('a[href^="#"]')) set(false);
+        });
+        // Back/forward cache can restore the page with the nav still open.
+        addEventListener('pageshow', (e) => {
+          if (e.persisted && btn.getAttribute('aria-expanded') === 'true') set(false);
         });
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
