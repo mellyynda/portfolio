@@ -1,0 +1,265 @@
+/* ---------- "Custom (AI)" theme ----------
+   Values come from validated design tokens (src/lib/themeTokens.ts) set as --ai-* properties on <html>.
+   Only active under [data-theme='custom']; layout and content are unchanged. */
+
+html[data-theme='custom'] {
+  --bg: var(--ai-bg);
+  --ink: var(--ai-text);
+  --muted: var(--ai-muted);
+  --line: var(--ai-border);
+  --chip: var(--ai-surface);
+  --accent: var(--ai-accent);
+  --accent-ink: var(--ai-accent-text);
+  --display: var(--ai-display);
+  --sans: var(--ai-body);
+
+  /* remap the retro palette so base rules follow the generated colours */
+  --cream: var(--ai-bg);
+  --plum: var(--ai-text);
+  --sand: var(--ai-surface);
+  --saffron: var(--ai-highlight);
+  --blush: var(--ai-highlight);
+  --rust: var(--ai-accent);
+  --wine: var(--ai-accent);
+  color-scheme: var(--ai-scheme);
+}
+[data-theme='custom'] body {
+  background-color: var(--bg);
+  background-image: var(--ai-pattern);
+  background-size: var(--ai-pattern-size);
+  background-attachment: fixed;
+}
+
+/* panels: one bold colour, second colour for the second word */
+[data-theme='custom'] .panel {
+  background: var(--ai-panel);
+  color: var(--ai-panel-text);
+}
+[data-theme='custom'] .panel .l2 {
+  color: var(--ai-highlight);
+}
+[data-theme='custom'] .panel .dot {
+  background: var(--ai-highlight);
+}
+[data-theme='custom'] .panel-index {
+  color: var(--ai-panel-text);
+}
+
+/* pairs that are only safe in the retro palette */
+[data-theme='custom'] .menu {
+  background: var(--bg);
+  color: var(--ink);
+}
+[data-theme='custom'] .menu li:nth-child(even) a {
+  color: var(--accent);
+}
+[data-theme='custom'] .mark:focus-visible {
+  color: var(--bg);
+  background: var(--ink);
+}
+[data-theme='custom'] .contact-links a:hover {
+  background: var(--chip);
+  color: var(--ink);
+}
+[data-theme='custom'] .chips-lg li:nth-child(5n + 1) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+[data-theme='custom'] .chips-lg li:nth-child(5n + 3) {
+  background: var(--chip);
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+/* shape */
+[data-theme='custom'] :is(.btn, .chips li, .frame, .theme-menu, .theme-opt, .vibe, .ai-dialog, .ai-input, .ai-example) {
+  border-radius: var(--ai-radius);
+}
+[data-theme='custom'] :is(.frame, .project:nth-child(even) .frame, .theme-menu, .vibe, .ai-dialog) {
+  box-shadow: var(--ai-shadow);
+}
+
+/* ---------- theme menu entry + generator dialog (all themes) ---------- */
+.theme-opt[hidden] {
+  display: none;
+}
+.theme-gen {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.75rem;
+  margin-top: 0.4rem;
+  padding: 0.6rem 0.5rem;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+.theme-gen:hover {
+  background: var(--chip);
+}
+
+.ai-dialog {
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100svh - 2rem);
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 8px 8px 0 var(--saffron);
+}
+.ai-dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+.ai-form {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.5rem;
+}
+.ai-title {
+  padding-right: 2rem;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+.ai-intro,
+.ai-note {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.ai-note {
+  font-size: 0.85rem;
+}
+.ai-label {
+  margin-top: 0.4rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+.ai-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ai-input {
+  flex: 1 1 14rem;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--chip);
+  color: var(--ink);
+  font: inherit;
+}
+.ai-input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.ai-dialog .btn {
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.92rem;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+}
+.ai-dialog .btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.ai-dialog .btn:disabled,
+.ai-example:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.ai-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+.ai-example {
+  min-height: 2.25rem;
+  padding: 0.2rem 0.8rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ai-example:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.ai-status {
+  min-height: 1.5em;
+  font-weight: 700;
+}
+.ai-status:empty {
+  min-height: 0;
+}
+.ai-status[data-kind='error'] {
+  color: var(--ink);
+  padding: 0.5rem 0.75rem;
+  border-left: 4px solid var(--accent);
+  background: var(--chip);
+}
+.ai-form[aria-busy='true'] .ai-status::before {
+  content: '';
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.5em;
+  vertical-align: -0.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ai-spin 0.8s linear infinite;
+}
+@keyframes ai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-form[aria-busy='true'] .ai-status::before {
+    animation: none;
+    border-right-color: currentColor;
+    opacity: 0.6;
+  }
+}
+.ai-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+}
+.ai-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.ai-close:hover {
+  background: var(--chip);
+}

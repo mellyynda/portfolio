@@ -1,0 +1,3 @@
+# Copy to .dev.vars (git-ignored) to call the real API from `npm run dev`.
+# Or skip this and use `npm run dev:mock` for sample themes without a key.
+ANTHROPIC_API_KEY=sk-ant-...
