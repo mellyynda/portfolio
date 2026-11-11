@@ -7,7 +7,7 @@ compatibility_flags = ["nodejs_compat"]
 [vars]
 MODEL = "claude-haiku-5-5"
 ALLOWED_ORIGINS = "https://mellyynda.github.io"
-HOURLY_LIMIT_PER_IP = "5"
+HOURLY_LIMIT_PER_IP = "10"
 DAILY_LIMIT_GLOBAL = "300"
 
 # Burst limit per IP (Cloudflare rate-limiting binding, free; period must be 10 or 60 seconds).
