@@ -100,7 +100,7 @@ export default {
     if (await overLimit(env, ip)) return json({ error: 'Too many requests. Try again later.' }, 429, { ...cors, 'retry-after': '3600' });
 
     try {
-      const tokens = env.MOCK === 'true' ? mockTokens(clean) : env.ANTHROPIC_API_KEY ? await generate(env, clean) : null;
+      const tokens = env.MOCK === 'true' ? validateTokens(mockTokens(clean)) : env.ANTHROPIC_API_KEY ? await generate(env, clean) : null;
       if (!tokens) return json({ error: 'Could not generate a theme' }, 502, cors);
       return json({ tokens }, 200, { ...cors, 'cache-control': 'no-store' });
     } catch (err) {

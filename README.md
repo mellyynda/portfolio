@@ -36,6 +36,8 @@ npm run dev:mock                                   # sample themes, no API key n
 PUBLIC_THEME_API_URL=http://localhost:8787/theme npm run dev
 ```
 
+In mock mode, a prompt containing `mock:incomplete` returns a theme with missing fields, so you can check that the Worker rejects it and the dialog shows an error. `npm test` in the repo root runs the token validation tests.
+
 ### Deploy the Worker
 
 Needs a free Cloudflare account and an Anthropic API key.

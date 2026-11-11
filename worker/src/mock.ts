@@ -64,7 +64,11 @@ const PRESETS: { match: RegExp; tokens: ThemeTokens }[] = [
   },
 ];
 
-export function mockTokens(prompt: string): ThemeTokens {
+/** Simulates a model response with missing fields, to test validation. Triggered by "mock:incomplete". */
+const INCOMPLETE = { name: 'Incomplete', mode: 'dark', colors: { bg: '#000000', text: '#ffffff' }, fonts: { heading: 'manrope' } };
+
+export function mockTokens(prompt: string): unknown {
+  if (prompt.includes('mock:incomplete')) return INCOMPLETE;
   const hit = PRESETS.find((p) => p.match.test(prompt));
   if (hit) return hit.tokens;
   let h = 0;
