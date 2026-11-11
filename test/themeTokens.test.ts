@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { COLOR_KEYS, ensureContrast, tokensToVars, validateTokens } from '../src/lib/themeTokens.ts';
+import { COLOR_KEYS, DISPLAY_WIDTH, FONTS, ensureContrast, tokensToVars, validateTokens } from '../src/lib/themeTokens.ts';
 
 const valid = () => ({
   name: 'Deep Ocean',
@@ -48,6 +48,16 @@ test('rejects missing or malformed fields without throwing', () => {
   for (const [label, input] of cases) {
     assert.doesNotThrow(() => validateTokens(input), label);
     assert.equal(validateTokens(input), null, label);
+  }
+});
+
+test('every heading font has a display width so panel words can be sized', () => {
+  for (const f of Object.keys(FONTS) as (keyof typeof FONTS)[]) {
+    const t = validateTokens({ ...valid(), fonts: { heading: f, body: 'manrope' } });
+    assert.ok(t, f);
+    const w = Number(tokensToVars(t)['--ai-display-w']);
+    assert.ok(w >= 1 && w <= 1.5, `${f}: ${w}`);
+    assert.equal(w, DISPLAY_WIDTH[f]);
   }
 });
 
