@@ -45,6 +45,17 @@ html[data-theme='custom'] {
   color: var(--ai-panel-text);
 }
 
+/* Big panel words: same sizing as the base theme, scaled down by the heading font's width so wide fonts never overflow.
+   The fallback is the widest font, for vars saved before --ai-display-w existed. */
+[data-theme='custom'] .big {
+  font-size: min(calc(140cqi / (var(--len) * var(--ai-display-w, 1.5))), calc(15rem / var(--ai-display-w, 1.5)));
+}
+@media (max-width: 52rem) {
+  [data-theme='custom'] .big {
+    font-size: min(calc(132cqi / (var(--len) * var(--ai-display-w, 1.5))), calc(10rem / var(--ai-display-w, 1.5)));
+  }
+}
+
 /* pairs that are only safe in the retro palette */
 [data-theme='custom'] .menu {
   background: var(--bg);
