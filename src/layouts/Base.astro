@@ -10,7 +10,7 @@ import '../styles/global.css';
 import '../styles/retro.css';
 import '../styles/ai-theme.css';
 import ThemeGenerator from '../components/ThemeGenerator.astro';
-import { SITE_URL, EMAIL, LINKEDIN, GITHUB, paths, asset, type Content } from '../data/content';
+import { SITE_URL, EMAIL, LINKEDIN, paths, asset, type Content } from '../data/content';
 
 interface Props {
   c: Content;
@@ -59,7 +59,7 @@ const jsonLd = {
       email: `mailto:${EMAIL}`,
       url: SITE_URL + '/',
       image: ogImage,
-      sameAs: [LINKEDIN, GITHUB],
+      sameAs: [LINKEDIN],
       address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
       worksFor: { '@type': 'Organization', name: 'Worldline / PaymentIQ' },
       knowsLanguage: [
@@ -141,7 +141,7 @@ const jsonLd = {
         <div class="theme-switch">
           <button class="theme-pill" type="button" aria-expanded="false" aria-controls="theme-menu">
             <span class="theme-pill-k">{c.themes.label}<span class="sr-only">:</span></span>
-            {themeIds.map((id) => <span class="theme-pill-v" data-theme-name={id} hidden={id !== 'classic'}>{c.themes[id].name}</span>)}
+            {themeIds.map((id) => <span class="theme-pill-v" data-theme-name={id}>{c.themes[id].name}</span>)}
             <span class="theme-pill-caret" aria-hidden="true">▾</span>
           </button>
           <div id="theme-menu" class="theme-menu" hidden>
@@ -232,7 +232,6 @@ const jsonLd = {
         if (theme === 'classic') delete root.dataset.theme;
         else root.dataset.theme = theme;
         for (const r of radios) r.checked = r.value === theme;
-        for (const el of document.querySelectorAll<HTMLElement>('.theme-pill-v')) el.hidden = el.dataset.themeName !== theme;
         document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
       };
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -329,12 +328,31 @@ const jsonLd = {
           btn.setAttribute('aria-expanded', String(open));
           btn.setAttribute('aria-label', (open ? btn.dataset.close : btn.dataset.open) ?? '');
           document.documentElement.classList.toggle('menu-open', open);
-          for (const el of document.querySelectorAll<HTMLElement>('main, footer, .skip, .home-nav, .lang-pill, .theme-switch, .vibe')) el.inert = open;
+          // The theme and language pills stay above the open nav, so they stay interactive too.
+          for (const el of document.querySelectorAll<HTMLElement>('main, footer, .skip, .home-nav, .vibe')) el.inert = open;
           if (open) menu.querySelector('a')?.focus();
         };
         btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+        // Opening the theme menu closes the nav, so only one overlay is open at a time.
+        document.querySelector('.theme-pill')?.addEventListener('click', () => {
+          if (btn.getAttribute('aria-expanded') === 'true') set(false);
+        });
         menu.addEventListener('click', (e) => {
-          if ((e.target as HTMLElement).closest('a')) set(false);
+          if ((e.target as HTMLElement).closest('a[href^="#"]')) set(false);
+        });
+        // Switching language from the open nav: play the nav's normal close transition, then navigate.
+        for (const link of document.querySelectorAll<HTMLAnchorElement>('.lang-pill, .menu-lang')) {
+          link.addEventListener('click', (e) => {
+            if (btn.getAttribute('aria-expanded') !== 'true' || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
+            set(false);
+            const secs = Math.max(0, ...getComputedStyle(menu).transitionDuration.split(',').map(parseFloat).filter((n) => !Number.isNaN(n)));
+            setTimeout(() => location.assign(link.href), secs * 1000);
+          });
+        }
+        // Back/forward cache can restore the page with the nav still open.
+        addEventListener('pageshow', (e) => {
+          if (e.persisted && btn.getAttribute('aria-expanded') === 'true') set(false);
         });
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
